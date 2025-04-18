@@ -1,0 +1,251 @@
+* {
+    cursor: crosshair ;
+}
+
+body {
+    overflow: hidden;
+    min-height: 100vh;
+    cursor: crosshair;
+    background: url("image/photo_bubble.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: "Winky Rough", sans-serif;
+
+}
+
+.bubble {
+    position: absolute;
+    z-index: 1000;
+    border-radius: 50%;
+    background: green;
+    opacity: 0.5;
+    border: 1px solid black;
+    pointer-events: auto;  
+    animation: anim 6s;
+    filter: hue-rotate(0deg);
+}
+
+.bubble.bad-bubble {
+    filter: none !important; 
+    pointer-events: auto; 
+    z-index: 1000;
+}
+
+@keyframes anim {
+    to{
+        top: -300px;
+        opacity: 1;
+        filter: hue-rotate(255deg)
+    }
+}
+
+h3 {
+    font-size: 14rem;
+    text-align: center;
+    color: gold;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.7);
+    user-select: none; 
+    outline: none; 
+    z-index: 999;
+    position: relative;
+}
+
+#YourScore {
+    display: none; 
+    font-size: 8rem;
+    text-align: center;
+    color: gold; 
+    position: absolute; 
+    user-select: none; 
+    outline: none; 
+    top: 40%;
+    left: 50%; 
+    transform: translateX(-50%);
+    z-index: 999; 
+    margin-top: 100px; 
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+#restartButton {
+    display: none;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, gold, orange);
+    color: black;
+    font-size: 2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease, background 0.3s ease;
+    margin-top: 60px; 
+    font-family: "Winky Rough", sans-serif;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 1); 
+    user-select: none; 
+    outline: none; 
+}
+
+#restartButton:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: linear-gradient(135deg, orange, gold);
+}
+
+#restartButton:active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#startButton{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, gold, orange);
+    color: black;
+    font-size: 2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease, background 0.3s ease;
+    font-family: "Winky Rough", sans-serif;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 1); 
+}
+
+#startButton:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: linear-gradient(135deg, orange, gold);
+}
+
+#startButton:active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#lifes-container {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 999;
+    user-select: none; 
+    outline: none; 
+}
+
+@keyframes pulse-scale {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.7);
+    }
+  }
+  
+.pulse-life {
+    animation: pulse-scale 0.4s ease-in-out infinite;
+}
+  
+#life1, #life2, #life3 {
+    display: none;
+    user-select: none; 
+    outline: none; 
+    pointer-events: none;
+}
+
+#lifes-container img {
+    width: 7rem; 
+    height: auto;
+    z-index: 999;
+}
+
+#gameOverBackground {
+    display: none; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    z-index: 0; 
+}
+
+
+@media (max-width: 1440px) {
+    h3 {
+        font-size: 10rem;
+        margin-top: 100px;
+        z-index: 999; 
+        position: relative;
+
+    }
+
+    #YourScore {
+        font-size: 6rem;
+        margin-top: 40px;
+
+    }
+
+    #restartButton {
+        font-size: 1.6rem;
+        border-radius: 1.2rem;
+        margin-top: 60px;
+    }
+
+    #startButton
+    {
+        font-size: 1.6rem;
+        border-radius: 1.2rem;
+    }
+    #gameOverBackground{
+        width: 50%;
+        height: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    h3 {
+        font-size: 6rem;
+        margin-top: 80px;
+    }
+
+    #YourScore {
+        font-size: 4rem;
+        top: 30%;
+        margin-top: 40px;
+    }
+
+    #startButton,
+    #restartButton {
+        font-size: 1.4rem;
+        padding: 0.8rem 1.8rem;
+        border-radius: 1rem;
+        top: 65%;
+    }
+}
+
+@media (max-width: 480px) {
+    h3 {
+        font-size: 4rem;
+        margin-top: 60px;
+    }
+
+    #YourScore {
+        font-size: 2.5rem;
+        top: 28%;
+        margin-top: 30px;
+    }
+
+    #startButton,
+    #restartButton {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.7rem;
+        top: 65%;
+    }
+}

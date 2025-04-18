@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="Bubble_Game.css" />
+  <title>Bubble Game</title>
+</head>
+
+<body>
+  <h3>0</h3>
+  <button id="startButton">Lancer le jeu</button>
+
+
+  <div id="lifes-container">
+    <div id="life1"> <img src="image/croix.png"> </div>
+    <div id="life2"> <img src="image/croix.png"> </div>
+    <div id="life3"> <img src="image/croix.png"> </div>
+  </div>
+
+  <audio id="soundBubbleExplos" src="son/ballon explose.mp3" preload="auto"></audio>
+  <audio id="soundError" src="son/erreur.wav" preload="auto"></audio>
+  <audio id="soundGameOver" src="son/game over explose.mp3" preload="auto"></audio>
+  <audio id="soundStresse" src="son/stresse.mp3" preload="auto"></audio>
+
+  <div id="YourScore" style="display:none;"></div>
+
+  <button id="restartButton">Rejouer</button>
+  
+  <img id="gameOverBackground" src="image/img_explo.png" alt="Game Over Background"
+    style="display:none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 998;" />
+
+  <script src="Bubble_Game.js"></script>
+</body>
+
+</html>
