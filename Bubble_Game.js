@@ -198,6 +198,14 @@ class Game {
         yourScoreDiv.innerHTML = `Votre score : <span style="color: red;">${this.score}</span>`;
 
         this.restartButton.style.display = "block";
+        
+        const life1 = document.getElementById("life1");
+        const life2 = document.getElementById("life2");
+        const life3 = document.getElementById("life3");
+        
+            life1.style.display = "none";
+            life2.style.display = "none";
+            life3.style.display = "none";
     }
 }
 
