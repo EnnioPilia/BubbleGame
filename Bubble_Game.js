@@ -78,12 +78,11 @@ class Game {
         this.rankingList = document.getElementById('rankingList');
         this.closeRankingModal = document.getElementById('closeRankingModal');
     
-         // Gérer la fermeture du modal du classement
          document.getElementById('closeRankingModal').addEventListener("click", () => {
             this.closeRankingModalWindow();
         });
 
-
+        this.loadScores();
 
         this.restartButton.addEventListener("click", () => {
             this.gameOverBackground.style.display = "none";
@@ -91,6 +90,13 @@ class Game {
         });
     
         this.start();
+    }
+
+    loadScores() {
+        const storedScores = localStorage.getItem('highScores');
+        if (storedScores) {
+            this.scores = JSON.parse(storedScores);
+        }
     }
 
     start() {
@@ -262,16 +268,21 @@ class Game {
             li.textContent = `${index + 1}. ${score.name} - ${score.score}`;
             this.rankingList.appendChild(li);
         });
-     this.rankingModal = document.getElementById('rankingModal');
 
-        this.rankingModal.style.display = 'block';
+        this.rankingModal = document.getElementById('rankingModal');
+        this.rankingModal.style.display = 'block';     
+        this.restartButton.disabled = true;
+        this.restartButton.style.pointerEvents = "none";
+        this.rankingButton.style.pointerEvents = "none";  
     }
 
     closeRankingModalWindow() {
         this.rankingModal.style.display = 'none';
+        this.restartButton.disabled = false;
+        this.restartButton.style.pointerEvents = "auto";
+        this.rankingButton.style.pointerEvents = "auto";  
     }
 }
-
 
 document.addEventListener('dblclick', function (e) {
     e.preventDefault();
