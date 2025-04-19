@@ -14,6 +14,9 @@
 
 <body>
   <h3>0</h3>
+  <div id="playerInputContainer">
+    <input type="text" id="playerName" placeholder="Entrez un nom">
+  </div>
   <button id="startButton">Lancer le jeu</button>
 
 
@@ -27,6 +30,16 @@
   <audio id="soundError" src="son/erreur.wav" preload="auto"></audio>
   <audio id="soundGameOver" src="son/game over explose.mp3" preload="auto"></audio>
   <audio id="soundStresse" src="son/stresse.mp3" preload="auto"></audio>
+
+  <button id="rankingButton" style="display: none;">Classement</button>
+
+<div id="rankingModal" style="display: none;">
+  <div id="rankingContainer">
+    <h2>🏆 Top 10 🏆</h2>
+    <ul id="rankingList"></ul>
+    <button id="closeRankingModal">✖</button>
+  </div>
+</div>
 
   <div id="YourScore" style="display:none;"></div>
 

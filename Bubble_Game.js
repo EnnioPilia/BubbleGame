@@ -1,3 +1,9 @@
+
+document.getElementById('soundBubbleExplos').volume = 0.2; 
+document.getElementById('soundError').volume = 0.2;
+document.getElementById('soundStresse').volume = 0.2;
+document.getElementById('soundGameOver').volume = 0.2;
+
 class Bubble {
     constructor(game) {
         this.game = game;
@@ -61,16 +67,29 @@ class Game {
         this.lifes = 4;
         this.spawnSpeed = 600;
         this.intervalId = null;
-
+        this.scores = [];
+    
         this.scoreDisplay = document.querySelector('h3');
         this.restartButton = document.getElementById('restartButton');
+        this.playerName = document.getElementById('playerName');
         this.gameOverBackground = document.getElementById('gameOverBackground');
+        this.rankingButton = document.getElementById('rankingButton');
+        this.rankingModal = document.getElementById('rankingModal');
+        this.rankingList = document.getElementById('rankingList');
+        this.closeRankingModal = document.getElementById('closeRankingModal');
+    
+         // Gérer la fermeture du modal du classement
+         document.getElementById('closeRankingModal').addEventListener("click", () => {
+            this.closeRankingModalWindow();
+        });
+
+
 
         this.restartButton.addEventListener("click", () => {
             this.gameOverBackground.style.display = "none";
             this.start();
         });
-
+    
         this.start();
     }
 
@@ -96,6 +115,10 @@ class Game {
         document.body.style.pointerEvents = "auto";
         this.restartButton.style.pointerEvents = "auto";
         this.restartButton.style.display = "none";
+        this.rankingButton.style.pointerEvents = "auto";
+        this.rankingButton.style.display = "none";
+        this.playerName.style.pointerEvents = "auto";
+        this.playerName.style.display = "none";
 
         if (this.intervalId) clearInterval(this.intervalId);
         this.runSpawnLoop();
@@ -185,6 +208,8 @@ class Game {
     }
 
     gameOver() {
+        console.log('Game Over triggered');
+    
         stopSound("soundStresse");
         this.gameOverBackground.style.display = "block";
         this.scoreDisplay.textContent = " GAME OVER ";
@@ -192,30 +217,75 @@ class Game {
         document.body.style.pointerEvents = "none";
         clearInterval(this.intervalId);
         document.querySelectorAll('.bubble').forEach(bubble => bubble.remove());
-
+    
         const yourScoreDiv = document.getElementById("YourScore");
         yourScoreDiv.style.display = "block";
         yourScoreDiv.innerHTML = `Votre score : <span style="color: red;">${this.score}</span>`;
-
+    
+        this.rankingButton.style.display = "block";
         this.restartButton.style.display = "block";
-        
-        const life1 = document.getElementById("life1");
-        const life2 = document.getElementById("life2");
-        const life3 = document.getElementById("life3");
-        
-            life1.style.display = "none";
-            life2.style.display = "none";
-            life3.style.display = "none";
+        this.rankingButton.style.pointerEvents = "auto";  // Permet d'éviter un blocage par pointer-events
+        this.closeRankingModal.style.pointerEvents = "auto";  // Permet d'éviter un blocage par pointer-events
+
+    
+        this.rankingButton.addEventListener("click", () => {
+            this.showRankingModal();
+        });
+
+      
+        this.closeRankingModal.addEventListener("click", () => {
+        this.closeRankingModalWindow();
+        });
+
+        document.getElementById("life1").style.display = "none";
+        document.getElementById("life2").style.display = "none";
+        document.getElementById("life3").style.display = "none";
+    
+        this.saveScore();
+    }
+    
+    saveScore() {
+        const playerName = this.playerName.value.trim() || "Anonyme";
+        const newScore = { name: playerName, score: this.score };
+
+        this.scores.push(newScore);
+        this.scores.sort((a, b) => b.score - a.score);
+        this.scores = this.scores.slice(0, 10); // Garder seulement les 10 meilleurs scores
+
+        localStorage.setItem('highScores', JSON.stringify(this.scores));
+    }
+    
+    showRankingModal() {
+        this.rankingList.innerHTML = '';
+        this.scores.forEach((score, index) => {
+            const li = document.createElement('li');
+            li.textContent = `${index + 1}. ${score.name} - ${score.score}`;
+            this.rankingList.appendChild(li);
+        });
+     this.rankingModal = document.getElementById('rankingModal');
+
+        this.rankingModal.style.display = 'block';
+    }
+
+    closeRankingModalWindow() {
+        this.rankingModal.style.display = 'none';
     }
 }
+
 
 document.addEventListener('dblclick', function (e) {
     e.preventDefault();
 });
 
+let currentGame = null;
+
 const Startbtn = document.getElementById('startButton');
 Startbtn.addEventListener("click", () => {
-    new Game();
+    if (!currentGame) {
+        currentGame = new Game();
+    } else {
+        currentGame.start();
+    }
 });
 
 function stopSound(id) {

@@ -49,6 +49,37 @@ h3 {
     z-index: 999;
     position: relative;
 }
+#playerInputContainer {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    user-select: none;
+}
+
+#playerName {
+    background: linear-gradient(135deg, gold, orange);
+    color: black;
+    font-size: 2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 15px 5px rgba(0, 0, 0, 1);
+    font-family: "Winky Rough", sans-serif;
+    text-align: center;
+    outline: none;
+    cursor: text;
+}
+
+#playerName::placeholder {
+    color: black;
+    opacity: 0.7;
+}
+
+#playerName:focus {
+    background: linear-gradient(135deg, orange, gold);
+}
 
 #YourScore {
     display: none; 
@@ -137,7 +168,79 @@ h3 {
     user-select: none; 
     outline: none; 
 }
-
+/* Styles pour la fenêtre modale */
+#rankingModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
+    border-radius: 10px;
+    z-index: 1001;
+    display: none;
+  }
+  
+  #rankingContainer {
+    color: gold;
+    text-align: center;
+    font-family: "Winky Rough", sans-serif;
+  }
+  
+  #rankingList {
+    list-style: none;
+    padding: 0;
+    font-size: 2rem;
+  }
+  
+  #rankingList li {
+    margin: 1rem 0;
+  }
+  
+  #closeRankingModal {
+    background: linear-gradient(135deg, gold, orange);
+    color: black;
+    font-size: 2rem;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-family: "Winky Rough", sans-serif;
+    transition: transform 0.3s ease;
+  }
+  
+  #closeRankingModal:hover {
+    transform: scale(1.1);
+  }
+  
+  #rankingButton {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, gold, orange);
+    color: black;
+    font-size: 2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease, background 0.3s ease;
+    font-family: "Winky Rough", sans-serif;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 1); 
+  }
+  
+  #rankingButton:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  
+  #rankingButton:active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
 @keyframes pulse-scale {
     0%, 100% {
       transform: scale(1);
@@ -210,7 +313,7 @@ h3 {
 
 @media (max-width: 768px) {
     h3 {
-        font-size: 6rem;
+        font-size: 10rem;
         margin-top: 80px;
     }
 
@@ -231,7 +334,7 @@ h3 {
 
 @media (max-width: 480px) {
     h3 {
-        font-size: 4rem;
+        font-size: 15rem;
         margin-top: 60px;
     }
 
@@ -247,5 +350,32 @@ h3 {
         padding: 0.6rem 1.2rem;
         border-radius: 0.7rem;
         top: 65%;
+    }
+}
+@media (max-width: 1900px) and (min-width: 1400px) {
+    h3 {
+        font-size: 12rem;  
+        margin-top: 150px;
+    }
+
+    #YourScore {
+        font-size: 6rem;  
+        margin-top: 40px; 
+    }
+
+    #restartButton {
+        font-size: 1.8rem;  
+        border-radius: 1.4rem; 
+        margin-top: 80px; 
+    }
+
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius: 1.4rem; 
+    }
+
+    #gameOverBackground {
+        width: 60%;  
+        height: 60%;
     }
 }
