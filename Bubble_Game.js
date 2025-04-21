@@ -86,7 +86,7 @@ class Game {
 
         this.restartButton.addEventListener("click", () => {
             this.gameOverBackground.style.display = "none";
-            this.start();
+            window.location.reload();
         });
     
         this.start();
