@@ -100,6 +100,11 @@ class Game {
     }
 
     start() {
+        const savedName = localStorage.getItem('playerName');
+            if (savedName) {
+                this.playerName.value = savedName; 
+            }
+            
         this.score = 0;
         this.lifes = 4;
         this.spawnSpeed = 600;
@@ -252,12 +257,13 @@ class Game {
     
     saveScore() {
         const playerName = this.playerName.value.trim() || "Anonyme";
+        localStorage.setItem('playerName', playerName);
         const newScore = { name: playerName, score: this.score };
-
+    
         this.scores.push(newScore);
         this.scores.sort((a, b) => b.score - a.score);
         this.scores = this.scores.slice(0, 10); 
-
+    
         localStorage.setItem('highScores', JSON.stringify(this.scores));
     }
     
