@@ -230,8 +230,8 @@ class Game {
     
         this.rankingButton.style.display = "block";
         this.restartButton.style.display = "block";
-        this.rankingButton.style.pointerEvents = "auto";  // Permet d'éviter un blocage par pointer-events
-        this.closeRankingModal.style.pointerEvents = "auto";  // Permet d'éviter un blocage par pointer-events
+        this.rankingButton.style.pointerEvents = "auto";  
+        this.closeRankingModal.style.pointerEvents = "auto";  
 
     
         this.rankingButton.addEventListener("click", () => {
@@ -256,7 +256,7 @@ class Game {
 
         this.scores.push(newScore);
         this.scores.sort((a, b) => b.score - a.score);
-        this.scores = this.scores.slice(0, 10); // Garder seulement les 10 meilleurs scores
+        this.scores = this.scores.slice(0, 10); 
 
         localStorage.setItem('highScores', JSON.stringify(this.scores));
     }

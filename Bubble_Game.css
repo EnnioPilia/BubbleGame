@@ -10,7 +10,6 @@ body {
     background-size: cover;
     background-position: center;
     font-family: "Winky Rough", sans-serif;
-
 }
 
 .bubble {
@@ -49,6 +48,7 @@ h3 {
     z-index: 999;
     position: relative;
 }
+
 #playerInputContainer {
     position: absolute;
     top: 58%;
@@ -100,15 +100,17 @@ h3 {
 #restartButton {
     display: none;
     position: absolute;
-    top: 70%;
+    top: 74%;
     left: 50%;
+    width: 9%;
+    aspect-ratio: 1 / 1; 
     transform: translate(-50%, -50%);
     background: linear-gradient(135deg, gold, orange);
     color: black;
     font-size: 2rem;
-    padding: 1rem 2.5rem;
+    padding: 1rem 2.2rem;
     border: none;
-    border-radius: 1.5rem;
+    border-radius: 50%!important;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
     cursor: pointer;
     z-index: 1000;
@@ -120,26 +122,19 @@ h3 {
     outline: none; 
 }
 
-#restartButton:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    background: linear-gradient(135deg, orange, gold);
-}
-
-#restartButton:active {
-    transform: translate(-50%, -50%) scale(1);
-}
-
-#startButton{
+#startButton {
     position: absolute;
-    top: 70%;
+    top: 74%;
     left: 50%;
+    width: 8%;
+    aspect-ratio: 1 / 1; 
     transform: translate(-50%, -50%);
     background: linear-gradient(135deg, gold, orange);
     color: black;
     font-size: 2rem;
-    padding: 1rem 2.5rem;
+    padding: 1rem 2.2rem;
     border: none;
-    border-radius: 1.5rem;
+    border-radius:50%!important;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
     cursor: pointer;
     z-index: 1000;
@@ -148,12 +143,12 @@ h3 {
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 1); 
 }
 
-#startButton:hover {
+#restartButton:hover, #rankingButton:hover, #startButton:hover {
     transform: translate(-50%, -50%) scale(1.1);
     background: linear-gradient(135deg, orange, gold);
 }
 
-#startButton:active {
+#restartButton:active, #rankingButton:active, #startButton:active {
     transform: translate(-50%, -50%) scale(1);
 }
 
@@ -181,23 +176,27 @@ h3 {
     display: none;
   }
   
-  #rankingContainer {
+#rankingContainer {
     color: gold;
     text-align: center;
     font-family: "Winky Rough", sans-serif;
-  }
+}
   
-  #rankingList {
+#rankingList {
     list-style: none;
     padding: 0;
     font-size: 2rem;
-  }
+}
   
-  #rankingList li {
+#rankingList li {
     margin: 1rem 0;
-  }
+}
+
+.ranking-title {
+    font-size: 3rem;
+}
   
-  #closeRankingModal {
+#closeRankingModal {
     background: linear-gradient(135deg, gold, orange);
     color: black;
     font-size: 2rem;
@@ -208,13 +207,13 @@ h3 {
     margin-top: 1rem;
     font-family: "Winky Rough", sans-serif;
     transition: transform 0.3s ease;
-  }
-  
-  #closeRankingModal:hover {
+}
+
+#closeRankingModal:hover {
     transform: scale(1.1);
-  }
+}
   
-  #rankingButton {
+#rankingButton {
     position: absolute;
     top: 20%;
     left: 50%;
@@ -231,15 +230,15 @@ h3 {
     transition: transform 0.3s ease, background 0.3s ease;
     font-family: "Winky Rough", sans-serif;
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, 1); 
-  }
+}
   
-  #rankingButton:hover {
+#rankingButton:hover {
     transform: translate(-50%, -50%) scale(1.1);
-  }
+}
   
-  #rankingButton:active {
+#rankingButton:active {
     transform: translate(-50%, -50%) scale(1);
-  }
+}
   
 @keyframes pulse-scale {
     0%, 100% {
@@ -278,38 +277,99 @@ h3 {
     z-index: 0; 
 }
 
+@media (max-width: 1800px) and (min-width: 1400px) {
+    h3 {
+        font-size: 12rem;  
+        margin-top: 170px;
+    }
 
-@media (max-width: 1440px) {
+    #YourScore {
+        font-size: 6rem;  
+        margin-top: 67px; 
+    }
+
+    #restartButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 9%;
+    }
+
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 8%;
+    }
+
+    #gameOverBackground {
+        width: 60%;  
+        height: 60%;
+    }
+
+    #rankingModal {
+        width: 20%;
+        height: 90%;
+        padding: 1.5rem;
+    }
+
+    .ranking-title {
+        font-size: 35px;
+    }
+
+    #rankingList {
+        font-size: 1.7rem;
+    }
+
+    #closeRankingModal {
+        font-size: 24px;
+        padding: 6px 13px;
+        margin: -18px;
+    }
+
+    #rankingButton {
+        font-size: 1.8rem;
+    }
+}
+
+
+@media (max-width: 1399px) and (min-width: 1024px) {
     h3 {
         font-size: 10rem;
         margin-top: 100px;
         z-index: 999; 
         position: relative;
-        padding-top: 1rem;
-
+        padding-top: 4rem;
     }
 
     #YourScore {
         font-size: 6rem;
         margin-top: 40px;
-
     }
 
     #restartButton {
-        font-size: 1.6rem;
-        border-radius: 1.2rem;
-        margin-top: 60px;
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 11%;
     }
 
-    #startButton
-    {
-        font-size: 1.6rem;
-        border-radius: 1.2rem;
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 10%;  
     }
-    #gameOverBackground{
+
+    #gameOverBackground { 
         width: 50%;
         height: 50%;
     }
+
     #rankingModal {
         width: 30%;
         height: 90%;
@@ -330,27 +390,36 @@ h3 {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) and (min-width: 768px) {
     h3 {
-        font-size: 10rem;
-        margin-top: 80px;
+        font-size: 9rem;
+        margin-top: 160px;
     }
 
     #YourScore {
         font-size: 4rem;
         top: 30%;
-        margin-top: 40px;
+        margin-top: 120px;
     }
 
-    #startButton,
-    #restartButton {
-        font-size: 1.4rem;
-        padding: 0.8rem 1.8rem;
-        border-radius: 1rem;
-        top: 65%;
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 14%;
     }
+
+    #restartButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 17%;
+    }
+
     #rankingModal {
-        width: 60%;
+        width: 30%;
         padding: 1.2rem;
     }
 
@@ -365,6 +434,7 @@ h3 {
     #closeRankingModal {
         font-size: 1.4rem;
         padding: 0.4rem 1rem;
+    
     }
 
     #rankingButton {
@@ -373,25 +443,87 @@ h3 {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 767px) and (min-width: 480px){
     h3 {
-        font-size: 15rem;
+        font-size: 11rem;
         margin-top: 60px;
     }
 
     #YourScore {
         font-size: 2.5rem;
         top: 28%;
-        margin-top: 30px;
+        margin-top: 55px;
     }
 
-    #startButton,
-    #restartButton {
-        font-size: 1rem;
-        padding: 0.6rem 1.2rem;
-        border-radius: 0.7rem;
-        top: 65%;
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 20%;
     }
+
+    #restartButton {
+        font-size: 22px;
+        border-radius: 50% !important;
+        margin-top: 23px;
+        padding: 1px;
+        width: 16%;
+    }
+
+    #rankingModal {
+        width: 45%;
+        padding: 1rem;
+    }
+
+    .ranking-title {
+        font-size: 1.5rem;
+    }
+
+    #rankingList {
+        font-size: 1.1rem;
+    }
+
+    #closeRankingModal {
+        font-size: 1.2rem;
+        padding: 0.3rem 0.8rem;
+    }
+
+    #rankingButton {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.2rem;
+        margin: -11% 0%;
+    }
+}
+
+@media (max-width: 479px)  {
+    h3 {
+        font-size: 9rem;
+        margin-top: 63px;
+    }
+
+    #YourScore {
+        font-size: 29px;
+        top: 28%;
+        margin-top: 40px;
+    }
+
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;; 
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 30%;
+    }
+
+    #restartButton {
+        font-size: 1.8rem;
+        border-radius: 50% !important;
+        margin-top: 23px;
+        padding: 1px;
+        width: 27%;
+    }
+
     #rankingModal {
         width: 80%;
         padding: 1rem;
@@ -413,55 +545,20 @@ h3 {
     #rankingButton {
         font-size: 1.1rem;
         padding: 0.6rem 1.2rem;
+        margin: -20% 0%;
+    }
+
+    #playerName {
+        background: linear-gradient(135deg, gold, orange);
+        color: black;
+        font-size: 2rem;
+        padding: 2% 0;
+        border: none;
+        border-radius: 1.5rem;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 15px 5px rgba(0, 0, 0, 1);
+        font-family: "Winky Rough", sans-serif;
+        text-align: center;
+        outline: none;
+        cursor: text;
     }
 }
-@media (max-width: 1900px) and (min-width: 1400px) {
-    h3 {
-        font-size: 12rem;  
-        margin-top: 170px;
-
-    }
-
-    #YourScore {
-        font-size: 6rem;  
-        margin-top: 40px; 
-    }
-
-    #restartButton {
-        font-size: 1.8rem;  
-        border-radius: 1.4rem; 
-        margin-top: 80px; 
-    }
-
-    #startButton {
-        font-size: 1.8rem;  
-        border-radius: 1.4rem; 
-    }
-
-    #gameOverBackground {
-        width: 60%;  
-        height: 60%;
-    }
-    #rankingModal {
-        width: 22%;
-        padding: 1.8rem;
-    }
-
-    .ranking-title {
-        font-size: 2.7rem;
-    }
-
-    #rankingList {
-        font-size: 1.7rem;
-    }
-
-    #closeRankingModal {
-        font-size: 1.8rem;
-        padding: 0.6rem 1.5rem;
-    }
-
-    #rankingButton {
-        font-size: 1.8rem;
-    }
-}
-
