@@ -174,6 +174,8 @@ h3 {
     border-radius: 10px;
     z-index: 1001;
     display: none;
+    flex-direction: column;
+    justify-content: center;
   }
   
 #rankingContainer {
@@ -311,8 +313,7 @@ h3 {
 
     #rankingModal {
         width: 20%;
-        height: 90%;
-        padding: 1.5rem;
+        padding: 3rem;
     }
 
     .ranking-title {
@@ -326,7 +327,6 @@ h3 {
     #closeRankingModal {
         font-size: 24px;
         padding: 6px 13px;
-        margin: -18px;
     }
 
     #rankingButton {
