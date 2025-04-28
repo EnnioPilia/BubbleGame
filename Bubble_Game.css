@@ -47,6 +47,7 @@ h3 {
     outline: none; 
     z-index: 999;
     position: relative;
+
 }
 
 #playerInputContainer {
@@ -83,7 +84,7 @@ h3 {
 
 #YourScore {
     display: none; 
-    font-size: 8rem;
+    font-size: 7rem;
     text-align: center;
     color: gold; 
     position: absolute; 
@@ -100,15 +101,15 @@ h3 {
 #restartButton {
     display: none;
     position: absolute;
-    top: 74%;
+    top: 75%;
     left: 50%;
-    width: 9%;
-    aspect-ratio: 1 / 1; 
+    width: 150px;
+    height: 150px;
     transform: translate(-50%, -50%);
     background: linear-gradient(135deg, gold, orange);
     color: black;
     font-size: 2rem;
-    padding: 1rem 2.2rem;
+    padding: 1rem ;
     border: none;
     border-radius: 50%!important;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
@@ -124,10 +125,10 @@ h3 {
 
 #startButton {
     position: absolute;
-    top: 74%;
+    top: 80%;
     left: 50%;
-    width: 8%;
-    aspect-ratio: 1 / 1; 
+    width: 150px;
+    height: 150px;
     transform: translate(-50%, -50%);
     background: linear-gradient(135deg, gold, orange);
     color: black;
@@ -278,7 +279,61 @@ h3 {
     object-fit: cover;
     z-index: 0; 
 }
+ @media (min-width: 1440px){
+    h3 {
+        font-size: 12rem;  
+        margin-top: 200px;
+    }
 
+    #YourScore {
+        font-size: 6rem;  
+        margin-top: 67px; 
+    }
+
+    #restartButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 9%;
+    }
+
+    #startButton {
+        font-size: 1.8rem;  
+        border-radius:50%!important;
+        margin-top: 23px; 
+        padding: 1rem 1rem;
+        width: 8%;
+    }
+
+    #gameOverBackground {
+        width: 60%;  
+        height: 60%;
+    }
+
+    #rankingModal {
+        width: 20%;
+        padding: 3rem;
+    }
+
+    .ranking-title {
+        font-size: 35px;
+    }
+
+    #rankingList {
+        font-size: 1.7rem;
+    }
+
+    #closeRankingModal {
+        font-size: 24px;
+        padding: 6px 13px;
+    }
+
+    #rankingButton {
+        font-size: 1.8rem;
+    }
+}
+ 
 @media (max-width: 1800px) and (min-width: 1400px) {
     h3 {
         font-size: 12rem;  
@@ -346,7 +401,7 @@ h3 {
 
     #YourScore {
         font-size: 5rem;
-        margin-top: 40px;
+        margin-top: 60px;
     }
 
     #restartButton {
@@ -354,7 +409,7 @@ h3 {
         border-radius:50%!important;; 
         margin-top: 23px; 
         padding: 1rem 1rem;
-        width: 11%;
+        width: 12%;
     }
 
     #startButton {
@@ -362,7 +417,7 @@ h3 {
         border-radius:50%!important;; 
         margin-top: 23px; 
         padding: 1rem 1rem;
-        width: 10%;  
+        width: 12%;  
     }
 
     #gameOverBackground { 
@@ -559,4 +614,4 @@ h3 {
         outline: none;
         cursor: text;
     }
-}
+} 
