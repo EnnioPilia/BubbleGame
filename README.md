@@ -53,7 +53,7 @@ Le joueur doit :
 - Animation verticale (du bas vers le haut)
 - Destruction automatique ou au clic
 
-### 🎮Game
+### Game
 
 - Gestion du score
 - Gestion des vies
@@ -105,7 +105,7 @@ index.html
 
 - Cliquer sur **Start**
 - Entrer un pseudo
-- Jouer 🎮
+- Jouer 
 
 ---
 
@@ -128,7 +128,7 @@ Le jeu est entièrement responsive :
 
 ---
 
-## 🧪 Améliorations possibles
+## Améliorations possibles
 
 - Backend pour leaderboard global
 - Mode multijoueur
