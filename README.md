@@ -2,7 +2,7 @@
 
 Jeu web développé en JavaScript dans le cadre d’un projet de promotion **Concepteur Développeur d’Applications (CDA)** chez Simplon (2025).
 
- Projet récompensé du prix du jeu le plus "fun" 
+Récompensé pour le jeu le plus "fun"
 
 ---
 
