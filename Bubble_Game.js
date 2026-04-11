@@ -552,7 +552,7 @@ class Game {
         else if (this.score >= 180) newSpeed = 330;
         else if (this.score >= 150) newSpeed = 350;
         else if (this.score >= 100) newSpeed = 380;
-        else if (this.score >= 50) newSpeed = 400;
+        else if (this.score >= 50) newSpeed = 420;
         else if (this.score >= 30) newSpeed = 450;
         else if (this.score >= 10) newSpeed = 480;
         else if (this.score >= 5) newSpeed = 500;
@@ -619,10 +619,10 @@ class Game {
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
 
-            if ( instance && !instance.counted && !instance.isSpecial && !instance.isHeart && !instance.isBad) {
+            if (instance && !instance.counted && !instance.isSpecial && !instance.isHeart && !instance.isBad) {
                 const rect = b.getBoundingClientRect();
 
-                if (rect.top <= 0) {
+                if (rect.top + rect.height < 0) {
                     instance.counted = true;
 
                     this.lifes--;

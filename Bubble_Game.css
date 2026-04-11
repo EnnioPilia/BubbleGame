@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Winky Rough", sans-serif;
-    cursor: crosshair;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -13,6 +12,7 @@ body {
     flex-direction: column;
     background: url("image/photo_bubble.jpg") center/cover no-repeat;
     overflow: hidden;
+    cursor: url("image/cible3.png") 20 20, crosshair;
 }
 
 ::selection {
@@ -199,7 +199,7 @@ body,
     }
 
     to {
-        transform: translateY(-120vh);
+        transform: translateY(-150vh);
     }
 }
 
@@ -210,7 +210,7 @@ body,
 
 @keyframes animHorizontal {
     from {
-        transform: translateX(-150px);
+        transform: translateX(-130px);
     }
 
     to {
@@ -222,26 +222,30 @@ body,
     background: none !important;
     border: none !important;
     opacity: 0.9 !important;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     font-size: 5rem;
-
     animation: pulseHeart 0.6s infinite;
-
-    text-shadow: 
+    text-shadow:
         -1px -1px 0 black,
-         1px -1px 0 black,
-        -1px  1px 0 black,
-         1px  1px 0 black;
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
 }
 
 @keyframes pulseHeart {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .pulse {
