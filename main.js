@@ -289,6 +289,7 @@ class Game {
         this.titleMenu = document.getElementById("title");
         this.menuSoundButton = document.getElementById("menuSoundButton");
         this.soundButton = document.getElementById("soundButton");
+        this.cursorButton = document.getElementById("cursorButton");
 
         this.specialStartDelay = 10000;
         this.gameStartTime = Date.now();
@@ -327,6 +328,8 @@ class Game {
             this.menuSoundButton.onclick = () => {
                 const audioPopup = document.getElementById("audioPopup");
                 audioPopup.classList.toggle("active");
+
+                toggleCustomCursor(!audioPopup.classList.contains("active"));
             };
         }
         this.setUI("menu");
@@ -347,6 +350,7 @@ class Game {
         const menuButton = this.menuButton;
         const rankingButton = this.rankingButton;
         const soundButton = this.soundButton;
+        const cursorButton = this.cursorButton;
 
         [
             startButton,
@@ -359,7 +363,8 @@ class Game {
             rankingButton,
             soundButton,
             playerName,
-            title
+            title,
+            cursorButton
         ].forEach(el => {
             if (el) el.style.display = "none";
         });
@@ -369,6 +374,7 @@ class Game {
                 startButton.style.display = "block";
                 menuRankingButton.style.display = "block";
                 menuSoundButton.style.display = "block";
+                cursorButton.style.display = "block";
                 playerName.style.display = "block";
                 title.style.display = "block";
                 score.style.display = "none";
@@ -737,15 +743,27 @@ class Game {
         });
 
         this.rankingPopup.style.display = "flex";
+        toggleCustomCursor(false);
     }
 
     hideRanking() {
         this.rankingPopup.style.display = "none";
+        toggleCustomCursor(true);
     }
 
 }
 
 const game = new Game();
+
+function toggleCustomCursor(enable) {
+    if (enable) {
+        document.body.style.cursor = "none";
+        if (cursor) cursor.style.display = "block";
+    } else {
+        document.body.style.cursor = "auto";
+        if (cursor) cursor.style.display = "none";
+    }
+}
 
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;
@@ -762,6 +780,8 @@ const audioPopup = document.getElementById("audioPopup");
 
 game.soundButton.onclick = () => {
     audioPopup.classList.toggle("active");
+
+    toggleCustomCursor(!audioPopup.classList.contains("active"));
 };
 
 document.addEventListener("click", (e) => {
@@ -769,6 +789,7 @@ document.addEventListener("click", (e) => {
         !audioPopup.contains(e.target) &&
         e.target !== soundButton &&
         e.target !== game.menuSoundButton
+
     ) {
         audioPopup.classList.remove("active");
     }
@@ -779,6 +800,9 @@ const closeBtn = document.getElementById("closeAudio");
 
 closeBtn.addEventListener("click", () => {
     popup.classList.remove("active");
+
+    document.body.style.cursor = "none";
+    if (cursor) cursor.style.display = "block";
 });
 
 const slider = document.getElementById("volumeSlider");
@@ -791,3 +815,81 @@ function updateSlider() {
 slider.addEventListener("input", updateSlider);
 
 updateSlider();
+
+document.addEventListener("mousemove", (e) => {
+    if (cursor) {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+    }
+});
+
+updateSlider();
+
+const cursorButton = document.getElementById("cursorButton");
+const cursorPopup = document.getElementById("cursorPopup");
+const cursorPreview = document.getElementById("cursorPreview");
+const cursorSlider = document.getElementById("cursorSizeSlider");
+const validateCursorBtn = document.getElementById("validateCursor");
+const cursor = document.getElementById("customCursor");
+
+const savedCursorSize = localStorage.getItem("cursorSize") || 60;
+
+if (cursor) {
+    cursor.style.width = savedCursorSize + "px";
+    cursor.style.height = savedCursorSize + "px";
+    cursor.style.display = "block";
+}
+
+document.body.style.cursor = "none";
+
+cursorButton.onclick = () => {
+    cursorPopup.classList.add("active");
+    toggleCustomCursor(false);
+};
+
+validateCursorBtn.onclick = () => {
+    const size = cursorSlider.value;
+
+    if (cursor) {
+        cursor.style.width = size + "px";
+        cursor.style.height = size + "px";
+    }
+
+    localStorage.setItem("cursorSize", size);
+
+    cursorPopup.classList.remove("active");
+    toggleCustomCursor(true);
+};
+
+cursorSlider.value = savedCursorSize;
+
+function updateCursorSlider() {
+    const value = cursorSlider.value;
+    const percent = (value - cursorSlider.min) / (cursorSlider.max - cursorSlider.min) * 100;
+
+    cursorSlider.style.background =
+        `linear-gradient(to right, gold ${percent}%, white ${percent}%)`;
+}
+
+cursorSlider.addEventListener("input", () => {
+    const size = cursorSlider.value;
+
+    const baseSize = 100;
+    const scale = size / baseSize;
+
+    cursorPreview.style.transform = `scale(${scale})`;
+
+    updateCursorSlider();
+});
+
+updateCursorSlider();
+
+const playerInput = document.getElementById("playerName");
+
+playerInput.addEventListener("mouseenter", () => {
+    toggleCustomCursor(false);
+});
+
+playerInput.addEventListener("mouseleave", () => {
+    toggleCustomCursor(true);
+});

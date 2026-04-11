@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="Bubble_Game.css" />
+  <link rel="stylesheet" href="style.css" />
   <title>Bubble Game</title>
 </head>
 
@@ -24,6 +24,8 @@
     </div>
   </div>
 
+<img id="customCursor" src="image/cible3.png">
+
   <h3 id="score">0</h3>
   <h4 id="title">BUBBLE GAME</h4>
 
@@ -32,6 +34,7 @@
     <button id="startButton">Jouer</button>
     <button id="menuRankingButton">Classement</button>
     <button id="menuSoundButton">Son</button>
+    <button id="cursorButton">Curseur</button>
   </div>
 
   <div id="gameButtons">
@@ -42,6 +45,15 @@
     <button id="rankingButton">Classement</button>
   </div>
 
+<div id="cursorPopup">
+  <div class="cursor-content">
+    <h2>Taille du curseur</h2>
+    <img id="cursorPreview" src="image/cible3.png">
+    <input type="range" id="cursorSizeSlider" min="30" max="120" value="60">
+    <button id="validateCursor">Valider</button>
+  </div>
+
+</div>
   <div id="YourScore"></div>
 
   <img id="gameOverBackground" src="image/img_explo.png">
@@ -69,7 +81,7 @@
   <audio id="musicGame" src="son/game.ogg" loop></audio>
   <audio id="musicMenu" src="son/menu.ogg" loop></audio>
 
-  <script src="Bubble_Game.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>
