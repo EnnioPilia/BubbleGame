@@ -104,3 +104,23 @@ function updateCursorSlider(slider) {
 }
 
 
+const playerInput = document.getElementById("playerName");
+
+if (playerInput) {
+
+    playerInput.addEventListener("mouseenter", () => {
+        toggleCustomCursor(false);
+    });
+
+    playerInput.addEventListener("mouseleave", () => {
+        toggleCustomCursor(true);
+    });
+
+    playerInput.addEventListener("focus", () => {
+        toggleCustomCursor(false);
+    });
+
+    playerInput.addEventListener("blur", () => {
+        toggleCustomCursor(false);
+    });
+}

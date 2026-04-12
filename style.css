@@ -12,6 +12,8 @@ body {
     flex-direction: column;
     background: url("image/photo_bubble.jpg") center/cover no-repeat;
     overflow: hidden;
+    background: url("image/photo_bubble.jpg") center / cover no-repeat;
+    background-attachment: fixed;
 }
 
 ::selection {
@@ -316,7 +318,7 @@ body,
     height: 100%;
     object-fit: cover;
     display: none;
-    z-index: 1;
+    z-index: 5;
 }
 
 button {
@@ -555,7 +557,7 @@ body.pause #gameButtons {
 #cursorPopup {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     justify-content: center;
     align-items: center;
@@ -576,7 +578,7 @@ body.pause #gameButtons {
 }
 
 #cursorPreview {
-    width: 100px; 
+    width: 100px;
     height: 100px;
     margin: 20px 0;
     pointer-events: none;

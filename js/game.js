@@ -218,6 +218,8 @@ export default class Game {
         this.playerName.value = this.currentPlayerName;
         this.scoreDisplay.textContent = this.score;
 
+        document.getElementById("gameOverBackground").style.display = "none";
+
         this.setUI("game");
 
         pause(sounds.gameOver);
@@ -266,7 +268,7 @@ export default class Game {
 
         let newSpeed = this.spawnSpeed;
 
-        const milestones = [1, 40, 60, 80,
+        const milestones = [40, 60, 80,
             100, 120, 140,
             160, 180, 190,
             200, 210, 220,
@@ -285,8 +287,7 @@ export default class Game {
         else if (this.score >= 100) newSpeed = 380;
         else if (this.score >= 50) newSpeed = 420;
         else if (this.score >= 30) newSpeed = 450;
-        else if (this.score >= 10) newSpeed = 480;
-        else if (this.score >= 5) newSpeed = 500;
+        else if (this.score >= 10) newSpeed = 500;
 
         if (newSpeed !== this.spawnSpeed) {
             this.spawnSpeed = newSpeed;
@@ -360,6 +361,8 @@ export default class Game {
 
         this.clearBubbles();
 
+        document.getElementById("gameOverBackground").style.display = "block";
+
         this.setUI("gameover");
 
         if (!this.scoreSaved) {
@@ -389,6 +392,8 @@ export default class Game {
 
         this.clearBubbles();
         this.resetGameState();
+
+        document.getElementById("gameOverBackground").style.display = "none";
 
         this.yourScore.style.display = "none";
         this.scoreDisplay.textContent = "0";
