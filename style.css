@@ -129,6 +129,7 @@ body,
 
 #menu input {
     padding: 15px;
+    cursor: text;
 }
 
 #playerName {
@@ -376,9 +377,9 @@ button:active {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 350px;
     gap: 15px;
     width: 100%;
-    margin-top: 20px;
     z-index: 2500;
 }
 
@@ -583,7 +584,7 @@ body.pause #gameButtons {
 
 #validateCursor {
     margin-top: 20px;
-      cursor: pointer;
+    cursor: pointer;
 }
 
 #cursorSizeSlider {
@@ -602,6 +603,10 @@ body.pause #gameButtons {
     border-radius: 50%;
     background: gold;
     cursor: pointer;
+}
+
+body.custom-cursor:not(.no-custom-cursor) {
+    cursor: none;
 }
 
 @media (max-width: 768px) {
