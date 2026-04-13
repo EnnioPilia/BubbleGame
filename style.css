@@ -375,6 +375,11 @@ button:active {
     display: none;
 }
 
+#settingsButtonPause {
+    top: 80px;
+    right: 20px;
+}
+
 #gameButtons {
     display: flex;
     flex-direction: column;
@@ -607,8 +612,43 @@ body.pause #gameButtons {
     cursor: pointer;
 }
 
+#settingsPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+}
+
+#settingsPopup.active {
+    display: flex;
+}
+
+.settings-content {
+    background: black;
+    color: gold;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px gold;
+}
+
+.settings-content button {
+    margin-top: 15px;
+}
+
 body.custom-cursor:not(.no-custom-cursor) {
     cursor: none;
+}
+
+body.no-custom-cursor button {
+    cursor: pointer;
+}
+
+body.no-custom-cursor {
+    cursor: auto;
 }
 
 @media (max-width: 768px) {

@@ -1,5 +1,5 @@
 import { setVolume, toggleSound, getState } from "./sound.js";
-import { toggleCustomCursor } from "./cursor.js";
+import { updateCursorState } from "./UI.js";
 
 export function initAudioUI() {
     const soundToggle = document.getElementById("soundToggle");
@@ -21,7 +21,7 @@ export function initAudioUI() {
             btn.onclick = (e) => {
                 e.stopPropagation();
                 audioPopup.classList.add("active");
-                toggleCustomCursor(false);
+                updateCursorState();
             };
         }
     });
@@ -33,14 +33,9 @@ export function initAudioUI() {
     if (closeBtn) {
         closeBtn.onclick = () => {
             audioPopup.classList.remove("active");
-            toggleCustomCursor(true);
+            updateCursorState();
         };
     }
-
-    document.addEventListener("click", () => {
-        audioPopup.classList.remove("active");
-        toggleCustomCursor(true); 
-    });
 
     if (volumeSlider) {
         volumeSlider.oninput = () => {

@@ -27,9 +27,8 @@ export default class Game {
         this.yourScore = document.getElementById("YourScore");
         this.titleMenu = document.getElementById("title");
 
-        this.menuSoundButton = document.getElementById("menuSoundButton");
-        this.soundButton = document.getElementById("soundButton");
-        this.cursorButton = document.getElementById("cursorButton");
+        this.settingsButtonMenu = document.getElementById("settingsButtonMenu");
+        this.settingsButtonPause = document.getElementById("settingsButtonPause");
 
         this.pauseButton = document.getElementById("pauseButton");
         this.resumeButton = document.getElementById("resumeButton");
@@ -120,7 +119,8 @@ export default class Game {
             this.restartButton,
             this.menuButton,
             this.rankingButton,
-            this.soundButton,
+            this.settingsButtonMenu,
+            this.settingsButtonPause,
             this.playerName,
             this.titleMenu,
             this.cursorButton
@@ -132,8 +132,7 @@ export default class Game {
             case "menu":
                 this.startButton.style.display = "block";
                 this.menuRankingButton.style.display = "block";
-                this.menuSoundButton.style.display = "block";
-                this.cursorButton.style.display = "block";
+                this.settingsButtonMenu.style.display = "block";
                 this.playerName.style.display = "block";
                 this.titleMenu.style.display = "block";
                 break;
@@ -141,14 +140,15 @@ export default class Game {
             case "game":
                 this.pauseButton.style.display = "block";
                 this.scoreDisplay.style.display = "block";
+
                 break;
 
             case "pause":
                 this.resumeButton.style.display = "block";
                 this.restartButton.style.display = "block";
                 this.menuButton.style.display = "block";
-                this.soundButton.style.display = "block";
                 this.scoreDisplay.style.display = "block";
+                this.settingsButtonPause.style.display = "block";
                 break;
 
             case "gameover":

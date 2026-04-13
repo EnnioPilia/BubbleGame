@@ -1,4 +1,5 @@
 let cursor;
+import { updateCursorState } from "./UI.js";
 
 export function initCursor() {
 
@@ -10,7 +11,9 @@ export function initCursor() {
     if (cursor) {
         cursor.src = "image/" + selectedCursor;
     }
-    cursorPreview.src = "image/" + selectedCursor;
+    if (cursorPreview) {
+        cursorPreview.src = "image/" + selectedCursor;
+    }
 
     cursorOptions.forEach(option => {
         if (option.dataset.cursor === selectedCursor) {
@@ -19,8 +22,9 @@ export function initCursor() {
 
         option.addEventListener("click", () => {
             selectedCursor = option.dataset.cursor;
-            cursor.src = "image/" + selectedCursor;
-            cursorPreview.src = "image/" + selectedCursor;
+
+            if (cursor) cursor.src = "image/" + selectedCursor;
+            if (cursorPreview) cursorPreview.src = "image/" + selectedCursor;
 
             cursorOptions.forEach(o => o.classList.remove("selected"));
             option.classList.add("selected");
@@ -29,14 +33,12 @@ export function initCursor() {
         });
     });
 
-    cursor = document.getElementById("customCursor");
-    toggleCustomCursor(true);
+    updateCursorState();
 
     const cursorButton = document.getElementById("cursorButton");
     const cursorPopup = document.getElementById("cursorPopup");
     const cursorSlider = document.getElementById("cursorSizeSlider");
     const validateCursorBtn = document.getElementById("validateCursor");
-    const playerInput = document.getElementById("playerName");
 
     const savedCursorSize = localStorage.getItem("cursorSize") || 60;
 
@@ -44,14 +46,13 @@ export function initCursor() {
         cursorButton.onclick = (e) => {
             e.stopPropagation();
             cursorPopup.classList.add("active");
-            toggleCustomCursor(false);
+            updateCursorState();
         };
     }
 
     if (cursor) {
         cursor.style.width = savedCursorSize + "px";
         cursor.style.height = savedCursorSize + "px";
-        cursor.style.display = "block";
     }
 
     document.addEventListener("mousemove", (e) => {
@@ -65,44 +66,38 @@ export function initCursor() {
         e.stopPropagation();
     });
 
-    document.addEventListener("click", () => {
-        if (cursorPopup.classList.contains("active")) {
+    if (validateCursorBtn) {
+        validateCursorBtn.onclick = () => {
+            const size = cursorSlider.value;
+
+            if (cursor) {
+                cursor.style.width = size + "px";
+                cursor.style.height = size + "px";
+            }
+
+            localStorage.setItem("cursorSize", size);
+
             cursorPopup.classList.remove("active");
-            toggleCustomCursor(true);
-        }
-    });
+            updateCursorState();
+        };
+    }
 
-    // cursorButton.onclick = (e) => {
-    //     e.stopPropagation();
-    //     cursorPopup.classList.add("active");
-    //     toggleCustomCursor(false);
-    // };
+    if (cursorSlider) {
+        cursorSlider.value = savedCursorSize;
 
-    validateCursorBtn.onclick = () => {
-        const size = cursorSlider.value;
+        cursorSlider.addEventListener("input", () => {
+            const size = cursorSlider.value;
+            const scale = size / 100;
 
-        if (cursor) {
-            cursor.style.width = size + "px";
-            cursor.style.height = size + "px";
-        }
+            if (cursorPreview) {
+                cursorPreview.style.transform = `scale(${scale})`;
+            }
 
-        localStorage.setItem("cursorSize", size);
+            updateCursorSlider(cursorSlider);
+        });
 
-        cursorPopup.classList.remove("active");
-        toggleCustomCursor(true);
-    };
-
-    cursorSlider.value = savedCursorSize;
-
-    cursorSlider.addEventListener("input", () => {
-        const size = cursorSlider.value;
-        const scale = size / 100;
-
-        cursorPreview.style.transform = `scale(${scale})`;
         updateCursorSlider(cursorSlider);
-    });
-
-    updateCursorSlider(cursorSlider);
+    }
 }
 
 export function toggleCustomCursor(enable) {
@@ -115,6 +110,7 @@ export function toggleCustomCursor(enable) {
         if (cursor) cursor.style.display = "block";
     } else {
         document.body.classList.add("no-custom-cursor");
+        document.body.classList.remove("custom-cursor");
 
         if (cursor) cursor.style.display = "none";
     }
@@ -127,26 +123,3 @@ function updateCursorSlider(slider) {
     slider.style.background =
         `linear-gradient(to right, gold ${percent}%, white ${percent}%)`;
 }
-
-
-const playerInput = document.getElementById("playerName");
-
-if (playerInput) {
-
-    playerInput.addEventListener("mouseenter", () => {
-        toggleCustomCursor(false);
-    });
-
-    playerInput.addEventListener("mouseleave", () => {
-        toggleCustomCursor(true);
-    });
-
-    playerInput.addEventListener("focus", () => {
-        toggleCustomCursor(false);
-    });
-
-    playerInput.addEventListener("blur", () => {
-        toggleCustomCursor(false);
-    });
-}
-

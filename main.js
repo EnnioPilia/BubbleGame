@@ -1,14 +1,17 @@
 import { initSound, applyVolume, sounds } from "./js/sound.js";
 import { initAudioUI } from "./js/audioUI.js";
 import { initCursor } from "./js/cursor.js";
+import { initSettingsUI } from "./js/settings.js";
+import { initUI } from "./js/UI.js";
 import Game from "./js/game.js";
 
 initSound();
 initCursor();
+initUI();         
+initSettingsUI();
+initAudioUI();
 
 const game = new Game();
-
-initAudioUI();
 
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;

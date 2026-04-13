@@ -33,19 +33,26 @@
       <input type="text" id="playerName" placeholder="Entrez votre nom" maxlength="15">
       <button id="startButton">Jouer</button>
       <button id="menuRankingButton">Classement</button>
-      <button id="menuSoundButton">Son</button>
-      <button id="cursorButton">Curseur</button>
+      <button id="settingsButtonMenu">Paramètres</button>
     </div>
 
+    <div id="settingsPopup">
+      <div class="settings-content">
+        <button id="openSound">Son</button>
+        <button id="openCursor">Curseur</button>
+        <button id="closeSettings">Fermer</button>
+      </div>
+    </div>
+    
     <div id="gameButtons">
       <button id="resumeButton">▶ Reprendre</button>
       <button id="restartButton">Rejouer</button>
       <button id="menuButton">Menu</button>
-      <button id="soundButton">Son</button>
+      <button id="settingsButtonPause">Paramètres</button>
       <button id="rankingButton">Classement</button>
     </div>
 
-<img id="customCursor" src="">
+    <img id="customCursor" src="">
 
     <div id="cursorPopup">
       <div class="cursor-content">
