@@ -1,14 +1,39 @@
-// cursor.js
-
 let cursor;
 
 export function initCursor() {
+
+    cursor = document.getElementById("customCursor");
+    const cursorPreview = document.getElementById("cursorPreview");
+    const cursorOptions = document.querySelectorAll(".cursor-option");
+    let selectedCursor = localStorage.getItem("cursorImage") || "cursor1.png";
+
+    if (cursor) {
+        cursor.src = "image/" + selectedCursor;
+    }
+    cursorPreview.src = "image/" + selectedCursor;
+
+    cursorOptions.forEach(option => {
+        if (option.dataset.cursor === selectedCursor) {
+            option.classList.add("selected");
+        }
+
+        option.addEventListener("click", () => {
+            selectedCursor = option.dataset.cursor;
+            cursor.src = "image/" + selectedCursor;
+            cursorPreview.src = "image/" + selectedCursor;
+
+            cursorOptions.forEach(o => o.classList.remove("selected"));
+            option.classList.add("selected");
+
+            localStorage.setItem("cursorImage", selectedCursor);
+        });
+    });
+
     cursor = document.getElementById("customCursor");
     toggleCustomCursor(true);
 
     const cursorButton = document.getElementById("cursorButton");
     const cursorPopup = document.getElementById("cursorPopup");
-    const cursorPreview = document.getElementById("cursorPreview");
     const cursorSlider = document.getElementById("cursorSizeSlider");
     const validateCursorBtn = document.getElementById("validateCursor");
     const playerInput = document.getElementById("playerName");
@@ -47,11 +72,11 @@ export function initCursor() {
         }
     });
 
-    cursorButton.onclick = (e) => {
-        e.stopPropagation();
-        cursorPopup.classList.add("active");
-        toggleCustomCursor(false);
-    };
+    // cursorButton.onclick = (e) => {
+    //     e.stopPropagation();
+    //     cursorPopup.classList.add("active");
+    //     toggleCustomCursor(false);
+    // };
 
     validateCursorBtn.onclick = () => {
         const size = cursorSlider.value;
@@ -124,3 +149,4 @@ if (playerInput) {
         toggleCustomCursor(false);
     });
 }
+

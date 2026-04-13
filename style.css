@@ -457,7 +457,7 @@ body.pause #gameButtons {
     margin: 25px 0;
     font-size: clamp(1.5rem, 3vw, 1.8rem);
     width: 100%;
-    max-width: 350px;
+    max-width: 370px;
 }
 
 #closeAudio {
@@ -580,7 +580,7 @@ body.pause #gameButtons {
 #cursorPreview {
     width: 100px;
     height: 100px;
-    margin: 20px 0;
+    margin: 30px 0;
     pointer-events: none;
 }
 
@@ -654,6 +654,33 @@ body.custom-cursor:not(.no-custom-cursor) {
         margin-top: -20px;
     }
 
+}
+
+#cursorChoices {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 25px 0;
+    margin-bottom: 0;
+}
+
+.cursor-option {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: transform 0.2s, border 0.2s;
+}
+
+.cursor-option:hover {
+    transform: scale(1.2);
+    border: 2px solid gold;
+}
+
+.cursor-option.selected {
+    border: 2px solid gold;
+    box-shadow: 0 0 10px gold;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {

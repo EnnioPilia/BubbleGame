@@ -13,65 +13,73 @@
 </head>
 
 <body>
-<div id="ui">
+  <div id="ui">
 
-  <div id="topBar">
-    <button id="pauseButton">⏸</button>
-    <div id="lifes-container">
-      <div id="life1"><img src="image/croix.png"></div>
-      <div id="life2"><img src="image/croix.png"></div>
-      <div id="life3"><img src="image/croix.png"></div>
+    <div id="topBar">
+      <button id="pauseButton">⏸</button>
+      <div id="lifes-container">
+        <div id="life1"><img src="image/croix.png"></div>
+        <div id="life2"><img src="image/croix.png"></div>
+        <div id="life3"><img src="image/croix.png"></div>
+      </div>
     </div>
-  </div>
 
-<img id="customCursor" src="image/cible3.png">
 
-  <h3 id="score">0</h3>
-  <h4 id="title">BUBBLE GAME</h4>
 
-  <div id="menu">
-    <input type="text" id="playerName" placeholder="Entrez votre nom" maxlength="15">
-    <button id="startButton">Jouer</button>
-    <button id="menuRankingButton">Classement</button>
-    <button id="menuSoundButton">Son</button>
-    <button id="cursorButton">Curseur</button>
-  </div>
+    <h3 id="score">0</h3>
+    <h4 id="title">BUBBLE GAME</h4>
 
-  <div id="gameButtons">
-    <button id="resumeButton">▶ Reprendre</button>
-    <button id="restartButton">Rejouer</button>
-    <button id="menuButton">Menu</button>
-    <button id="soundButton">Son</button>
-    <button id="rankingButton">Classement</button>
-  </div>
+    <div id="menu">
+      <input type="text" id="playerName" placeholder="Entrez votre nom" maxlength="15">
+      <button id="startButton">Jouer</button>
+      <button id="menuRankingButton">Classement</button>
+      <button id="menuSoundButton">Son</button>
+      <button id="cursorButton">Curseur</button>
+    </div>
 
-<div id="cursorPopup">
-  <div class="cursor-content">
-    <h2>Taille du curseur</h2>
-    <img id="cursorPreview" src="image/cible3.png">
-    <input type="range" id="cursorSizeSlider" min="30" max="120" value="60">
-    <button id="validateCursor">Valider</button>
-  </div>
+    <div id="gameButtons">
+      <button id="resumeButton">▶ Reprendre</button>
+      <button id="restartButton">Rejouer</button>
+      <button id="menuButton">Menu</button>
+      <button id="soundButton">Son</button>
+      <button id="rankingButton">Classement</button>
+    </div>
 
-</div>
-  <div id="YourScore"></div>
+<img id="customCursor" src="">
 
-  <img id="gameOverBackground" src="image/img_explo.png">
+    <div id="cursorPopup">
+      <div class="cursor-content">
+        <h2>Taille du curseur</h2>
+        <img id="cursorPreview" src="">
+        <input type="range" id="cursorSizeSlider" min="20" max="150" value="60">
+        <div id="cursorChoices">
+          <img src="image/cursor1.png" data-cursor="cursor1.png" class="cursor-option">
+          <img src="image/cursor2.png" data-cursor="cursor2.png" class="cursor-option">
+          <img src="image/cursor3.png" data-cursor="cursor3.png" class="cursor-option">
+          <img src="image/cursor4.png" data-cursor="cursor4.png" class="cursor-option">
+        </div>
+        <button id="validateCursor">Valider</button>
+      </div>
 
-<div id="audioPopup">
-  <div class="popup-content">
-    <button id="closeAudio">✖</button>
-    <button id="soundToggle">🔊</button>
-    <input type="range" id="volumeSlider">
-  </div>
-</div>
+    </div>
+    <div id="YourScore"></div>
+
+    <img id="gameOverBackground" src="image/img_explo.png">
+
+    <div id="audioPopup">
+      <div class="popup-content">
+        <button id="closeAudio">✖</button>
+        <button id="soundToggle">🔊</button>
+        <input type="range" id="volumeSlider">
+      </div>
+    </div>
     <div id="rankingPopup">
       <h2>🏆 Classement 🏆</h2>
       <div id="rankingList"></div>
       <button id="closeRanking">Fermer</button>
     </div>
-    
-</div>
+
+  </div>
   <audio id="soundBubbleExplos" src="son/ballon explose.mp3"></audio>
   <audio id="soundError" src="son/erreur.wav"></audio>
   <audio id="soundSucess" src="son/sucess.mp3"></audio>
@@ -82,7 +90,7 @@
   <audio id="musicMenu" src="son/menu.ogg" loop></audio>
 
 
-<script type="module" src="main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 
 </html>
