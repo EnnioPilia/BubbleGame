@@ -12,6 +12,7 @@ export const sounds = {
     success: getSound('soundSucess'),
     heart: getSound('soundHeart'),
     musicMenu: getSound("musicMenu"),
+    slowMusic: getSound("slowMusic"),
     musicGame: getSound("musicGame"),
 };
 
@@ -56,3 +57,4 @@ export function pause(sound) {
 export function getState() {
     return { volume, soundEnabled };
 }
+

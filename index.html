@@ -24,14 +24,13 @@
       </div>
     </div>
 
-
-
     <h3 id="score">0</h3>
     <h4 id="title">BUBBLE GAME</h4>
 
     <div id="menu">
       <input type="text" id="playerName" placeholder="Entrez votre nom" maxlength="15">
       <button id="startButton">Jouer</button>
+      <button id="difficultyButton">Mode : Facile</button>
       <button id="menuRankingButton">Classement</button>
       <button id="settingsButtonMenu">Paramètres</button>
     </div>
@@ -80,12 +79,32 @@
         <input type="range" id="volumeSlider">
       </div>
     </div>
+    
     <div id="rankingPopup">
       <h2>🏆 Classement 🏆</h2>
       <div id="rankingList"></div>
       <button id="closeRanking">Fermer</button>
     </div>
+    
 
+
+<!-- <div id="rankingPopup">
+    <div>
+        <h2>Classement</h2>
+
+        <div id="rankingTabs">
+            <button id="tabEasy">Facile</button>
+            <button id="tabHard">Difficile</button>
+        </div>
+
+        <div id="rankingList"></div>
+
+        <button id="closeRanking">Fermer</button>
+    </div> -->
+
+
+
+</div>
   </div>
   <audio id="soundBubbleExplos" src="son/ballon explose.mp3"></audio>
   <audio id="soundError" src="son/erreur.wav"></audio>
@@ -95,6 +114,7 @@
   <audio id="soundStresse" src="son/stress.wav" loop></audio>
   <audio id="musicGame" src="son/game.ogg" loop></audio>
   <audio id="musicMenu" src="son/menu.ogg" loop></audio>
+  <audio id="slowMusic" src="son/time_stop.mp3" loop></audio>
 
 
   <script type="module" src="main.js"></script>

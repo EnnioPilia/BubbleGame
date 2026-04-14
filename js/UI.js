@@ -17,3 +17,28 @@ export function initUI() {
         updateCursorState();
     });
 }
+
+export function initDifficultyButton(onChange) {
+    const btn = document.getElementById("difficultyButton");
+    let difficulty = "easy";
+
+    function update() {
+        if (difficulty === "easy") {
+            btn.innerHTML = "Mode : FACILE";
+            btn.classList.remove("hard");
+            btn.classList.add("easy");
+        } else {
+            btn.innerHTML = "Mode : DIFFICILE";
+            btn.classList.remove("easy");
+            btn.classList.add("hard");
+        }
+    }
+
+    btn.onclick = () => {
+        difficulty = difficulty === "easy" ? "hard" : "easy";
+        update();
+        onChange(difficulty); // 🔥 envoie au Game
+    };
+
+    update(); // initialisation
+}

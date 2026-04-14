@@ -2,25 +2,68 @@ import { sounds, play, pause } from "./sound.js";
 import Bubble from "./bubble.js";
 import { toggleCustomCursor } from "./cursor.js";
 
+const DIFFICULTY = {
+    easy: {
+        spawnSpeed: 800,
+    },
+    hard: {
+        spawnSpeed: 600,
+    }
+};
+
+const POWERUPS = {
+    easy: {
+        slowDuration: 10000,
+        slowFactor: 1.8
+    },
+    hard: {
+        slowDuration: 6000,
+        slowFactor: 1.6
+    }
+};
+
 export default class Game {
     constructor() {
-        // état jeu
         this.score = 0;
         this.lifes = 4;
-        this.spawnSpeed = 600;
         this.intervalId = null;
         this.isPaused = false;
         this.scoreSaved = false;
-        this.heartMilestones = new Set();
+
+        window.currentGameState = "menu";
+        this.difficulty = "easy";
+
+        this.baseSpawnSpeed = 700;
+        this.spawnSpeed = 700;
 
         this.currentPlayerName = "";
 
-        // UI
+        this.slowMilestones = {
+            easy: [30, 70, 120, 170, 220, 260, 300, 350, 400, 450, 450, 500],
+            hard: [120, 170, 220, 270, 300, 350, 400, 450, 500]
+        };
+
+        this.heartMilestones = {
+            easy: [40, 60, 80, 100, 130, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 350, 400, 450, 500],
+            hard: [80, 100, 140, 180, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 450, 500]
+        };
+
+        this.heartMilestonesUsed = new Set();
+
+        this.usedSlowMilestones = new Set();
+        this.isSlowActive = false;
+
+        this.specialStartDelay = 10000;
+        this.gameStartTime = Date.now();
+        this.lastSpecialSpawn = 0;
+        this.specialCooldown = 17000;
+
         this.scoreDisplay = document.getElementById('score');
         this.startButton = document.getElementById('startButton');
         this.playerName = document.getElementById('playerName');
 
         this.restartButton = document.getElementById('restartButton');
+        this.difficultyButton = document.getElementById('difficultyButton');
         this.rankingButton = document.getElementById('rankingButton');
         this.menuRankingButton = document.getElementById('menuRankingButton');
         this.menuButton = document.getElementById("menuButton");
@@ -33,24 +76,15 @@ export default class Game {
         this.pauseButton = document.getElementById("pauseButton");
         this.resumeButton = document.getElementById("resumeButton");
 
-        // ranking
         this.rankingPopup = document.getElementById("rankingPopup");
         this.rankingList = document.getElementById("rankingList");
         this.closeRanking = document.getElementById("closeRanking");
 
-        // gameplay
-        this.specialStartDelay = 10000;
-        this.gameStartTime = Date.now();
-        this.lastSpecialSpawn = 0;
-        this.specialCooldown = 17000;
-
-        // events
+        this.isGameOver = false;
         this.bindEvents();
 
         this.setUI("menu");
     }
-
-    /* ================= INIT ================= */
 
     bindEvents() {
         this.startButton.onclick = () => this.start();
@@ -85,35 +119,46 @@ export default class Game {
             }
         });
     }
+
     resetGameState() {
         this.score = 0;
         this.lifes = 4;
-        this.spawnSpeed = 600;
+
+        const config = DIFFICULTY[this.difficulty] || DIFFICULTY.easy;
+
+        this.baseSpawnSpeed = config.spawnSpeed;
+        this.spawnSpeed = this.baseSpawnSpeed;
+
+        this.usedSlowMilestones.clear();
+        this.heartMilestonesUsed.clear();
+
+        this.lastSpecialSpawn = 0;
+
+        this.isSlowActive = false;
+
         this.isPaused = false;
         this.scoreSaved = false;
+
         this.gameStartTime = Date.now();
-        this.lastSpecialSpawn = 0;
-        this.heartMilestones.clear();
+        this.isGameOver = false;
     }
 
     clearBubbles() {
         document.querySelectorAll('.bubble').forEach(b => b.remove());
     }
 
-    /* ================= UI ================= */
-
     setUI(state) {
 
-        // 🔥 RESET GLOBAL (très important)
         this.scoreDisplay.style.display = "none";
         this.yourScore.style.display = "none";
         this.yourScore.innerHTML = "";
         document.body.classList.remove("gameover", "pause");
+        window.currentGameState = state;
 
         const elements = [
             this.startButton,
+            this.difficultyButton,
             this.menuRankingButton,
-            this.menuSoundButton,
             this.pauseButton,
             this.resumeButton,
             this.restartButton,
@@ -131,6 +176,7 @@ export default class Game {
         switch (state) {
             case "menu":
                 this.startButton.style.display = "block";
+                this.difficultyButton.style.display = "block";
                 this.menuRankingButton.style.display = "block";
                 this.settingsButtonMenu.style.display = "block";
                 this.playerName.style.display = "block";
@@ -170,6 +216,7 @@ export default class Game {
             l.classList.remove("pulse");
         });
     }
+
     displayLifes() {
         const life1 = document.getElementById("life1");
         const life2 = document.getElementById("life2");
@@ -180,6 +227,7 @@ export default class Game {
             l.classList.remove("pulse");
         });
 
+        if (this.isGameOver) return;
         if (this.lifes <= 3) life1.style.display = "block";
         if (this.lifes <= 2) life2.style.display = "block";
 
@@ -188,12 +236,9 @@ export default class Game {
 
             [life1, life2, life3].forEach(l => l.classList.add("pulse"));
 
-            pause(sounds.musicGame);
-            play(sounds.stress);
+            this.updateMusic();
         }
     }
-
-    /* ================= GAME ================= */
 
     start() {
         this.clearBubbles();
@@ -205,7 +250,7 @@ export default class Game {
         this.setUI("game");
 
         pause(sounds.musicMenu);
-        play(sounds.musicGame);
+        this.updateMusic();
 
         this.displayLifes();
         this.run();
@@ -214,6 +259,7 @@ export default class Game {
     restart() {
         this.clearBubbles();
         this.resetGameState();
+        clearTimeout(this.slowTimeout);
 
         this.playerName.value = this.currentPlayerName;
         this.scoreDisplay.textContent = this.score;
@@ -224,7 +270,7 @@ export default class Game {
 
         pause(sounds.gameOver);
         pause(sounds.musicMenu);
-        play(sounds.musicGame);
+        this.updateMusic();
 
         this.displayLifes();
         this.run();
@@ -235,6 +281,12 @@ export default class Game {
 
         this.intervalId = setInterval(() => {
             if (!this.isPaused) {
+
+                const now = Date.now();
+                const delta = now - this.lastUpdateTime;
+                this.lastUpdateTime = now;
+                this.gameTime += delta;
+
                 this.spawnBubble();
                 this.checkLife();
             }
@@ -258,6 +310,10 @@ export default class Game {
         new Bubble(this, forceSpecial);
     }
 
+    spawnSlow() {
+        new Bubble(this, false, false, true);
+    }
+
     spawnHeart() {
         new Bubble(this, false, true);
     }
@@ -268,26 +324,59 @@ export default class Game {
 
         let newSpeed = this.spawnSpeed;
 
-        const milestones = [40, 60, 80,
-            100, 120, 140,
-            160, 180, 190,
-            200, 210, 220,
-            230, 240, 260,
-            300, 320, 350,
-            400, 450, 500];
+        if (this.difficulty === "easy") {
 
-        if (milestones.includes(this.score) && !this.heartMilestones.has(this.score)) {
-            this.spawnHeart();
-            this.heartMilestones.add(this.score);
+            if (
+                this.slowMilestones.easy.includes(this.score) &&
+                !this.usedSlowMilestones.has(this.score)
+            ) {
+                this.spawnSlow();
+                this.usedSlowMilestones.add(this.score);
+            }
+
+            if (
+                this.heartMilestones.easy.includes(this.score) &&
+                !this.heartMilestonesUsed.has(this.score)
+            ) {
+                this.spawnHeart();
+                this.heartMilestonesUsed.add(this.score);
+            }
+
+            if (this.score >= 250) newSpeed = 450;
+            else if (this.score >= 200) newSpeed = 500;
+            else if (this.score >= 150) newSpeed = 550;
+            else if (this.score >= 100) newSpeed = 600;
+            else if (this.score >= 50) newSpeed = 650;
+            else if (this.score >= 30) newSpeed = 700;
+            else if (this.score >= 10) newSpeed = 750;
         }
 
-        if (this.score >= 200) newSpeed = 300;
-        else if (this.score >= 180) newSpeed = 330;
-        else if (this.score >= 150) newSpeed = 350;
-        else if (this.score >= 100) newSpeed = 380;
-        else if (this.score >= 50) newSpeed = 420;
-        else if (this.score >= 30) newSpeed = 450;
-        else if (this.score >= 10) newSpeed = 500;
+        else if (this.difficulty === "hard") {
+
+            if (
+                this.slowMilestones.hard.includes(this.score) &&
+                !this.usedSlowMilestones.has(this.score)
+            ) {
+                this.spawnSlow();
+                this.usedSlowMilestones.add(this.score);
+            }
+
+            if (
+                this.heartMilestones.hard.includes(this.score) &&
+                !this.heartMilestonesUsed.has(this.score)
+            ) {
+                this.spawnHeart();
+                this.heartMilestonesUsed.add(this.score);
+            }
+
+            if (this.score >= 250) newSpeed = 300;
+            else if (this.score >= 200) newSpeed = 330;
+            else if (this.score >= 150) newSpeed = 350;
+            else if (this.score >= 100) newSpeed = 380;
+            else if (this.score >= 50) newSpeed = 420;
+            else if (this.score >= 30) newSpeed = 450;
+            else if (this.score >= 10) newSpeed = 500;
+        }
 
         if (newSpeed !== this.spawnSpeed) {
             this.spawnSpeed = newSpeed;
@@ -295,14 +384,94 @@ export default class Game {
         }
     }
 
+    activateSlow() {
+        const config = POWERUPS[this.difficulty];
+
+        document.body.classList.remove("zoom-effect");
+        void document.body.offsetWidth;
+        document.body.classList.add("zoom-effect");
+
+        if (!this.isSlowActive) {
+            this.slowRemaining = config.slowDuration;
+        }
+
+        this.isSlowActive = true;
+        this.updateMusic();
+
+        this.slowStartTime = Date.now();
+
+        clearTimeout(this.slowTimeout);
+
+document.querySelectorAll('.bubble').forEach(b => {
+    const instance = b.instance;
+
+    if (instance?.isSpecial) return; // ❌ on ignore les spéciales
+
+    const current = parseFloat(getComputedStyle(b).animationDuration);
+
+    if (!b.dataset.baseDuration) {
+        b.dataset.baseDuration = current;
+    }
+
+    b.style.animationDuration =
+        (b.dataset.baseDuration * config.slowFactor) + "s";
+});
+
+        this.slowTimeout = setTimeout(() => this.endSlow(), this.slowRemaining);
+    }
+
+    endSlow() {
+        document.querySelectorAll('.bubble').forEach(b => {
+            if (b.dataset.baseDuration) {
+                b.style.animationDuration = b.dataset.baseDuration + "s";
+            }
+        });
+
+        this.isSlowActive = false;
+        this.updateMusic();
+    }
+
+    getSlowFactor() {
+        return POWERUPS[this.difficulty].slowFactor;
+    }
+
+updateMusic() {
+    if (this.isPaused || this.isGameOver) return;
+
+    let target = null;
+
+    if (this.isSlowActive) {
+        target = sounds.slowMusic;
+    } else if (this.lifes <= 1) {
+        target = sounds.stress;
+    } else {
+        target = sounds.musicGame;
+    }
+
+    // 🎯 si déjà en train de jouer → on fait rien
+    if (!target.paused) return;
+
+    // 🔥 on coupe les autres seulement si on change vraiment
+    pause(sounds.musicGame);
+    pause(sounds.stress);
+    pause(sounds.slowMusic);
+
+    play(target);
+}
+
     pauseGame() {
         if (this.isPaused) return;
+        if (this.isSlowActive && this.slowTimeout) {
+            clearTimeout(this.slowTimeout);
 
+            this.slowRemaining -= Date.now() - this.slowStartTime;
+        }
         this.isPaused = true;
         this.setUI("pause");
 
         pause(sounds.musicGame);
         pause(sounds.stress);
+        pause(sounds.slowMusic);
 
         document.querySelectorAll('.bubble').forEach(b => {
             b.style.animationPlayState = 'paused';
@@ -312,15 +481,14 @@ export default class Game {
 
     resumeGame() {
         if (!this.isPaused) return;
+        if (this.isSlowActive) {
+            this.slowStartTime = Date.now();
 
+            this.slowTimeout = setTimeout(() => this.endSlow(), this.slowRemaining);
+        }
         this.isPaused = false;
         this.setUI("game");
-
-        if (this.lifes <= 1) {
-            play(sounds.stress);
-        } else {
-            play(sounds.musicGame);
-        }
+        this.updateMusic();
 
         document.querySelectorAll('.bubble').forEach(b => {
             b.style.animationPlayState = 'running';
@@ -332,7 +500,7 @@ export default class Game {
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
 
-            if (!instance || instance.counted || instance.isSpecial || instance.isHeart || instance.isBad) return;
+            if (!instance || instance.counted || instance.isSpecial || instance.isHeart || instance.isBad || instance.isSlow) return;
 
             const rect = b.getBoundingClientRect();
 
@@ -354,10 +522,14 @@ export default class Game {
 
     gameOver() {
         clearInterval(this.intervalId);
+        this.isGameOver = true;
+        clearTimeout(this.slowTimeout);
+        this.isSlowActive = false;
 
         play(sounds.gameOver);
         pause(sounds.musicGame);
         pause(sounds.stress);
+        pause(sounds.slowMusic);
 
         this.clearBubbles();
 
@@ -406,9 +578,6 @@ export default class Game {
 
         this.displayLifes();
     }
-
-    /* ================= RANKING ================= */
-
 
     showRanking() {
         let scores = JSON.parse(localStorage.getItem("scores")) || [];

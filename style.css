@@ -651,6 +651,101 @@ body.no-custom-cursor {
     cursor: auto;
 }
 
+
+/* #difficultyButton.easy {
+    background: linear-gradient(135deg, #4caf50, #8bc34a);
+    color: white;
+}
+
+#difficultyButton.hard {
+    background: linear-gradient(135deg, crimson, red);
+    color: white;
+} */
+
+
+
+.bubble {
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+
+    /* vitesse contrôlée */
+    animation-duration: var(--bubble-duration);
+}
+
+/* body.slow {
+    filter: blur(2px) brightness(0.8);
+}
+ */
+body.slow .bubble {
+    animation-duration: calc(var(--bubble-duration) * 1.8);
+}
+
+@keyframes zoomFlash {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.zoom-effect {
+    animation: zoomFlash 0.3s ease;
+}
+
+.slow-bubble {
+  background: url("image/sablier.png") no-repeat center;
+  background-size: 60%;
+  opacity: 1;
+  border: none;
+}
+
+#difficultyButton {
+    position: relative;
+    overflow: hidden;
+}
+
+#difficultyButton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transition: 0.4s;
+}
+
+#difficultyButton:hover::after {
+    left: 100%;
+}
+
+
+
+
+
+
+
+#rankingTabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+#rankingTabs button {
+    min-width: 120px;
+}
+
+
+
+
+
+
 @media (max-width: 768px) {
 
     #title {

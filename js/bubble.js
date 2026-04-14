@@ -1,11 +1,13 @@
 import { sounds, play, pause } from "./sound.js";
 
 export default class Bubble {
-    constructor(game, forceSpecial = false, isHeart = false) {
+    constructor(game, forceSpecial = false, isHeart = false, isSlow = false) {
         this.game = game;
         this.isHeart = isHeart;
         this.isSpecial = forceSpecial;
-        this.isBad = !this.isSpecial && !this.isHeart && Math.random() < 0.45;
+        this.isSlow = isSlow;
+
+        this.isBad = !this.isSpecial && !this.isHeart && !this.isSlow && Math.random() < 0.45;
 
         this.counted = false;
         this.clickCount = 0;
@@ -21,8 +23,6 @@ export default class Bubble {
         this.startLifetime();
     }
 
-    /* ================= INIT ================= */
-
     createElement() {
         this.element = document.createElement('span');
         this.element.classList.add('bubble');
@@ -35,9 +35,24 @@ export default class Bubble {
         const minSize = isMobile ? 70 : 100;
         const maxSize = isMobile ? 140 : 250;
 
-        let size = this.isSpecial
-            ? (isMobile ? 90 : 130)
-            : Math.random() * (maxSize - minSize) + minSize;
+        let size;
+
+        if (this.isSlow) {
+            size = isMobile ? 90 : 160;
+        }
+        else if (this.isSpecial) {
+            if (this.game.difficulty === "easy") {
+                size = isMobile ? 120 : 180;
+            } else {
+                size = isMobile ? 80 : 110;
+            }
+        }
+        else {
+            size = Math.random() * (maxSize - minSize) + minSize;
+        }
+        if (this.isSlow) {
+            this.inner.classList.add("slow-bubble");
+        }
 
         this.element.style.width = size + "px";
         this.element.style.height = size + "px";
@@ -50,6 +65,9 @@ export default class Bubble {
         } else if (this.isSpecial) {
             this.inner.style.background = "radial-gradient(circle, violet, cyan)";
             this.inner.classList.add("special");
+
+        } else if (this.isSlow) {
+
         } else if (this.isBad) {
             this.inner.classList.add("bad-bubble");
         } else {
@@ -68,11 +86,34 @@ export default class Bubble {
         if (this.isSpecial) {
             this.element.style.top = Math.random() * (window.innerHeight - size) + "px";
             this.element.style.left = "-150px";
-            this.element.style.animation = `animHorizontal 8s linear forwards`;
+
+            let duration = 8;
+
+            this.element.style.setProperty('--bubble-duration', duration + 's');
+            this.element.style.animationDuration = duration + 's';
+
+            this.element.style.animationName = "animHorizontal";
+            this.element.style.animationTimingFunction = "linear";
+            this.element.style.animationFillMode = "forwards";
+
         } else {
             const screenFactor = window.innerHeight / 800;
-            const duration = Math.max(1.5, (this.game.spawnSpeed / 1000) * 6 * screenFactor);
-            this.element.style.animation = `anim ${duration}s linear`;
+            let baseSpeed = this.game.isSlowActive
+                ? this.game.baseSpawnSpeed * this.game.getSlowFactor()
+                : this.game.spawnSpeed;
+
+            let duration = Math.max(1.5, (baseSpeed / 1000) * 6 * screenFactor);
+
+            if (this.isHeart && this.game.difficulty === "easy") {
+                duration *= 1.4;
+            }
+
+            // 👉 ICI AUSSI
+            this.element.style.setProperty('--bubble-duration', duration + 's');
+            this.element.style.animationDuration = duration + 's';
+
+            this.element.style.animationName = "anim";
+            this.element.style.animationTimingFunction = "linear";
         }
     }
 
@@ -83,6 +124,7 @@ export default class Bubble {
             if (this.isHeart) return this.handleHeart();
             if (this.isSpecial) return this.handleSpecial();
             if (this.isBad) return this.handleBad();
+            if (this.isSlow) return this.handleSlow();
 
             this.handleNormal();
         });
@@ -94,17 +136,26 @@ export default class Bubble {
         this.timeout = setTimeout(() => this.destroy(), this.remainingTime);
     }
 
-    /* ================= CLICK HANDLERS ================= */
+    handleSlow() {
+        play(sounds.powerup);
+
+        document.body.classList.add("zoom-effect");
+
+        // setTimeout(() => {
+        //     document.body.classList.remove("zoom-effect");
+        // }, 300);
+
+        this.game.activateSlow();
+
+        this.destroy();
+    }
 
     handleHeart() {
         play(sounds.heart);
 
         if (this.game.lifes < 4) this.game.lifes++;
 
-        if (this.game.lifes > 1) {
-            pause(sounds.stress);
-            play(sounds.musicGame);
-        }
+        this.game.updateMusic();
 
         this.game.displayLifes();
 

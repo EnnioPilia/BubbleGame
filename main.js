@@ -3,6 +3,7 @@ import { initAudioUI } from "./js/audioUI.js";
 import { initCursor } from "./js/cursor.js";
 import { initSettingsUI } from "./js/settings.js";
 import { initUI } from "./js/UI.js";
+import { initDifficultyButton } from "./js/UI.js";
 import Game from "./js/game.js";
 
 initSound();
@@ -21,5 +22,9 @@ document.addEventListener("click", (e) => {
         applyVolume();
     }
 }, { once: true });
+
+initDifficultyButton((difficulty) => {
+    game.difficulty = difficulty;
+});
 
 document.addEventListener("dblclick", e => e.preventDefault());
