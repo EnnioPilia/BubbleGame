@@ -24,11 +24,11 @@ export function initDifficultyButton(onChange) {
 
     function update() {
         if (difficulty === "easy") {
-            btn.innerHTML = "Mode : FACILE";
+            btn.innerHTML = "Mode : EASY";
             btn.classList.remove("hard");
             btn.classList.add("easy");
         } else {
-            btn.innerHTML = "Mode : DIFFICILE";
+            btn.innerHTML = "Mode : HARD";
             btn.classList.remove("easy");
             btn.classList.add("hard");
         }
@@ -37,8 +37,8 @@ export function initDifficultyButton(onChange) {
     btn.onclick = () => {
         difficulty = difficulty === "easy" ? "hard" : "easy";
         update();
-        onChange(difficulty); // 🔥 envoie au Game
+        onChange(difficulty); 
     };
 
-    update(); // initialisation
+    update();
 }

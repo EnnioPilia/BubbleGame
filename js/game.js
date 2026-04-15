@@ -39,7 +39,7 @@ export default class Game {
         this.currentPlayerName = "";
 
         this.slowMilestones = {
-            easy: [1 , 30, 70, 120, 170, 220, 260, 300, 350, 400, 450, 450, 500],
+            easy: [30, 70, 120, 170, 220, 260, 300, 350, 400, 450, 450, 500],
             hard: [120, 170, 220, 270, 300, 350, 400, 450, 500]
         };
 
@@ -49,7 +49,6 @@ export default class Game {
         };
 
         this.heartMilestonesUsed = new Set();
-
         this.usedSlowMilestones = new Set();
         this.isSlowActive = false;
 
@@ -81,12 +80,11 @@ export default class Game {
         this.closeRanking = document.getElementById("closeRanking");
 
         this.gameButtons = document.getElementById("gameButtons");
-this.gameOverButtons = document.getElementById("gameOverButtons");
+        this.gameOverButtons = document.getElementById("gameOverButtons");
 
-// nouveaux boutons
-this.restartButtonGameOver = document.getElementById("restartButtonGameOver");
-this.menuButtonGameOver = document.getElementById("menuButtonGameOver");
-this.rankingButtonGameOver = document.getElementById("rankingButtonGameOver");
+        this.restartButtonGameOver = document.getElementById("restartButtonGameOver");
+        this.menuButtonGameOver = document.getElementById("menuButtonGameOver");
+        this.rankingButtonGameOver = document.getElementById("rankingButtonGameOver");
 
         this.isGameOver = false;
         this.bindEvents();
@@ -102,12 +100,12 @@ this.rankingButtonGameOver = document.getElementById("rankingButtonGameOver");
         const tabEasy = document.getElementById("tabEasy");
         const tabHard = document.getElementById("tabHard");
 
-this.restartButtonGameOver.onclick = () => this.restart();
-this.menuButtonGameOver.onclick = () => this.backToMenu();
-this.rankingButtonGameOver.onclick = (e) => {
-    e.stopPropagation();
-    showRanking(this.rankingList, this.difficulty);
-};
+        this.restartButtonGameOver.onclick = () => this.restart();
+        this.menuButtonGameOver.onclick = () => this.backToMenu();
+        this.rankingButtonGameOver.onclick = (e) => {
+            e.stopPropagation();
+            showRanking(this.rankingList, this.difficulty);
+        };
 
         if (tabEasy && tabHard) {
             tabEasy.onclick = (e) => {
@@ -183,8 +181,8 @@ this.rankingButtonGameOver.onclick = (e) => {
 
         this.scoreDisplay.style.display = "none";
         this.yourScore.style.display = "none";
-            this.gameButtons.style.display = "none";
-    this.gameOverButtons.style.display = "none";
+        this.gameButtons.style.display = "none";
+        this.gameOverButtons.style.display = "none";
         this.yourScore.innerHTML = "";
         document.body.classList.remove("gameover", "pause");
         window.currentGameState = state;
@@ -208,38 +206,38 @@ this.rankingButtonGameOver.onclick = (e) => {
         elements.forEach(el => el && (el.style.display = "none"));
 
         switch (state) {
-        case "menu":
-            this.startButton.style.display = "block";
-            this.difficultyButton.style.display = "block";
-            this.menuRankingButton.style.display = "block";
-            this.settingsButtonMenu.style.display = "block";
-            this.playerName.style.display = "block";
-            this.titleMenu.style.display = "block";
-            break;
+            case "menu":
+                this.startButton.style.display = "block";
+                this.difficultyButton.style.display = "block";
+                this.menuRankingButton.style.display = "block";
+                this.settingsButtonMenu.style.display = "block";
+                this.playerName.style.display = "block";
+                this.titleMenu.style.display = "block";
+                break;
 
-        case "game":
-            this.scoreDisplay.style.display = "block";
-            this.pauseButton.style.display = "block";
-            break;
+            case "game":
+                this.scoreDisplay.style.display = "block";
+                this.pauseButton.style.display = "block";
+                break;
 
-        case "pause":
-            document.body.classList.add("pause");
+            case "pause":
+                document.body.classList.add("pause");
 
-            this.gameButtons.style.display = "flex";
-            this.resumeButton.style.display = "block";
-            this.restartButton.style.display = "block";
-            this.menuButton.style.display = "block";
-            this.settingsButtonPause.style.display = "block";
-            this.scoreDisplay.style.display = "block";
-            break;
+                this.gameButtons.style.display = "flex";
+                this.resumeButton.style.display = "block";
+                this.restartButton.style.display = "block";
+                this.menuButton.style.display = "block";
+                this.settingsButtonPause.style.display = "block";
+                this.scoreDisplay.style.display = "block";
+                break;
 
-        case "gameover":
-            document.body.classList.add("gameover");
+            case "gameover":
+                document.body.classList.add("gameover");
 
-            this.gameOverButtons.style.display = "flex";
-            this.hideLifes();
-            break;
-    }
+                this.gameOverButtons.style.display = "flex";
+                this.hideLifes();
+                break;
+        }
     }
 
     hideLifes() {
@@ -280,7 +278,7 @@ this.rankingButtonGameOver.onclick = (e) => {
         this.clearBubbles();
         this.resetGameState();
 
-        this.currentPlayerName = this.playerName.value || "Anonyme";
+        this.currentPlayerName = this.playerName.value || "John Doe";
         this.scoreDisplay.textContent = this.score;
 
         this.setUI("game");
@@ -437,7 +435,7 @@ this.rankingButtonGameOver.onclick = (e) => {
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
 
-            if (instance?.isSpecial) return; 
+            if (instance?.isSpecial) return;
 
             const current = parseFloat(getComputedStyle(b).animationDuration);
 

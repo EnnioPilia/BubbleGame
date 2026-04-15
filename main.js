@@ -31,8 +31,27 @@ document.addEventListener("click", (e) => {
 
 }, { once: true });
 
-initDifficultyButton((difficulty) => {
-    game.difficulty = difficulty;
-});
+
 
 document.addEventListener("dblclick", e => e.preventDefault());
+
+const difficultyButton = document.getElementById("difficultyButton");
+const difficultyText = document.getElementById("difficultyText");
+
+let isEasy = true;
+
+difficultyButton.addEventListener("click", () => {
+    isEasy = !isEasy;
+
+    if (isEasy) {
+        difficultyText.textContent = "EASY";
+        difficultyText.classList.remove("hard");
+        difficultyText.classList.add("easy");
+        game.difficulty = "easy";
+    } else {
+        difficultyText.textContent = "HARD";
+        difficultyText.classList.remove("easy");
+        difficultyText.classList.add("hard");
+        game.difficulty = "hard";
+    }
+});

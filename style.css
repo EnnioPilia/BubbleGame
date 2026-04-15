@@ -423,6 +423,7 @@ body.pause #gameButtons {
     align-items: center;
     gap: 15px;
     margin: 15px 0;
+    margin-top: 20px;
 }
 
 #rankingTabs button {
@@ -465,7 +466,7 @@ body.pause #gameButtons {
     max-width: 350px;
     background: black;
     color: gold;
-    padding: 30px;
+    padding: 27px;
     border-radius: 20px;
     box-shadow:
         0 0 20px rgba(255, 215, 0, 0.8),
@@ -730,53 +731,32 @@ body.no-custom-cursor {
 }
 
 
-
-
-
-
-
-
-
-
-/* #difficultyButton.easy {
-    background: linear-gradient(135deg, #4caf50, #8bc34a);
-    color: white;
+#difficultyButton {
+    color: black; 
 }
 
-#difficultyButton.hard {
-    background: linear-gradient(135deg, crimson, red);
-    color: white;
-} */
-
-
-
-
-
-
-
-
-
-.bubble {
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-
-    /* vitesse contrôlée */
-    animation-duration: var(--bubble-duration);
+#difficultyText.easy {
+    color: #ff7300;
+    text-shadow:
+        -0.7px -0.7px 0 black,
+         0.7px -0.7px 0 black,
+        -0.7px  0.7px 0 black,
+         0.7px  0.7px 0 black;
 }
 
-/* body.slow {
-    filter: blur(2px) brightness(0.8);
+#difficultyText.hard {
+    color: #c51400;
+    text-shadow:
+        -0.7px -0.7px 0 black,
+         0.7px -0.7px 0 black,
+        -0.7px  0.7px 0 black,
+         0.7px  0.7px 0 black;
 }
- */
 
-body.slow .bubble {
-    animation-duration: calc(var(--bubble-duration) * 1.8);
+.gameover-score span {
+    color: red;
+    text-shadow: 5px 5px 7px rgb(0, 0, 0), 0 0 20px rgb(128, 108, 1), 0 0 20px rgb(0, 0, 0);
 }
-
-
-
-
 
 @keyframes zoomFlash {
     0% {
@@ -801,8 +781,24 @@ body.slow .bubble {
     background-size: 60%;
     opacity: 1;
     border: none;
-}
+    opacity: 0.9;
+    animation: flip180 3s ease-in-out infinite;
 
+}
+@keyframes flip180 {
+    0% {
+        transform: rotate(0deg);
+    }
+    40% {
+        transform: rotate(180deg);
+    }
+    60% {
+        transform: rotate(180deg); 
+    }
+    100% {
+        transform: rotate(0deg); 
+    }
+}
 #difficultyButton {
     position: relative;
     overflow: hidden;
