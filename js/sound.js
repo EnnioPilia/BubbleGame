@@ -39,7 +39,14 @@ export function setVolume(v) {
 export function toggleSound() {
     soundEnabled = !soundEnabled;
     localStorage.setItem("soundEnabled", soundEnabled);
-
+if (!soundEnabled) {
+    Object.values(sounds).forEach(s => {
+        if (s) {
+            s.pause();
+            s.currentTime = 0;
+        }
+    });
+}
     applyVolume(soundEnabled ? volume : 0);
     return soundEnabled;
 }

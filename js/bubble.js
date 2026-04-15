@@ -139,11 +139,13 @@ export default class Bubble {
     handleSlow() {
         play(sounds.powerup);
 
-        document.body.classList.add("zoom-effect");
+ui.classList.remove("zoom-effect");
+void ui.offsetWidth; // reset animation
+ui.classList.add("zoom-effect");
 
-        // setTimeout(() => {
-        //     document.body.classList.remove("zoom-effect");
-        // }, 300);
+        setTimeout(() => {
+            document.body.classList.remove("zoom-effect");
+        }, 300);
 
         this.game.activateSlow();
 

@@ -1,16 +1,14 @@
 import { setVolume, toggleSound, getState } from "./sound.js";
 import { updateCursorState } from "./UI.js";
+import { openPopup, goToPopup } from "./popupManager.js";
 
 export function initAudioUI() {
     const soundToggle = document.getElementById("soundToggle");
     const volumeSlider = document.getElementById("volumeSlider");
-
     const audioPopup = document.getElementById("audioPopup");
     const closeBtn = document.getElementById("closeAudio");
-
     const soundButton = document.getElementById("soundButton");
     const menuSoundButton = document.getElementById("menuSoundButton");
-
     const { volume, soundEnabled } = getState();
 
     if (volumeSlider) volumeSlider.value = volume * 100;
@@ -20,19 +18,21 @@ export function initAudioUI() {
         if (btn) {
             btn.onclick = (e) => {
                 e.stopPropagation();
-                audioPopup.classList.add("active");
+                openPopup("audioPopup");
                 updateCursorState();
             };
         }
     });
 
-    audioPopup.addEventListener("click", (e) => {
-        e.stopPropagation();
-    });
+    if (audioPopup) {
+        audioPopup.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+    }
 
     if (closeBtn) {
         closeBtn.onclick = () => {
-            audioPopup.classList.remove("active");
+            goToPopup("audioPopup", "settingsPopup");
             updateCursorState();
         };
     }

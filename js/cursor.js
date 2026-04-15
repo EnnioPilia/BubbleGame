@@ -1,5 +1,6 @@
 let cursor;
 import { updateCursorState } from "./UI.js";
+import { goToPopup, openPopup } from "./popupManager.js";
 
 export function initCursor() {
 
@@ -45,7 +46,7 @@ export function initCursor() {
     if (cursorButton) {
         cursorButton.onclick = (e) => {
             e.stopPropagation();
-            cursorPopup.classList.add("active");
+            openPopup("cursorPopup");
             updateCursorState();
         };
     }
@@ -62,9 +63,11 @@ export function initCursor() {
         }
     });
 
-    cursorPopup.addEventListener("click", (e) => {
-        e.stopPropagation();
-    });
+    if (cursorPopup) {
+        cursorPopup.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+    }
 
     if (validateCursorBtn) {
         validateCursorBtn.onclick = () => {
@@ -77,7 +80,7 @@ export function initCursor() {
 
             localStorage.setItem("cursorSize", size);
 
-            cursorPopup.classList.remove("active");
+            goToPopup("cursorPopup", "settingsPopup");
             updateCursorState();
         };
     }

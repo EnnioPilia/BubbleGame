@@ -1,4 +1,5 @@
 import { updateCursorState } from "./UI.js";
+import { openPopup } from "./popupManager.js";
 
 export function initSettingsUI() {
 
@@ -21,13 +22,13 @@ export function initSettingsUI() {
         );
     }
     
-    settingsButtons.forEach(btn => {
-        btn?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            settingsPopup.classList.add("active");
-            updateCursorState();
-        });
+settingsButtons.forEach(btn => {
+    btn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openPopup("settingsPopup");
+        updateCursorState();
     });
+});
 
     closeSettings?.addEventListener("click", () => {
         settingsPopup.classList.remove("active");
@@ -37,23 +38,17 @@ export function initSettingsUI() {
         }
     });
 
-    openSound?.addEventListener("click", (e) => {
-        e.stopPropagation();
+openSound?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openPopup("audioPopup");
+    updateCursorState();
+});
 
-        settingsPopup.classList.remove("active");
-        audioPopup.classList.add("active");
-
-        updateCursorState();
-    });
-
-    openCursor?.addEventListener("click", (e) => {
-        e.stopPropagation();
-
-        settingsPopup.classList.remove("active");
-        cursorPopup.classList.add("active");
-
-        updateCursorState();
-    });
+openCursor?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openPopup("cursorPopup");
+    updateCursorState();
+});
 
     [settingsPopup, audioPopup, cursorPopup].forEach(popup => {
         popup?.addEventListener("click", (e) => {

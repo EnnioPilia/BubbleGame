@@ -2,8 +2,8 @@ import { toggleCustomCursor } from "./cursor.js";
 
 export function updateCursorState() {
     const anyPopupOpen = document.querySelector(
-        "#settingsPopup.active, #audioPopup.active, #cursorPopup.active"
-    );
+        "#settingsPopup.active, #audioPopup.active, #cursorPopup.active, #backgroundPopup.active"
+    ) || document.getElementById("rankingPopup")?.style.display === "flex";
 
     toggleCustomCursor(!anyPopupOpen);
 }

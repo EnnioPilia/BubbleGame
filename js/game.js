@@ -1,6 +1,6 @@
 import { sounds, play, pause } from "./sound.js";
 import Bubble from "./bubble.js";
-import { toggleCustomCursor } from "./cursor.js";
+import { showRanking, hideRanking } from "./rankingPopup.js";
 
 const DIFFICULTY = {
     easy: {
@@ -39,7 +39,7 @@ export default class Game {
         this.currentPlayerName = "";
 
         this.slowMilestones = {
-            easy: [30, 70, 120, 170, 220, 260, 300, 350, 400, 450, 450, 500],
+            easy: [1 , 30, 70, 120, 170, 220, 260, 300, 350, 400, 450, 450, 500],
             hard: [120, 170, 220, 270, 300, 350, 400, 450, 500]
         };
 
@@ -80,6 +80,14 @@ export default class Game {
         this.rankingList = document.getElementById("rankingList");
         this.closeRanking = document.getElementById("closeRanking");
 
+        this.gameButtons = document.getElementById("gameButtons");
+this.gameOverButtons = document.getElementById("gameOverButtons");
+
+// nouveaux boutons
+this.restartButtonGameOver = document.getElementById("restartButtonGameOver");
+this.menuButtonGameOver = document.getElementById("menuButtonGameOver");
+this.rankingButtonGameOver = document.getElementById("rankingButtonGameOver");
+
         this.isGameOver = false;
         this.bindEvents();
 
@@ -91,6 +99,28 @@ export default class Game {
         this.restartButton.onclick = () => this.restart();
         this.pauseButton.onclick = () => this.pauseGame();
         this.resumeButton.onclick = () => this.resumeGame();
+        const tabEasy = document.getElementById("tabEasy");
+        const tabHard = document.getElementById("tabHard");
+
+this.restartButtonGameOver.onclick = () => this.restart();
+this.menuButtonGameOver.onclick = () => this.backToMenu();
+this.rankingButtonGameOver.onclick = (e) => {
+    e.stopPropagation();
+    showRanking(this.rankingList, this.difficulty);
+};
+
+        if (tabEasy && tabHard) {
+            tabEasy.onclick = (e) => {
+                e.stopPropagation();
+                showRanking(this.rankingList, "easy");
+            };
+
+            tabHard.onclick = (e) => {
+                e.stopPropagation();
+                showRanking(this.rankingList, "hard");
+
+            };
+        }
 
         if (this.menuButton) {
             this.menuButton.onclick = () => this.backToMenu();
@@ -98,24 +128,26 @@ export default class Game {
 
         this.rankingButton.onclick = (e) => {
             e.stopPropagation();
-            this.showRanking();
+            showRanking(this.rankingList, this.difficulty);
         };
+
         if (this.menuRankingButton) {
             this.menuRankingButton.onclick = (e) => {
                 e.stopPropagation();
-                this.showRanking();
+                showRanking(this.rankingList, this.difficulty);
             };
         }
 
-        this.closeRanking.onclick = () => this.hideRanking();
+        this.closeRanking.onclick = () => hideRanking();
 
         document.addEventListener("click", (e) => {
-
             if (this.rankingPopup.style.display === "flex") {
 
-                if (e.target.closest("#rankingPopup > *")) return;
+                const popupContent = this.rankingPopup.querySelector("div");
 
-                this.hideRanking();
+                if (popupContent.contains(e.target)) return;
+
+                hideRanking();
             }
         });
     }
@@ -151,6 +183,8 @@ export default class Game {
 
         this.scoreDisplay.style.display = "none";
         this.yourScore.style.display = "none";
+            this.gameButtons.style.display = "none";
+    this.gameOverButtons.style.display = "none";
         this.yourScore.innerHTML = "";
         document.body.classList.remove("gameover", "pause");
         window.currentGameState = state;
@@ -174,36 +208,38 @@ export default class Game {
         elements.forEach(el => el && (el.style.display = "none"));
 
         switch (state) {
-            case "menu":
-                this.startButton.style.display = "block";
-                this.difficultyButton.style.display = "block";
-                this.menuRankingButton.style.display = "block";
-                this.settingsButtonMenu.style.display = "block";
-                this.playerName.style.display = "block";
-                this.titleMenu.style.display = "block";
-                break;
+        case "menu":
+            this.startButton.style.display = "block";
+            this.difficultyButton.style.display = "block";
+            this.menuRankingButton.style.display = "block";
+            this.settingsButtonMenu.style.display = "block";
+            this.playerName.style.display = "block";
+            this.titleMenu.style.display = "block";
+            break;
 
-            case "game":
-                this.pauseButton.style.display = "block";
-                this.scoreDisplay.style.display = "block";
+        case "game":
+            this.scoreDisplay.style.display = "block";
+            this.pauseButton.style.display = "block";
+            break;
 
-                break;
+        case "pause":
+            document.body.classList.add("pause");
 
-            case "pause":
-                this.resumeButton.style.display = "block";
-                this.restartButton.style.display = "block";
-                this.menuButton.style.display = "block";
-                this.scoreDisplay.style.display = "block";
-                this.settingsButtonPause.style.display = "block";
-                break;
+            this.gameButtons.style.display = "flex";
+            this.resumeButton.style.display = "block";
+            this.restartButton.style.display = "block";
+            this.menuButton.style.display = "block";
+            this.settingsButtonPause.style.display = "block";
+            this.scoreDisplay.style.display = "block";
+            break;
 
-            case "gameover":
-                this.restartButton.style.display = "block";
-                this.menuButton.style.display = "block";
-                this.rankingButton.style.display = "block";
-                this.hideLifes();
-                break;
-        }
+        case "gameover":
+            document.body.classList.add("gameover");
+
+            this.gameOverButtons.style.display = "flex";
+            this.hideLifes();
+            break;
+    }
     }
 
     hideLifes() {
@@ -387,10 +423,6 @@ export default class Game {
     activateSlow() {
         const config = POWERUPS[this.difficulty];
 
-        document.body.classList.remove("zoom-effect");
-        void document.body.offsetWidth;
-        document.body.classList.add("zoom-effect");
-
         if (!this.isSlowActive) {
             this.slowRemaining = config.slowDuration;
         }
@@ -402,20 +434,20 @@ export default class Game {
 
         clearTimeout(this.slowTimeout);
 
-document.querySelectorAll('.bubble').forEach(b => {
-    const instance = b.instance;
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
 
-    if (instance?.isSpecial) return; // ❌ on ignore les spéciales
+            if (instance?.isSpecial) return; 
 
-    const current = parseFloat(getComputedStyle(b).animationDuration);
+            const current = parseFloat(getComputedStyle(b).animationDuration);
 
-    if (!b.dataset.baseDuration) {
-        b.dataset.baseDuration = current;
-    }
+            if (!b.dataset.baseDuration) {
+                b.dataset.baseDuration = current;
+            }
 
-    b.style.animationDuration =
-        (b.dataset.baseDuration * config.slowFactor) + "s";
-});
+            b.style.animationDuration =
+                (b.dataset.baseDuration * config.slowFactor) + "s";
+        });
 
         this.slowTimeout = setTimeout(() => this.endSlow(), this.slowRemaining);
     }
@@ -435,35 +467,32 @@ document.querySelectorAll('.bubble').forEach(b => {
         return POWERUPS[this.difficulty].slowFactor;
     }
 
-updateMusic() {
-    if (this.isPaused || this.isGameOver) return;
+    updateMusic() {
+        if (this.isPaused || this.isGameOver) return;
 
-    let target = null;
+        let target = null;
 
-    if (this.isSlowActive) {
-        target = sounds.slowMusic;
-    } else if (this.lifes <= 1) {
-        target = sounds.stress;
-    } else {
-        target = sounds.musicGame;
+        if (this.isSlowActive) {
+            target = sounds.slowMusic;
+        } else if (this.lifes <= 1) {
+            target = sounds.stress;
+        } else {
+            target = sounds.musicGame;
+        }
+
+        if (!target.paused) return;
+
+        pause(sounds.musicGame);
+        pause(sounds.stress);
+        pause(sounds.slowMusic);
+
+        play(target);
     }
-
-    // 🎯 si déjà en train de jouer → on fait rien
-    if (!target.paused) return;
-
-    // 🔥 on coupe les autres seulement si on change vraiment
-    pause(sounds.musicGame);
-    pause(sounds.stress);
-    pause(sounds.slowMusic);
-
-    play(target);
-}
 
     pauseGame() {
         if (this.isPaused) return;
         if (this.isSlowActive && this.slowTimeout) {
             clearTimeout(this.slowTimeout);
-
             this.slowRemaining -= Date.now() - this.slowStartTime;
         }
         this.isPaused = true;
@@ -538,7 +567,8 @@ updateMusic() {
         this.setUI("gameover");
 
         if (!this.scoreSaved) {
-            let scores = JSON.parse(localStorage.getItem("scores")) || [];
+            const key = `scores_${this.difficulty}`;
+            let scores = JSON.parse(localStorage.getItem(key)) || [];
 
             scores.push({
                 name: this.currentPlayerName,
@@ -548,7 +578,7 @@ updateMusic() {
             scores.sort((a, b) => b.score - a.score);
             scores = scores.slice(0, 10);
 
-            localStorage.setItem("scores", JSON.stringify(scores));
+            localStorage.setItem(key, JSON.stringify(scores));
             this.scoreSaved = true;
         }
 
@@ -577,25 +607,5 @@ updateMusic() {
         play(sounds.musicMenu);
 
         this.displayLifes();
-    }
-
-    showRanking() {
-        let scores = JSON.parse(localStorage.getItem("scores")) || [];
-
-        this.rankingList.innerHTML = "";
-
-        scores.forEach((s, i) => {
-            const div = document.createElement("div");
-            div.textContent = `${i + 1}. ${s.name} - ${s.score}`;
-            this.rankingList.appendChild(div);
-        });
-
-        this.rankingPopup.style.display = "flex";
-        toggleCustomCursor(false);
-    }
-
-    hideRanking() {
-        this.rankingPopup.style.display = "none";
-        toggleCustomCursor(true);
     }
 }

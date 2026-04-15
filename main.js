@@ -3,6 +3,7 @@ import { initAudioUI } from "./js/audioUI.js";
 import { initCursor } from "./js/cursor.js";
 import { initSettingsUI } from "./js/settings.js";
 import { initUI } from "./js/UI.js";
+import { initBackgroundPopup } from "./js/backgroundPopup.js";
 import { initDifficultyButton } from "./js/UI.js";
 import Game from "./js/game.js";
 
@@ -11,6 +12,7 @@ initCursor();
 initUI();         
 initSettingsUI();
 initAudioUI();
+initBackgroundPopup();
 
 const game = new Game();
 

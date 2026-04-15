@@ -39,10 +39,11 @@
       <div class="settings-content">
         <button id="openSound">Son</button>
         <button id="openCursor">Curseur</button>
+        <button id="openBackground">Fond</button>
         <button id="closeSettings">Fermer</button>
       </div>
     </div>
-    
+
     <div id="gameButtons">
       <button id="resumeButton">▶ Reprendre</button>
       <button id="restartButton">Rejouer</button>
@@ -50,6 +51,16 @@
       <button id="settingsButtonPause">Paramètres</button>
       <button id="rankingButton">Classement</button>
     </div>
+
+
+    <div id="gameOverButtons">
+      <button id="restartButtonGameOver">Rejouer</button>
+      <button id="menuButtonGameOver">Menu</button>
+      <button id="rankingButtonGameOver">Classement</button>
+    </div>
+
+
+
 
     <img id="customCursor" src="">
 
@@ -79,32 +90,34 @@
         <input type="range" id="volumeSlider">
       </div>
     </div>
-    
-    <div id="rankingPopup">
-      <h2>🏆 Classement 🏆</h2>
-      <div id="rankingList"></div>
-      <button id="closeRanking">Fermer</button>
+
+    <div id="backgroundPopup">
+      <div class="background-content">
+        <h2>Choisir un fond</h2>
+        <div id="backgroundChoices">
+          <img src="image/fond1.jpg" data-bg="fond1.jpg" class="bg-option">
+          <img src="image/fond2.jpg" data-bg="fond2.jpg" class="bg-option">
+          <img src="image/fond3.jpg" data-bg="fond3.jpg" class="bg-option">
+        </div>
+        <button id="closeBackground">Valider</button>
+      </div>
     </div>
-    
 
-
-<!-- <div id="rankingPopup">
-    <div>
-        <h2>Classement</h2>
+    <div id="rankingPopup">
+      <div>
+        <h2>🏆 Classement 🏆</h2>
 
         <div id="rankingTabs">
-            <button id="tabEasy">Facile</button>
-            <button id="tabHard">Difficile</button>
+          <button id="tabEasy">FACILE</button>
+          <button id="tabHard">DIFFICILE</button>
         </div>
 
         <div id="rankingList"></div>
 
         <button id="closeRanking">Fermer</button>
-    </div> -->
+      </div>
 
-
-
-</div>
+    </div>
   </div>
   <audio id="soundBubbleExplos" src="son/ballon explose.mp3"></audio>
   <audio id="soundError" src="son/erreur.wav"></audio>
