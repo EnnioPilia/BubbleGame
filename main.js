@@ -5,6 +5,7 @@ import { initSettingsUI } from "./js/settings.js";
 import { initUI } from "./js/UI.js";
 import { initBackgroundPopup } from "./js/backgroundPopup.js";
 import { initDifficultyButton } from "./js/UI.js";
+import { getState } from "./js/sound.js";
 import Game from "./js/game.js";
 
 initSound();
@@ -19,10 +20,15 @@ const game = new Game();
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;
 
-    if (sounds.musicMenu && sounds.musicMenu.paused) {
+    if (!sounds.musicMenu) return;
+
+    const { soundEnabled } = getState(); 
+
+    if (soundEnabled && sounds.musicMenu.paused) {
         sounds.musicMenu.play();
         applyVolume();
     }
+
 }, { once: true });
 
 initDifficultyButton((difficulty) => {

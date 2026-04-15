@@ -39,15 +39,35 @@ export function setVolume(v) {
 export function toggleSound() {
     soundEnabled = !soundEnabled;
     localStorage.setItem("soundEnabled", soundEnabled);
-if (!soundEnabled) {
-    Object.values(sounds).forEach(s => {
-        if (s) {
-            s.pause();
-            s.currentTime = 0;
+
+    if (!soundEnabled) {
+        Object.values(sounds).forEach(s => {
+            if (s) {
+                s.pause();
+                s.currentTime = 0;
+            }
+        });
+    } else {
+        const state = window.currentGameState;
+
+        if (state === "menu") {
+            sounds.musicMenu?.play();
         }
-    });
-}
+
+        else if (state === "game") {
+            sounds.musicGame?.play();
+        }
+
+        else if (state === "pause") {
+            sounds.musicGame?.play();
+        }
+
+        else if (state === "gameover") {
+        }
+    }
+
     applyVolume(soundEnabled ? volume : 0);
+
     return soundEnabled;
 }
 
