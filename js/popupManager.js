@@ -28,10 +28,9 @@ export function openPopup(id) {
     if (id === "rankingPopup") {
         el.style.display = "flex";
 
-        // 🔥 bloque clic extérieur
         el.onclick = (e) => {
             if (e.target === el) {
-                e.stopPropagation(); // bloque fermeture
+                e.stopPropagation(); 
             }
         };
 

@@ -1,6 +1,6 @@
 import { setVolume, toggleSound, getState } from "./sound.js";
 import { updateCursorState } from "./UI.js";
-import { openPopup, goToPopup } from "./popupManager.js";
+import { openPopup, closeAllPopups } from "./popupManager.js";
 
 export function initAudioUI() {
     const soundToggle = document.getElementById("soundToggle");
@@ -32,7 +32,7 @@ export function initAudioUI() {
 
     if (closeBtn) {
         closeBtn.onclick = () => {
-            goToPopup("audioPopup", "settingsPopup");
+            closeAllPopups();
             updateCursorState();
         };
     }

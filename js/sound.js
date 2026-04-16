@@ -1,5 +1,3 @@
-// sound.js
-
 function getSound(id) {
     return document.getElementById(id) || null;
 }
@@ -59,9 +57,7 @@ export function toggleSound() {
                 window.gameInstance.updateMusic();
             }
         }
-
         else if (state === "gameover") {
-            // optionnel : rien ou son spécifique
         }
     }
 
@@ -69,11 +65,13 @@ export function toggleSound() {
 
     return soundEnabled;
 }
+
 function pauseAll() {
     Object.values(sounds).forEach(s => {
         if (s) s.pause();
     });
 }
+
 export function play(sound) {
     if (!soundEnabled || !sound) return;
     sound.currentTime = 0;

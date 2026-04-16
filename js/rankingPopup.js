@@ -4,7 +4,7 @@ import { openPopup, closeAllPopups } from "./popupManager.js";
 export function showRanking(rankingList, difficulty) {
     const key = `scores_${difficulty}`;
     let scores = JSON.parse(localStorage.getItem(key)) || [];
-document.body.classList.add("no-custom-cursor");
+    document.body.classList.add("no-custom-cursor");
 
     rankingList.innerHTML = "";
 
@@ -26,6 +26,6 @@ document.body.classList.add("no-custom-cursor");
 
 export function hideRanking() {
     document.body.classList.remove("no-custom-cursor");
-    closeAllPopups(); 
+    closeAllPopups();
     toggleCustomCursor(true);
 }

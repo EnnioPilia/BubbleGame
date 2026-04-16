@@ -241,6 +241,20 @@ body,
     }
 }
 
+.heart-click {
+    animation: heartClickAnim 0.18s ease forwards;
+}
+
+@keyframes heartClickAnim {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
 .pulse {
     animation: pulse 0.5s infinite;
 }
@@ -428,7 +442,7 @@ body.pause #gameButtons {
 
 #rankingTabs button {
     width: 140px;
-    font-size: 25px;
+    font-size: 20px;
     padding: 10px;
     border-radius: 20px;
     background: black;
@@ -458,12 +472,11 @@ body.pause #gameButtons {
     flex-direction: column;
     padding: 20px;
     background: rgba(0, 0, 0, 0.8);
-
 }
 
 #rankingPopup>* {
     width: auto;
-    max-width: 350px;
+    max-width: 381px;
     background: black;
     color: gold;
     padding: 27px;
@@ -570,11 +583,12 @@ body.pause #gameButtons {
     display: flex;
     align-items: center;
     width: min(90%, 500px);
-    padding: 40px;
+    padding: 50px;
     border-radius: 16px;
     background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(10px);
     gap: 35px;
+    box-shadow: 0 0 20px gold;
 }
 
 #audioPopup {
@@ -654,7 +668,7 @@ body.pause #gameButtons {
 
 .cursor-content {
     background: black;
-    padding: 30px;
+    padding: 45px;
     border-radius: 20px;
     text-align: center;
     color: gold;
@@ -669,7 +683,7 @@ body.pause #gameButtons {
 }
 
 #validateCursor {
-    margin-top: 20px;
+    margin-top: 30px;
     cursor: pointer;
 }
 
@@ -708,7 +722,7 @@ body.pause #gameButtons {
 .settings-content {
     background: black;
     color: gold;
-    padding: 30px;
+    padding: 40px 0px 65px 0px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 0 20px gold;
@@ -775,8 +789,6 @@ body.no-custom-cursor {
 .zoom-effect {
     animation: zoomFlash 0.6s ease;
 }
-
-
 
 .star-bubble .bubble-inner {
     border-radius: 0%;
@@ -889,21 +901,6 @@ body.no-custom-cursor {
     }
 }
 
-/* 
-@keyframes sparkle {
-    0% {
-        filter: brightness(1) drop-shadow(0 0 0px gold);
-        transform: scale(1);
-    }
-    50% {
-        filter: brightness(2) drop-shadow(0 0 15px gold);
-        transform: scale(1.1);
-    }
-    100% {
-        filter: brightness(1) drop-shadow(0 0 0px gold);
-        transform: scale(1);
-    }
-} */
 
 #difficultyButton::after {
     content: "";

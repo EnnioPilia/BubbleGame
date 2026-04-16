@@ -1,6 +1,7 @@
-let cursor;
 import { updateCursorState } from "./UI.js";
-import { goToPopup, openPopup } from "./popupManager.js";
+import { closeAllPopups, openPopup } from "./popupManager.js";
+
+let cursor;
 
 export function initCursor() {
 
@@ -80,7 +81,7 @@ export function initCursor() {
 
             localStorage.setItem("cursorSize", size);
 
-            goToPopup("cursorPopup", "settingsPopup");
+            closeAllPopups();
             updateCursorState();
         };
     }

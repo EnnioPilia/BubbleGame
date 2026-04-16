@@ -13,11 +13,11 @@ const DIFFICULTY = {
 
 const POWERUPS = {
     easy: {
-        slowDuration: 10000,
+        slowDuration: 12000,
         slowFactor: 1.8
     },
     hard: {
-        slowDuration: 6000,
+        slowDuration: 7000,
         slowFactor: 1.6
     }
 };
@@ -45,12 +45,12 @@ export default class Game {
 
         this.heartMilestones = {
             easy: [40, 60, 80, 100, 130, 140, 160, 180, 200, 280, 320, 450, 550],
-            hard: [80, 100, 140, 180, 210, 230, 250, 380, 500]
+            hard: [80, 100, 140, 180, 210, 230, 250, 380, 520]
         };
 
         this.slowMilestones = {
             easy: [30, 70, 120, 170, 320, 470, 550],
-            hard: [120, 170, 220, 370, 550]
+            hard: [90, 120, 170, 220, 370, 550]
         };
 
         this.starMilestones = {
@@ -381,8 +381,8 @@ export default class Game {
 
     increaseScore() {
         this.score++;
-        this.scoreDisplay.textContent = this.score;
 
+        this.scoreDisplay.textContent = this.score;
         let newSpeed = this.spawnSpeed;
 
         if (this.difficulty === "easy") {
@@ -411,21 +411,14 @@ export default class Game {
                 this.heartMilestonesUsed.add(this.score);
             }
 
-            if (this.score >= 200) newSpeed = 500;
+            if (this.score >= 250) newSpeed = 450;
+            else if (this.score >= 200) newSpeed = 500;
             else if (this.score >= 150) newSpeed = 550;
             else if (this.score >= 100) newSpeed = 600;
             else if (this.score >= 50) newSpeed = 650;
             else if (this.score >= 30) newSpeed = 700;
             else if (this.score >= 10) newSpeed = 750;
         }
-        //     if (this.score >= 250) newSpeed = 450;
-        //     else if (this.score >= 200) newSpeed = 500;
-        //     else if (this.score >= 150) newSpeed = 550;
-        //     else if (this.score >= 100) newSpeed = 600;
-        //     else if (this.score >= 50) newSpeed = 650;
-        //     else if (this.score >= 30) newSpeed = 700;
-        //     else if (this.score >= 10) newSpeed = 750;
-        // }
 
         else if (this.difficulty === "hard") {
 
@@ -554,6 +547,32 @@ export default class Game {
         }, this.starRemaining);
     }
 
+    endStar() {
+        this.isStarActive = false;
+
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
+
+            if (instance) instance.counted = true;
+
+            b.classList.add("star-blast");
+
+            setTimeout(() => {
+                b.remove();
+            }, 120);
+        });
+
+        const flash = document.getElementById("flashEffect");
+        flash.classList.add("flash-active");
+
+        setTimeout(() => {
+            flash.classList.remove("flash-active");
+        }, 300);
+
+        pause(sounds.starMode);
+        this.updateMusic();
+    }
+
     updateMusic() {
         if (this.isPaused || this.isGameOver) return;
 
@@ -590,9 +609,15 @@ export default class Game {
 
     pauseGame() {
         if (this.isPaused) return;
+
         if (this.isSlowActive && this.slowTimeout) {
             clearTimeout(this.slowTimeout);
             this.slowRemaining -= Date.now() - this.slowStartTime;
+        }
+
+        if (this.isStarActive && this.starTimeout) {
+            clearTimeout(this.starTimeout);
+            this.starRemaining -= Date.now() - this.starStartTime;
         }
 
         this.isPaused = true;
@@ -611,11 +636,19 @@ export default class Game {
 
     resumeGame() {
         if (!this.isPaused) return;
+
         if (this.isSlowActive) {
             this.slowStartTime = Date.now();
-
             this.slowTimeout = setTimeout(() => this.endSlow(), this.slowRemaining);
         }
+
+        if (this.isStarActive) {
+            this.starStartTime = Date.now();
+            this.starTimeout = setTimeout(() => {
+                this.endStar();
+            }, this.starRemaining);
+        }
+
         this.isPaused = false;
         this.setUI("game");
         this.updateMusic();
@@ -667,6 +700,7 @@ export default class Game {
     gameOver() {
         clearInterval(this.intervalId);
         this.isGameOver = true;
+
         clearTimeout(this.slowTimeout);
         this.isSlowActive = false;
 
@@ -698,10 +732,9 @@ export default class Game {
         }
 
         this.yourScore.style.display = "block";
-        this.yourScore.innerHTML = `
-            <div class="gameover-title">GAME OVER</div>
-            <div class="gameover-score">Score : <span>${this.score}</span></div>
-        `;
+        this.yourScore.innerHTML = 
+              ` <div class="gameover-title">GAME OVER</div>
+                <div class="gameover-score">Score : <span>${this.score}</span></div> `;
     }
 
     backToMenu() {
@@ -717,6 +750,7 @@ export default class Game {
 
         this.isStarActive = false;
         clearTimeout(this.starTimeout);
+        
         this.starTimeout = null;
         pause(sounds.starMode);
 

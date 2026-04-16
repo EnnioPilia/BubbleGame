@@ -144,7 +144,7 @@ export default class Bubble {
             }
             this.element.style.setProperty('--bubble-duration', duration + 's');
             this.element.style.animationDuration = duration + 's';
-this.element.dataset.baseDuration = duration;
+            this.element.dataset.baseDuration = duration;
 
             this.element.style.animationName = "anim";
             this.element.style.animationTimingFunction = "linear";
@@ -193,35 +193,18 @@ this.element.dataset.baseDuration = duration;
         if (this.game.lifes < 4) this.game.lifes++;
 
         this.game.updateMusic();
-
         this.game.displayLifes();
+        this.inner.classList.add("heart-click");
 
-        this.inner.style.transition = "transform 0.15s ease, opacity 0.15s ease";
-        this.inner.style.transform = "scale(0.4)";
-        this.inner.style.opacity = "0";
-
-        setTimeout(() => this.destroy(), 150);
+        setTimeout(() => {
+            this.destroy();
+        }, 300);
     }
 
     handleSpecial() {
         play(sounds.success);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        this.game.score += 1;
         this.game.increaseScore();
-
         this.clickCount++;
 
         this.element.style.filter = `brightness(${1 + this.clickCount * 0.11})`;
@@ -249,7 +232,7 @@ this.element.dataset.baseDuration = duration;
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
 
-            if (instance === this) return; // garde juste ça pour éviter bug
+            if (instance === this) return;
 
             if (instance) instance.counted = true;
 
@@ -277,7 +260,6 @@ this.element.dataset.baseDuration = duration;
     }
 
     handleNormal() {
-
         if (this.game.isStarActive) {
             const s = sounds.star.cloneNode();
             s.volume = Math.min(1, sounds.star.volume * 20);
@@ -289,10 +271,8 @@ this.element.dataset.baseDuration = duration;
             play(sounds.bubble);
             this.game.increaseScore();
         }
-
         this.destroy();
     }
-
 
     pause() {
         clearTimeout(this.timeout);
