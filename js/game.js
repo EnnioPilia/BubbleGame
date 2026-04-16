@@ -501,9 +501,30 @@ export default class Game {
 
     endSlow() {
         document.querySelectorAll('.bubble').forEach(b => {
-            if (b.dataset.baseDuration) {
-                b.style.animationDuration = b.dataset.baseDuration + "s";
+            const instance = b.instance;
+            if (!instance || instance.isSpecial) return;
+
+            const rect = b.getBoundingClientRect();
+            const currentTop = rect.top;
+
+            b.style.animation = "none";
+            b.style.top = currentTop + "px";
+            b.offsetHeight;
+
+            const screenFactor = window.innerHeight / 800;
+            let baseSpeed = this.spawnSpeed;
+
+            let duration = Math.max(1.5, (baseSpeed / 1000) * 6 * screenFactor);
+
+            if (instance.isHeart && this.difficulty === "easy") {
+                duration *= 1.4;
             }
+
+            if (instance.isStar) {
+                duration = this.difficulty === "easy" ? 6 : 5;
+            }
+
+            b.style.animation = `anim ${duration}s linear forwards`;
         });
 
         this.isSlowActive = false;
@@ -517,6 +538,9 @@ export default class Game {
     activateStar() {
         this.isStarActive = true;
 
+        this.starRemaining = STAR_CONFIG[this.difficulty];
+        this.starStartTime = Date.now();
+
         pause(sounds.musicGame);
         pause(sounds.stress);
         pause(sounds.slowMusic);
@@ -524,32 +548,10 @@ export default class Game {
         play(sounds.starMode);
 
         clearTimeout(this.starTimeout);
+
         this.starTimeout = setTimeout(() => {
-            this.isStarActive = false;
-
-            const flash = document.getElementById("flashEffect");
-            flash.classList.add("flash-active");
-
-            setTimeout(() => {
-                flash.classList.remove("flash-active");
-            }, 300);
-
-            document.querySelectorAll('.bubble').forEach(b => {
-                const instance = b.instance;
-
-                if (!instance) return;
-
-                b.classList.add("star-blast");
-
-                setTimeout(() => {
-                    b.remove();
-                }, 120);
-            });
-
-            pause(sounds.starMode);
-            this.updateMusic();
-
-        }, STAR_CONFIG[this.difficulty]);
+            this.endStar();
+        }, this.starRemaining);
     }
 
     updateMusic() {

@@ -44,27 +44,24 @@ export function toggleSound() {
 
     if (!soundEnabled) {
         Object.values(sounds).forEach(s => {
-            if (s) {
-                s.pause();
-                s.currentTime = 0;
-            }
+            if (s) s.pause();
         });
     } else {
         const state = window.currentGameState;
 
         if (state === "menu") {
+            pauseAll();
             sounds.musicMenu?.play();
         }
 
-        else if (state === "game") {
-            sounds.musicGame?.play();
-        }
-
-        else if (state === "pause") {
-            sounds.musicGame?.play();
+        else if (state === "game" || state === "pause") {
+            if (window.gameInstance) {
+                window.gameInstance.updateMusic();
+            }
         }
 
         else if (state === "gameover") {
+            // optionnel : rien ou son spécifique
         }
     }
 
@@ -72,7 +69,11 @@ export function toggleSound() {
 
     return soundEnabled;
 }
-
+function pauseAll() {
+    Object.values(sounds).forEach(s => {
+        if (s) s.pause();
+    });
+}
 export function play(sound) {
     if (!soundEnabled || !sound) return;
     sound.currentTime = 0;
