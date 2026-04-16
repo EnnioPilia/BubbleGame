@@ -16,6 +16,7 @@ initAudioUI();
 initBackgroundPopup();
 
 const game = new Game();
+window.gameInstance = game;
 
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;
@@ -30,8 +31,6 @@ document.addEventListener("click", (e) => {
     }
 
 }, { once: true });
-
-
 
 document.addEventListener("dblclick", e => e.preventDefault());
 

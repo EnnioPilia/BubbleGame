@@ -1,13 +1,20 @@
 import { sounds, play, pause } from "./sound.js";
 
 export default class Bubble {
-    constructor(game, forceSpecial = false, isHeart = false, isSlow = false) {
+    constructor(game, forceSpecial = false, isHeart = false, isSlow = false, isStar = false) {
         this.game = game;
         this.isHeart = isHeart;
         this.isSpecial = forceSpecial;
         this.isSlow = isSlow;
+        this.isStar = isStar;
+        this.spawnedDuringStar = this.game.isStarActive;
 
-        this.isBad = !this.isSpecial && !this.isHeart && !this.isSlow && Math.random() < 0.45;
+        this.isBad = !this.game.isStarActive &&
+            !this.isSpecial &&
+            !this.isHeart &&
+            !this.isSlow &&
+            !this.isStar &&
+            Math.random() < 0.45;
 
         this.counted = false;
         this.clickCount = 0;
@@ -50,7 +57,10 @@ export default class Bubble {
         else {
             size = Math.random() * (maxSize - minSize) + minSize;
         }
-        if (this.isSlow) {
+        if (this.isStar) {
+            size = isMobile ? 90 : 150;
+        }
+        else if (this.isSlow) {
             this.inner.classList.add("slow-bubble");
         }
 
@@ -61,22 +71,40 @@ export default class Bubble {
 
         if (this.isHeart) {
             this.inner.classList.add("heart");
+            this.element.style.zIndex = "2002";
             this.inner.innerHTML = "❤️";
+
         } else if (this.isSpecial) {
             this.inner.style.background = "radial-gradient(circle, violet, cyan)";
             this.inner.classList.add("special");
 
         } else if (this.isSlow) {
+            this.element.style.zIndex = "2001";
+
+        } else if (this.isStar) {
+            this.element.style.zIndex = "2003";
+            this.inner.style.background = "url('image/star.png') no-repeat center";
+            this.inner.style.backgroundSize = "contain";
+            this.inner.style.opacity = "1";
+            this.inner.style.border = "none";
+            this.element.classList.add("star-bubble");
 
         } else if (this.isBad) {
             this.inner.classList.add("bad-bubble");
-        } else {
-            let hue;
-            do {
-                hue = Math.random() * 360;
-            } while (hue < 20 || hue > 340);
 
-            this.inner.style.background = `hsl(${hue}, 100%, 50%)`;
+        } else {
+            if (this.game.isStarActive) {
+                this.inner.style.background = "radial-gradient( #e2b6f3, #8af5ff)";
+                this.inner.style.boxShadow = "0 0 20px #ff00ff, 0 0 40px #00ffff";
+                this.inner.classList.add("star-mode");
+            } else {
+                let hue;
+                do {
+                    hue = Math.random() * 360;
+                } while (hue < 20 || hue > 340);
+
+                this.inner.style.background = `hsl(${hue}, 100%, 50%)`;
+            }
         }
 
         this.setupAnimation(size);
@@ -107,10 +135,16 @@ export default class Bubble {
             if (this.isHeart && this.game.difficulty === "easy") {
                 duration *= 1.4;
             }
-
-            // 👉 ICI AUSSI
+            if (this.isStar) {
+                if (this.game.difficulty === "easy") {
+                    duration = 6;
+                } else {
+                    duration = 5;
+                }
+            }
             this.element.style.setProperty('--bubble-duration', duration + 's');
             this.element.style.animationDuration = duration + 's';
+this.element.dataset.baseDuration = duration;
 
             this.element.style.animationName = "anim";
             this.element.style.animationTimingFunction = "linear";
@@ -125,6 +159,7 @@ export default class Bubble {
             if (this.isSpecial) return this.handleSpecial();
             if (this.isBad) return this.handleBad();
             if (this.isSlow) return this.handleSlow();
+            if (this.isStar) return this.handleStar();
 
             this.handleNormal();
         });
@@ -139,9 +174,9 @@ export default class Bubble {
     handleSlow() {
         play(sounds.powerup);
 
-ui.classList.remove("zoom-effect");
-void ui.offsetWidth; // reset animation
-ui.classList.add("zoom-effect");
+        ui.classList.remove("zoom-effect");
+        void ui.offsetWidth;
+        ui.classList.add("zoom-effect");
 
         setTimeout(() => {
             document.body.classList.remove("zoom-effect");
@@ -171,6 +206,20 @@ ui.classList.add("zoom-effect");
     handleSpecial() {
         play(sounds.success);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        this.game.score += 1;
         this.game.increaseScore();
 
         this.clickCount++;
@@ -185,6 +234,38 @@ ui.classList.add("zoom-effect");
         }
     }
 
+    handleStar() {
+        play(sounds.star);
+
+        this.game.activateStar();
+
+        const flash = document.getElementById("flashEffect");
+        flash.classList.add("flash-active");
+
+        setTimeout(() => {
+            flash.classList.remove("flash-active"); // FLASSHEEEEEEEEEEEEE !!!!!!!!!!!!!!!!
+        }, 300);
+
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
+
+            if (instance === this) return; // garde juste ça pour éviter bug
+
+            if (instance) instance.counted = true;
+
+            b.classList.add("star-blast");
+
+            setTimeout(() => {
+                b.remove();
+            }, 120);
+        });
+
+        this.game.lifes = 4;
+        this.game.displayLifes();
+
+        this.destroy();
+    }
+
     handleBad() {
         play(sounds.error);
 
@@ -196,13 +277,22 @@ ui.classList.add("zoom-effect");
     }
 
     handleNormal() {
-        play(sounds.bubble);
 
-        this.game.increaseScore();
+        if (this.game.isStarActive) {
+            const s = sounds.star.cloneNode();
+            s.volume = Math.min(1, sounds.star.volume * 20);
+            s.play();
+
+            this.game.score += 3;
+            this.game.scoreDisplay.textContent = this.game.score;
+        } else {
+            play(sounds.bubble);
+            this.game.increaseScore();
+        }
+
         this.destroy();
     }
 
-    /* ================= LIFECYCLE ================= */
 
     pause() {
         clearTimeout(this.timeout);

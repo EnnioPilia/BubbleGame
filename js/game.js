@@ -22,6 +22,11 @@ const POWERUPS = {
     }
 };
 
+const STAR_CONFIG = {
+    easy: 15000,
+    hard: 15000
+};
+
 export default class Game {
     constructor() {
         this.score = 0;
@@ -38,24 +43,32 @@ export default class Game {
 
         this.currentPlayerName = "";
 
-        this.slowMilestones = {
-            easy: [30, 70, 120, 170, 220, 260, 300, 350, 400, 450, 450, 500],
-            hard: [120, 170, 220, 270, 300, 350, 400, 450, 500]
+        this.heartMilestones = {
+            easy: [40, 60, 80, 100, 130, 140, 160, 180, 200, 280, 320, 450, 550],
+            hard: [80, 100, 140, 180, 210, 230, 250, 380, 500]
         };
 
-        this.heartMilestones = {
-            easy: [40, 60, 80, 100, 130, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 350, 400, 450, 500],
-            hard: [80, 100, 140, 180, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 450, 500]
+        this.slowMilestones = {
+            easy: [30, 70, 120, 170, 320, 470, 550],
+            hard: [120, 170, 220, 370, 550]
+        };
+
+        this.starMilestones = {
+            easy: [210, 350, 500],
+            hard: [260, 400, 550]
         };
 
         this.heartMilestonesUsed = new Set();
         this.usedSlowMilestones = new Set();
+        this.starMilestonesUsed = new Set();
         this.isSlowActive = false;
 
         this.specialStartDelay = 10000;
         this.gameStartTime = Date.now();
         this.lastSpecialSpawn = 0;
         this.specialCooldown = 17000;
+        this.isStarActive = false;
+        this.starTimeout = null;
 
         this.scoreDisplay = document.getElementById('score');
         this.startButton = document.getElementById('startButton');
@@ -161,10 +174,15 @@ export default class Game {
 
         this.usedSlowMilestones.clear();
         this.heartMilestonesUsed.clear();
+        this.starMilestonesUsed.clear();
 
         this.lastSpecialSpawn = 0;
 
         this.isSlowActive = false;
+
+        this.isStarActive = false;
+        clearTimeout(this.starTimeout);
+        this.starTimeout = null;
 
         this.isPaused = false;
         this.scoreSaved = false;
@@ -293,7 +311,11 @@ export default class Game {
     restart() {
         this.clearBubbles();
         this.resetGameState();
+
         clearTimeout(this.slowTimeout);
+        this.isStarActive = false;
+        clearTimeout(this.starTimeout);
+        this.starTimeout = null;
 
         this.playerName.value = this.currentPlayerName;
         this.scoreDisplay.textContent = this.score;
@@ -334,8 +356,9 @@ export default class Game {
 
         if (now - this.gameStartTime > this.specialStartDelay) {
             if (now - this.lastSpecialSpawn > this.specialCooldown) {
-                if (Math.random() < 0.3) {
+                if (!this.isStarActive && Math.random() < 0.3) {
                     forceSpecial = true;
+
                     this.lastSpecialSpawn = now;
                 }
             }
@@ -352,6 +375,10 @@ export default class Game {
         new Bubble(this, false, true);
     }
 
+    spawnStar() {
+        new Bubble(this, false, false, false, true);
+    }
+
     increaseScore() {
         this.score++;
         this.scoreDisplay.textContent = this.score;
@@ -359,6 +386,14 @@ export default class Game {
         let newSpeed = this.spawnSpeed;
 
         if (this.difficulty === "easy") {
+
+            if (
+                this.starMilestones.easy.includes(this.score) &&
+                !this.starMilestonesUsed.has(this.score)
+            ) {
+                this.spawnStar();
+                this.starMilestonesUsed.add(this.score);
+            }
 
             if (
                 this.slowMilestones.easy.includes(this.score) &&
@@ -376,14 +411,21 @@ export default class Game {
                 this.heartMilestonesUsed.add(this.score);
             }
 
-            if (this.score >= 250) newSpeed = 450;
-            else if (this.score >= 200) newSpeed = 500;
+            if (this.score >= 200) newSpeed = 500;
             else if (this.score >= 150) newSpeed = 550;
             else if (this.score >= 100) newSpeed = 600;
             else if (this.score >= 50) newSpeed = 650;
             else if (this.score >= 30) newSpeed = 700;
             else if (this.score >= 10) newSpeed = 750;
         }
+        //     if (this.score >= 250) newSpeed = 450;
+        //     else if (this.score >= 200) newSpeed = 500;
+        //     else if (this.score >= 150) newSpeed = 550;
+        //     else if (this.score >= 100) newSpeed = 600;
+        //     else if (this.score >= 50) newSpeed = 650;
+        //     else if (this.score >= 30) newSpeed = 700;
+        //     else if (this.score >= 10) newSpeed = 750;
+        // }
 
         else if (this.difficulty === "hard") {
 
@@ -401,6 +443,13 @@ export default class Game {
             ) {
                 this.spawnHeart();
                 this.heartMilestonesUsed.add(this.score);
+            }
+            if (
+                this.starMilestones.hard.includes(this.score) &&
+                !this.starMilestonesUsed.has(this.score)
+            ) {
+                this.spawnStar();
+                this.starMilestonesUsed.add(this.score);
             }
 
             if (this.score >= 250) newSpeed = 300;
@@ -465,8 +514,57 @@ export default class Game {
         return POWERUPS[this.difficulty].slowFactor;
     }
 
+    activateStar() {
+        this.isStarActive = true;
+
+        pause(sounds.musicGame);
+        pause(sounds.stress);
+        pause(sounds.slowMusic);
+
+        play(sounds.starMode);
+
+        clearTimeout(this.starTimeout);
+        this.starTimeout = setTimeout(() => {
+            this.isStarActive = false;
+
+            const flash = document.getElementById("flashEffect");
+            flash.classList.add("flash-active");
+
+            setTimeout(() => {
+                flash.classList.remove("flash-active");
+            }, 300);
+
+            document.querySelectorAll('.bubble').forEach(b => {
+                const instance = b.instance;
+
+                if (!instance) return;
+
+                b.classList.add("star-blast");
+
+                setTimeout(() => {
+                    b.remove();
+                }, 120);
+            });
+
+            pause(sounds.starMode);
+            this.updateMusic();
+
+        }, STAR_CONFIG[this.difficulty]);
+    }
+
     updateMusic() {
         if (this.isPaused || this.isGameOver) return;
+
+        if (this.isStarActive) {
+            if (!sounds.starMode.paused) return;
+
+            pause(sounds.musicGame);
+            pause(sounds.stress);
+            pause(sounds.slowMusic);
+
+            play(sounds.starMode);
+            return;
+        }
 
         let target = null;
 
@@ -480,6 +578,7 @@ export default class Game {
 
         if (!target.paused) return;
 
+        pause(sounds.starMode);
         pause(sounds.musicGame);
         pause(sounds.stress);
         pause(sounds.slowMusic);
@@ -493,12 +592,14 @@ export default class Game {
             clearTimeout(this.slowTimeout);
             this.slowRemaining -= Date.now() - this.slowStartTime;
         }
+
         this.isPaused = true;
         this.setUI("pause");
 
         pause(sounds.musicGame);
         pause(sounds.stress);
         pause(sounds.slowMusic);
+        pause(sounds.starMode);
 
         document.querySelectorAll('.bubble').forEach(b => {
             b.style.animationPlayState = 'paused';
@@ -527,18 +628,32 @@ export default class Game {
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
 
-            if (!instance || instance.counted || instance.isSpecial || instance.isHeart || instance.isBad || instance.isSlow) return;
+            if (
+                !instance ||
+                instance.counted ||
+                instance.isSpecial ||
+                instance.isHeart ||
+                instance.isBad ||
+                instance.isSlow ||
+                instance.isStar
+            ) return;
 
             const rect = b.getBoundingClientRect();
 
             if (rect.top + rect.height < 0) {
                 instance.counted = true;
-                this.lifes--;
+
+                if (
+                    !this.isStarActive &&
+                    !instance.isStar &&
+                    !instance.spawnedDuringStar
+                ) {
+                    this.lifes--;
+                    this.displayLifes();
+                    play(sounds.error);
+                }
 
                 b.remove();
-                this.displayLifes();
-
-                play(sounds.error);
             }
         });
 
@@ -598,11 +713,17 @@ export default class Game {
         this.yourScore.style.display = "none";
         this.scoreDisplay.textContent = "0";
 
+        this.isStarActive = false;
+        clearTimeout(this.starTimeout);
+        this.starTimeout = null;
+        pause(sounds.starMode);
+
         this.setUI("menu");
 
         pause(sounds.musicGame);
         pause(sounds.gameOver);
         play(sounds.musicMenu);
+        pause(sounds.starMode);
 
         this.displayLifes();
     }

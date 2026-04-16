@@ -776,6 +776,39 @@ body.no-custom-cursor {
     animation: zoomFlash 0.6s ease;
 }
 
+
+
+.star-bubble .bubble-inner {
+    border-radius: 0%;
+    animation: 
+        starSparkle 0.4s infinite,
+        starColorShift 2s linear infinite;
+}
+
+@keyframes starSparkle {
+    0% {
+        transform: scale(0.9);
+        filter: brightness(2) drop-shadow(0 0 5px gold);
+    }
+    25% {
+        transform: scale(1.1);
+        filter: brightness(2) drop-shadow(0 0 15px yellow);
+    }
+    50% {
+        transform: scale(0.9) ;
+        filter: brightness(2) drop-shadow(0 0 25px orange);
+    }
+    75% {
+        transform: scale(1.1) ;
+        filter: brightness(2) drop-shadow(0 0 20px white);
+    }
+    100% {
+        transform: scale(0.9) ;
+        filter: brightness(2) drop-shadow(0 0 5px gold);
+    }
+}
+
+
 .slow-bubble {
     background: url("image/sablier.png") no-repeat center;
     background-size: 60%;
@@ -783,8 +816,8 @@ body.no-custom-cursor {
     border: none;
     opacity: 0.9;
     animation: flip180 3s ease-in-out infinite;
-
 }
+
 @keyframes flip180 {
     0% {
         transform: rotate(0deg);
@@ -799,10 +832,78 @@ body.no-custom-cursor {
         transform: rotate(0deg); 
     }
 }
+
+@keyframes starExplosion {
+    0% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.8); filter: brightness(3); }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.star-blast {
+    animation: starExplosion 0.4s ease forwards;
+}
+
 #difficultyButton {
     position: relative;
     overflow: hidden;
 }
+
+#flashEffect {
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.flash-active {
+    animation: flash 0.8s ease;
+}
+
+@keyframes flash {
+    0% { opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+
+.star-mode {
+    opacity: 1;
+    animation: sparkle 0.15s infinite;
+    filter: hue-rotate(5deg);
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(0.95);
+        filter: brightness(1.2);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+/* 
+@keyframes sparkle {
+    0% {
+        filter: brightness(1) drop-shadow(0 0 0px gold);
+        transform: scale(1);
+    }
+    50% {
+        filter: brightness(2) drop-shadow(0 0 15px gold);
+        transform: scale(1.1);
+    }
+    100% {
+        filter: brightness(1) drop-shadow(0 0 0px gold);
+        transform: scale(1);
+    }
+} */
 
 #difficultyButton::after {
     content: "";
@@ -818,6 +919,7 @@ body.no-custom-cursor {
 #difficultyButton:hover::after {
     left: 100%;
 }
+
 
 @media (max-width: 768px) {
 

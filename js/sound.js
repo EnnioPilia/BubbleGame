@@ -14,6 +14,8 @@ export const sounds = {
     musicMenu: getSound("musicMenu"),
     slowMusic: getSound("slowMusic"),
     musicGame: getSound("musicGame"),
+    starMode: getSound('soundStarMode'),
+    star: getSound('soundStar'),
 };
 
 let soundEnabled = localStorage.getItem("soundEnabled") !== "false";
