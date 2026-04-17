@@ -309,6 +309,8 @@ export default class Game {
     }
 
     restart() {
+        document.body.classList.remove("slow-mode");
+        document.body.classList.remove("star-active");
         this.clearBubbles();
         this.resetGameState();
 
@@ -468,6 +470,7 @@ export default class Game {
         }
 
         this.isSlowActive = true;
+        document.body.classList.add("slow-mode");
         this.updateMusic();
 
         this.slowStartTime = Date.now();
@@ -493,6 +496,7 @@ export default class Game {
     }
 
     endSlow() {
+        document.body.classList.remove("slow-mode");
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
             if (!instance || instance.isSpecial) return;
@@ -529,10 +533,18 @@ export default class Game {
     }
 
     activateStar() {
+        if (this.isSlowActive) {
+            this.isSlowActive = false;
+
+            document.body.classList.remove("slow-mode");
+            clearTimeout(this.slowTimeout);
+        }
+
         this.isStarActive = true;
 
         this.starRemaining = STAR_CONFIG[this.difficulty];
         this.starStartTime = Date.now();
+        document.body.classList.add("star-active");
 
         pause(sounds.musicGame);
         pause(sounds.stress);
@@ -549,17 +561,14 @@ export default class Game {
 
     endStar() {
         this.isStarActive = false;
+        document.body.classList.remove("star-active");
 
         document.querySelectorAll('.bubble').forEach(b => {
             const instance = b.instance;
 
             if (instance) instance.counted = true;
 
-            b.classList.add("star-blast");
-
-            setTimeout(() => {
-                b.remove();
-            }, 120);
+            b.remove();
         });
 
         const flash = document.getElementById("flashEffect");
@@ -620,6 +629,7 @@ export default class Game {
             this.starRemaining -= Date.now() - this.starStartTime;
         }
 
+        document.body.classList.add("pause");
         this.isPaused = true;
         this.setUI("pause");
 
@@ -649,6 +659,7 @@ export default class Game {
             }, this.starRemaining);
         }
 
+        document.body.classList.remove("pause");
         this.isPaused = false;
         this.setUI("game");
         this.updateMusic();
@@ -698,6 +709,7 @@ export default class Game {
     }
 
     gameOver() {
+        document.body.classList.remove("slow-mode");
         clearInterval(this.intervalId);
         this.isGameOver = true;
 
@@ -732,12 +744,14 @@ export default class Game {
         }
 
         this.yourScore.style.display = "block";
-        this.yourScore.innerHTML = 
-              ` <div class="gameover-title">GAME OVER</div>
+        this.yourScore.innerHTML =
+            ` <div class="gameover-title">GAME OVER</div>
                 <div class="gameover-score">Score : <span>${this.score}</span></div> `;
     }
 
     backToMenu() {
+        document.body.classList.remove("slow-mode");
+        document.body.classList.remove("star-active");
         clearInterval(this.intervalId);
 
         this.clearBubbles();
@@ -750,7 +764,7 @@ export default class Game {
 
         this.isStarActive = false;
         clearTimeout(this.starTimeout);
-        
+
         this.starTimeout = null;
         pause(sounds.starMode);
 

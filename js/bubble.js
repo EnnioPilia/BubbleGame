@@ -94,8 +94,7 @@ export default class Bubble {
 
         } else {
             if (this.game.isStarActive) {
-                this.inner.style.background = "radial-gradient( #e2b6f3, #8af5ff)";
-                this.inner.style.boxShadow = "0 0 20px #ff00ff, 0 0 40px #00ffff";
+        
                 this.inner.classList.add("star-mode");
             } else {
                 let hue;
@@ -217,37 +216,32 @@ export default class Bubble {
         }
     }
 
-    handleStar() {
-        play(sounds.star);
+handleStar() {
+    play(sounds.clicStar);
 
-        this.game.activateStar();
+    this.game.activateStar();
 
-        const flash = document.getElementById("flashEffect");
-        flash.classList.add("flash-active");
+    const flash = document.getElementById("flashEffect");
+    flash.classList.add("flash-active");
 
-        setTimeout(() => {
-            flash.classList.remove("flash-active"); // FLASSHEEEEEEEEEEEEE !!!!!!!!!!!!!!!!
-        }, 300);
+    setTimeout(() => {
+        flash.classList.remove("flash-active");
+    }, 300);
 
-        document.querySelectorAll('.bubble').forEach(b => {
-            const instance = b.instance;
+    document.body.classList.add("star-active");
 
-            if (instance === this) return;
+    document.querySelectorAll('.bubble').forEach(b => {
+        const instance = b.instance;
+        if (instance === this) return;
+        if (instance) instance.counted = true;
+        b.remove();
+    });
 
-            if (instance) instance.counted = true;
+    this.destroy();
 
-            b.classList.add("star-blast");
-
-            setTimeout(() => {
-                b.remove();
-            }, 120);
-        });
-
-        this.game.lifes = 4;
-        this.game.displayLifes();
-
-        this.destroy();
-    }
+    this.game.lifes = 4;
+    this.game.displayLifes();
+}
 
     handleBad() {
         play(sounds.error);
@@ -262,7 +256,7 @@ export default class Bubble {
     handleNormal() {
         if (this.game.isStarActive) {
             const s = sounds.star.cloneNode();
-            s.volume = Math.min(1, sounds.star.volume * 20);
+            s.volume = Math.min(1, sounds.star.volume * 50);
             s.play();
 
             this.game.score += 3;

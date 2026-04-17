@@ -32,7 +32,7 @@
     <div id="menu">
       <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
       <button id="startButton">PLAY</button>
-      <button id="difficultyButton" class="easy"> MODE / <span id="difficultyText" class="easy">EASY</span></button>
+      <button id="difficultyButton" class="easy"> MODE - <span id="difficultyText" class="easy">EASY</span></button>
       <button id="menuRankingButton">LEADERBOARD</button>
       <button id="settingsButtonMenu">SETTINGS</button>
     </div>
@@ -60,13 +60,13 @@
       <button id="rankingButtonGameOver">LEADERBOARD</button>
     </div>
 
-    <img id="customCursor" src="">
+    <img id="customCursor" src="Cursor">
 
     <div id="cursorPopup">
       <div class="cursor-content">
         <h2>CURSOR SIZE</h2>
         <img id="cursorPreview" src="">
-        <input type="range" id="cursorSizeSlider" min="20" max="150" value="60">
+        <input type="range" id="cursorSizeSlider" min="15" max="150" value="60">
         <div id="cursorChoices">
           <img src="image/cursor1.png" data-cursor="cursor1.png" class="cursor-option">
           <img src="image/cursor2.png" data-cursor="cursor2.png" class="cursor-option">
@@ -93,9 +93,10 @@
       <div class="background-content">
         <div id="backgroundChoices">
           <img src="image/fond1.jpg" data-bg="fond1.jpg" class="bg-option">
-          <img src="image/fond2.jpg" data-bg="fond2.jpg" class="bg-option">
-          <img src="image/fond4.jpg" data-bg="fond4.jpg" class="bg-option">
+          <img src="image/fond2.jpg" data-bg="fond2.jpg" class="bg-option fond2">
           <img src="image/fond3.jpg" data-bg="fond3.jpg" class="bg-option">
+                    <img src="image/fond4.jpg" data-bg="fond4.jpg" class="bg-option">
+
 
         </div>
         <button id="closeBackground">APPLY</button>
@@ -126,7 +127,8 @@
   <audio id="musicMenu" src="son/menu.ogg" loop></audio>
   <audio id="slowMusic" src="son/time_stop.mp3" loop></audio>
   <audio id="soundStarMode" src="son/star_mode.mp3" loop></audio>
-<audio id="soundStar" src="son/star.mp3"></audio>
+  <audio id="soundStar" src="son/star.mp3"></audio>
+  <audio id="clicStar" src="son/clic_star.mp3"></audio>
 
   <script type="module" src="main.js"></script>
 </body>
