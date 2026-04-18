@@ -17,8 +17,8 @@ const POWERUPS = {
         slowFactor: 1.8
     },
     hard: {
-        slowDuration: 7000,
-        slowFactor: 1.6
+        slowDuration: 8000,
+        slowFactor: 1.5
     }
 };
 
@@ -54,7 +54,7 @@ export default class Game {
         };
 
         this.starMilestones = {
-            easy: [210, 350, 500],
+            easy: [1, 210, 350, 500],
             hard: [260, 400, 550]
         };
 
