@@ -44,23 +44,29 @@ export default class Game {
         this.currentPlayerName = "";
 
         this.heartMilestones = {
-            easy: [40, 60, 80, 100, 130, 140, 160, 180, 200, 280, 320, 450, 550],
-            hard: [80, 100, 140, 180, 210, 230, 250, 380, 520]
+            easy: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 300, 350, 450, 500, 650, 700],
+            hard: [80, 100, 140, 180, 210, 380, 550, 650, 700]
         };
 
         this.slowMilestones = {
-            easy: [30, 70, 120, 170, 320, 470, 550],
-            hard: [90, 120, 170, 220, 370, 550]
+            easy: [30, 120, 210, 330, 510, 680],
+            hard: [90, 170, 250, 410, 540, 620]
+        };
+
+        this.aimMilestones = {
+            easy: [1, 70, 170, 480, 640, 700],
+            hard: [120, 220, 380, 580, 680]
         };
 
         this.starMilestones = {
-            easy: [1, 210, 350, 500],
-            hard: [260, 400, 550]
+            easy: [220, 360, 520],
+            hard: [260, 420, 620]
         };
 
         this.heartMilestonesUsed = new Set();
         this.usedSlowMilestones = new Set();
         this.starMilestonesUsed = new Set();
+        this.aimMilestonesUsed = new Set();
         this.isSlowActive = false;
 
         this.specialStartDelay = 10000;
@@ -69,6 +75,9 @@ export default class Game {
         this.specialCooldown = 17000;
         this.isStarActive = false;
         this.starTimeout = null;
+        this.isAimActive = false;
+        this.aimTimeout = null;
+        this.currentTarget = null;
 
         this.scoreDisplay = document.getElementById('score');
         this.startButton = document.getElementById('startButton');
@@ -166,6 +175,8 @@ export default class Game {
     resetGameState() {
         this.score = 0;
         this.lifes = 4;
+        this.lastSpecialSpawn = 0;
+        this.currentTarget = null;
 
         const config = DIFFICULTY[this.difficulty] || DIFFICULTY.easy;
 
@@ -175,10 +186,13 @@ export default class Game {
         this.usedSlowMilestones.clear();
         this.heartMilestonesUsed.clear();
         this.starMilestonesUsed.clear();
-
-        this.lastSpecialSpawn = 0;
+        this.aimMilestonesUsed.clear();
 
         this.isSlowActive = false;
+
+        this.isAimActive = false;
+        clearTimeout(this.aimTimeout);
+        this.aimTimeout = null;
 
         this.isStarActive = false;
         clearTimeout(this.starTimeout);
@@ -311,13 +325,19 @@ export default class Game {
     restart() {
         document.body.classList.remove("slow-mode");
         document.body.classList.remove("star-active");
+        document.body.classList.remove("aim-mode");
+
         this.clearBubbles();
         this.resetGameState();
 
         clearTimeout(this.slowTimeout);
         this.isStarActive = false;
+
         clearTimeout(this.starTimeout);
         this.starTimeout = null;
+
+        this.isAimActive = false;
+        clearTimeout(this.aimTimeout);
 
         this.playerName.value = this.currentPlayerName;
         this.scoreDisplay.textContent = this.score;
@@ -358,9 +378,8 @@ export default class Game {
 
         if (now - this.gameStartTime > this.specialStartDelay) {
             if (now - this.lastSpecialSpawn > this.specialCooldown) {
-                if (!this.isStarActive && Math.random() < 0.3) {
+                if (!this.isStarActive && !this.isAimActive && Math.random() < 0.3) {
                     forceSpecial = true;
-
                     this.lastSpecialSpawn = now;
                 }
             }
@@ -381,6 +400,10 @@ export default class Game {
         new Bubble(this, false, false, false, true);
     }
 
+    spawnAim() {
+        new Bubble(this, false, false, false, false, true);
+    }
+
     increaseScore() {
         this.score++;
 
@@ -390,7 +413,8 @@ export default class Game {
         if (this.difficulty === "easy") {
 
             if (
-                this.starMilestones.easy.includes(this.score) &&
+                !this.isAimActive &&
+                this.starMilestones[this.difficulty].includes(this.score) &&
                 !this.starMilestonesUsed.has(this.score)
             ) {
                 this.spawnStar();
@@ -398,7 +422,16 @@ export default class Game {
             }
 
             if (
-                this.slowMilestones.easy.includes(this.score) &&
+                this.aimMilestones[this.difficulty].includes(this.score) &&
+                !this.aimMilestonesUsed.has(this.score)
+            ) {
+                this.spawnAim();
+                this.aimMilestonesUsed.add(this.score);
+            }
+
+            if (
+                !this.isAimActive &&
+                this.slowMilestones[this.difficulty].includes(this.score) &&
                 !this.usedSlowMilestones.has(this.score)
             ) {
                 this.spawnSlow();
@@ -406,12 +439,14 @@ export default class Game {
             }
 
             if (
-                this.heartMilestones.easy.includes(this.score) &&
+                !this.isAimActive &&
+                this.heartMilestones[this.difficulty].includes(this.score) &&
                 !this.heartMilestonesUsed.has(this.score)
             ) {
                 this.spawnHeart();
                 this.heartMilestonesUsed.add(this.score);
             }
+
 
             if (this.score >= 250) newSpeed = 450;
             else if (this.score >= 200) newSpeed = 500;
@@ -425,7 +460,25 @@ export default class Game {
         else if (this.difficulty === "hard") {
 
             if (
-                this.slowMilestones.hard.includes(this.score) &&
+                !this.isAimActive &&
+                this.starMilestones[this.difficulty].includes(this.score) &&
+                !this.starMilestonesUsed.has(this.score)
+            ) {
+                this.spawnStar();
+                this.starMilestonesUsed.add(this.score);
+            }
+
+            if (
+                this.aimMilestones[this.difficulty].includes(this.score) &&
+                !this.aimMilestonesUsed.has(this.score)
+            ) {
+                this.spawnAim();
+                this.aimMilestonesUsed.add(this.score);
+            }
+
+            if (
+                !this.isAimActive &&
+                this.slowMilestones[this.difficulty].includes(this.score) &&
                 !this.usedSlowMilestones.has(this.score)
             ) {
                 this.spawnSlow();
@@ -433,18 +486,12 @@ export default class Game {
             }
 
             if (
-                this.heartMilestones.hard.includes(this.score) &&
+                !this.isAimActive &&
+                this.heartMilestones[this.difficulty].includes(this.score) &&
                 !this.heartMilestonesUsed.has(this.score)
             ) {
                 this.spawnHeart();
                 this.heartMilestonesUsed.add(this.score);
-            }
-            if (
-                this.starMilestones.hard.includes(this.score) &&
-                !this.starMilestonesUsed.has(this.score)
-            ) {
-                this.spawnStar();
-                this.starMilestonesUsed.add(this.score);
             }
 
             if (this.score >= 250) newSpeed = 300;
@@ -460,6 +507,77 @@ export default class Game {
             this.spawnSpeed = newSpeed;
             this.run();
         }
+    }
+
+    activateAim() {
+
+        pause(sounds.musicGame);
+        pause(sounds.stress);
+        pause(sounds.slowMusic);
+        pause(sounds.starMode);
+        play(sounds.aimMode);
+
+        if (this.isSlowActive) {
+            this.isSlowActive = false;
+            document.body.classList.remove("slow-mode");
+            clearTimeout(this.slowTimeout);
+        }
+
+        if (this.isStarActive) {
+            this.isStarActive = false;
+            document.body.classList.remove("star-active");
+            clearTimeout(this.starTimeout);
+            pause(sounds.starMode);
+        }
+
+        const flash = document.getElementById("flashEffect");
+        flash.classList.add("flash-active");
+
+        setTimeout(() => {
+            flash.classList.remove("flash-active");
+        }, 300);
+
+        this.isAimActive = true;
+        document.body.classList.add("aim-mode");
+
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
+            if (instance) instance.counted = true;
+            b.remove();
+        });
+
+        this.currentTarget = null;
+
+        this.aimRemaining = 10000;
+        this.aimStartTime = Date.now();
+
+        clearTimeout(this.aimTimeout);
+
+        this.aimTimeout = setTimeout(() => {
+            this.endAim();
+        }, this.aimRemaining);
+    }
+
+    endAim() {
+        this.isAimActive = false;
+        document.body.classList.remove("aim-mode");
+
+        pause(sounds.aimMode);
+
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
+            if (instance) instance.counted = true;
+            b.remove();
+        });
+
+        const flash = document.getElementById("flashEffect");
+        flash.classList.add("flash-active");
+
+        setTimeout(() => {
+            flash.classList.remove("flash-active");
+        }, 300);
+
+        this.updateMusic();
     }
 
     activateSlow() {
@@ -585,13 +703,25 @@ export default class Game {
     updateMusic() {
         if (this.isPaused || this.isGameOver) return;
 
+        if (this.isAimActive) {
+            if (!sounds.aimMode.paused) return;
+
+            pause(sounds.musicGame);
+            pause(sounds.stress);
+            pause(sounds.slowMusic);
+            pause(sounds.starMode);
+
+            play(sounds.aimMode);
+            return;
+        }
+
         if (this.isStarActive) {
             if (!sounds.starMode.paused) return;
 
             pause(sounds.musicGame);
             pause(sounds.stress);
             pause(sounds.slowMusic);
-
+            play(sounds.aimMode);
             play(sounds.starMode);
             return;
         }
@@ -629,6 +759,11 @@ export default class Game {
             this.starRemaining -= Date.now() - this.starStartTime;
         }
 
+        if (this.isAimActive && this.aimTimeout) {
+            clearTimeout(this.aimTimeout);
+            this.aimRemaining -= Date.now() - this.aimStartTime;
+        }
+
         document.body.classList.add("pause");
         this.isPaused = true;
         this.setUI("pause");
@@ -637,6 +772,7 @@ export default class Game {
         pause(sounds.stress);
         pause(sounds.slowMusic);
         pause(sounds.starMode);
+        pause(sounds.aimMode);;
 
         document.querySelectorAll('.bubble').forEach(b => {
             b.style.animationPlayState = 'paused';
@@ -657,6 +793,13 @@ export default class Game {
             this.starTimeout = setTimeout(() => {
                 this.endStar();
             }, this.starRemaining);
+        }
+
+        if (this.isAimActive) {
+            this.aimStartTime = Date.now();
+            this.aimTimeout = setTimeout(() => {
+                this.endAim();
+            }, this.aimRemaining);
         }
 
         document.body.classList.remove("pause");
@@ -720,6 +863,7 @@ export default class Game {
         pause(sounds.musicGame);
         pause(sounds.stress);
         pause(sounds.slowMusic);
+        pause(sounds.aimMode);
 
         this.clearBubbles();
 
@@ -752,6 +896,8 @@ export default class Game {
     backToMenu() {
         document.body.classList.remove("slow-mode");
         document.body.classList.remove("star-active");
+        document.body.classList.remove("aim-mode");
+
         clearInterval(this.intervalId);
 
         this.clearBubbles();
@@ -765,6 +911,9 @@ export default class Game {
         this.isStarActive = false;
         clearTimeout(this.starTimeout);
 
+        this.isAimActive = false;
+        clearTimeout(this.aimTimeout);
+
         this.starTimeout = null;
         pause(sounds.starMode);
 
@@ -772,8 +921,9 @@ export default class Game {
 
         pause(sounds.musicGame);
         pause(sounds.gameOver);
-        play(sounds.musicMenu);
         pause(sounds.starMode);
+
+        play(sounds.musicMenu);
 
         this.displayLifes();
     }

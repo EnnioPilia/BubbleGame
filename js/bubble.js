@@ -1,19 +1,22 @@
 import { sounds, play, pause } from "./sound.js";
 
 export default class Bubble {
-    constructor(game, forceSpecial = false, isHeart = false, isSlow = false, isStar = false) {
+    constructor(game, forceSpecial = false, isHeart = false, isSlow = false, isStar = false, isAim = false) {
         this.game = game;
         this.isHeart = isHeart;
         this.isSpecial = forceSpecial;
         this.isSlow = isSlow;
         this.isStar = isStar;
+        this.isAim = isAim;
         this.spawnedDuringStar = this.game.isStarActive;
 
         this.isBad = !this.game.isStarActive &&
+        !this.game.isAimActive && 
             !this.isSpecial &&
             !this.isHeart &&
             !this.isSlow &&
             !this.isStar &&
+             !this.isAim &&
             Math.random() < 0.45;
 
         this.counted = false;
@@ -81,6 +84,14 @@ export default class Bubble {
         } else if (this.isSlow) {
             this.element.style.zIndex = "2001";
 
+        } else if (this.isAim) {
+            this.element.style.zIndex = "2001";
+            this.inner.style.background = "url('image/viseur.png') no-repeat center";
+            this.inner.style.backgroundSize = "contain";
+            this.inner.style.opacity = "1";
+            this.inner.style.border = "none";
+            this.element.classList.add("aim-bubble");
+
         } else if (this.isStar) {
             this.element.style.zIndex = "2003";
             this.inner.style.background = "url('image/star.png') no-repeat center";
@@ -94,7 +105,7 @@ export default class Bubble {
 
         } else {
             if (this.game.isStarActive) {
-        
+
                 this.inner.classList.add("star-mode");
             } else {
                 let hue;
@@ -159,6 +170,7 @@ export default class Bubble {
             if (this.isBad) return this.handleBad();
             if (this.isSlow) return this.handleSlow();
             if (this.isStar) return this.handleStar();
+            if (this.isAim) return this.handleAim();
 
             this.handleNormal();
         });
@@ -216,32 +228,40 @@ export default class Bubble {
         }
     }
 
-handleStar() {
-    play(sounds.clicStar);
+    handleStar() {
+        play(sounds.clicStar);
 
-    this.game.activateStar();
+        this.game.activateStar();
 
-    const flash = document.getElementById("flashEffect");
-    flash.classList.add("flash-active");
+        const flash = document.getElementById("flashEffect");
+        flash.classList.add("flash-active");
 
-    setTimeout(() => {
-        flash.classList.remove("flash-active");
-    }, 300);
+        setTimeout(() => {
+            flash.classList.remove("flash-active");
+        }, 300);
 
-    document.body.classList.add("star-active");
+        document.body.classList.add("star-active");
 
-    document.querySelectorAll('.bubble').forEach(b => {
-        const instance = b.instance;
-        if (instance === this) return;
-        if (instance) instance.counted = true;
-        b.remove();
-    });
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
+            if (instance === this) return;
+            if (instance) instance.counted = true;
+            b.remove();
+        });
 
-    this.destroy();
+        this.destroy();
 
-    this.game.lifes = 4;
-    this.game.displayLifes();
-}
+        this.game.lifes = 4;
+        this.game.displayLifes();
+    }
+
+    handleAim() {
+        play(sounds.soundAim);
+
+        this.game.activateAim();
+
+        this.destroy();
+    }
 
     handleBad() {
         play(sounds.error);
