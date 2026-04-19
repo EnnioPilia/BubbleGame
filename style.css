@@ -1023,7 +1023,7 @@ body.aim-mode::after {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(circle, rgba(226, 0, 0, 0.6), transparent);
+    background: radial-gradient(circle, rgba(226, 0, 0, 0.7), transparent);
 }
 
 .aim-bubble .bubble-inner {

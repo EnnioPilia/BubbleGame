@@ -21,10 +21,6 @@ window.gameInstance = game;
 window.aimStep = 0;
 window.currentTarget = null;
 
-let aimDirX = 0;
-let aimDirY = 0;
-let aimMoving = false;
-
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;
 
@@ -74,6 +70,12 @@ function getNextTarget() {
     }) || null;
 }
 
+
+let currentX = window.innerWidth / 2;
+let currentY = window.innerHeight / 2;
+
+let isTracking = false;
+
 document.addEventListener("click", (e) => {
     const game = window.gameInstance;
     if (!game || !game.isAimActive || game.isPaused) return;
@@ -81,59 +83,37 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const cursor = document.getElementById("customCursor");
-if (window.aimStep === 0) {
+    if (!isTracking) {
+        window.currentTarget = getNextTarget();
 
-    window.currentTarget = getNextTarget();
+        if (window.currentTarget) {
 
-    if (window.currentTarget) {
+            currentX = window.innerWidth / 2;
+            currentY = window.innerHeight / 2;
 
-        const rect = window.currentTarget.getBoundingClientRect();
+            const cursor = document.getElementById("customCursor");
+            cursor.style.left = currentX + "px";
+            cursor.style.top = currentY + "px";
 
-        const targetX = rect.left + rect.width / 2;
-        const targetY = rect.top + rect.height / 2;
-
-        const dx = targetX - currentX;
-        const dy = targetY - currentY;
-
-const distance = Math.sqrt(dx * dx + dy * dy); 
-
-        if (distance === 0) return;
-
-  
-        aimMoving = true;
-
-        followTarget();
-
-        window.aimStep = 1;
+            isTracking = true;
+            followTarget();
+        }
     }
-
-
-    } else if (window.aimStep === 1) {
-aimMoving = false;
+    else {
         if (window.currentTarget) {
             window.currentTarget.click();
         }
-currentX = window.innerWidth / 2;
-currentY = window.innerHeight / 2;
 
-cursor.style.left = currentX + "px";
-cursor.style.top = currentY + "px";
-        window.currentTarget = null;
-        window.aimStep = 0;
+        resetCursor();
     }
 });
 
-let currentX = window.innerWidth / 2;
-let currentY = window.innerHeight / 2;
-
 function followTarget() {
-    if (!aimMoving || !window.gameInstance.isAimActive) return;
+    if (!isTracking || !window.gameInstance.isAimActive) return;
 
     const cursor = document.getElementById("customCursor");
 
     if (!window.currentTarget || !document.body.contains(window.currentTarget)) {
-        aimMoving = false;
         resetCursor();
         return;
     }
@@ -148,27 +128,26 @@ function followTarget() {
 
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance < 10) {
-        aimMoving = false;
+    if (distance < 1) {
+        currentX = targetX;
+        currentY = targetY;
+    } else {
+        const smoothing = 0.2;
 
-        window.currentTarget.click();
-
-        resetCursor();
-        return;
+        currentX += dx * smoothing;
+        currentY += dy * smoothing;
     }
-
-    const speed = 20;
-
-    currentX += (dx / distance) * speed;
-    currentY += (dy / distance) * speed;
 
     cursor.style.left = currentX + "px";
     cursor.style.top = currentY + "px";
 
     requestAnimationFrame(followTarget);
 }
+
 function resetCursor() {
     const cursor = document.getElementById("customCursor");
+
+    isTracking = false;
 
     currentX = window.innerWidth / 2;
     currentY = window.innerHeight / 2;
@@ -177,17 +156,25 @@ function resetCursor() {
     cursor.style.top = currentY + "px";
 
     window.currentTarget = null;
-    window.aimStep = 0;
 }
+
+function stopAimTracking() {
+    isTracking = false;
+    window.currentTarget = null;
+}
+
 document.addEventListener("keydown", (e) => {
     const game = window.gameInstance;
     if (!game) return;
+
     if (e.key === "Escape") {
 
-        if (game.isPaused) {
-            game.resumeGame();
-        } else {
+        if (!game.isPaused) {
+            stopAimTracking();
+            resetCursor();
             game.pauseGame();
+        } else {
+            game.resumeGame();
         }
     }
 });

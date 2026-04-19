@@ -589,7 +589,7 @@ export default class Game {
 
         this.currentTarget = null;
 
-        this.aimRemaining = 910000;
+        this.aimRemaining = 10000;
         this.aimStartTime = Date.now();
 
         clearTimeout(this.aimTimeout);
@@ -604,7 +604,7 @@ export default class Game {
         window.currentTarget = null;
         unlockCursor();
         const cursor = document.getElementById("customCursor");
-        
+        isTracking = false;
         cursor.style.left = window.innerWidth / 2 + "px";
         cursor.style.top = window.innerHeight / 2 + "px";
 
