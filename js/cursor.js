@@ -10,7 +10,15 @@ export function initCursor() {
     const cursorOptions = document.querySelectorAll(".cursor-option");
     let selectedCursor = localStorage.getItem("cursorImage") || "cursor1.png";
     const playerInput = document.getElementById("playerName");
+    window.aimCursor = document.getElementById("aimCursor");
 
+    if (window.aimCursor) {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        window.aimCursor.style.left = centerX + "px";
+        window.aimCursor.style.top = centerY + "px";
+    }
     if (playerInput) {
         playerInput.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -163,4 +171,27 @@ export function lockCursor() {
 
 export function unlockCursor() {
     lock = false;
+}
+
+export function resetCursorUI() {
+    const cursor = document.getElementById("customCursor");
+    const aim = document.getElementById("aimCursor");
+
+    document.body.classList.remove("aim-mode");
+
+    if (cursor) cursor.style.display = "none";
+    if (aim) aim.style.display = "none";
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    if (cursor) {
+        cursor.style.left = centerX + "px";
+        cursor.style.top = centerY + "px";
+    }
+
+    if (aim) {
+        aim.style.left = centerX + "px";
+        aim.style.top = centerY + "px";
+    }
 }

@@ -2,6 +2,8 @@ import { sounds, play, pause } from "./sound.js";
 import Bubble from "./bubble.js";
 import { showRanking, hideRanking } from "./rankingPopup.js";
 import { lockCursor, unlockCursor } from "./cursor.js";
+import { resetCursorUI } from "./cursor.js";
+import { toggleCustomCursor } from "./cursor.js";
 
 const DIFFICULTY = {
     easy: { spawnSpeed: 800 },
@@ -54,7 +56,7 @@ export default class Game {
         };
 
         this.aimMilestones = {
-            easy: [1, 70, 170, 480, 640, 700],
+            easy: [70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580, 680]
         };
 
@@ -68,12 +70,14 @@ export default class Game {
         this.usedSlowMilestones = new Set();
         this.starMilestonesUsed = new Set();
         this.aimMilestonesUsed = new Set();
-        this.isSlowActive = false;
 
         this.specialStartDelay = 10000;
         this.gameStartTime = Date.now();
+
         this.lastSpecialSpawn = 0;
         this.specialCooldown = 17000;
+
+        this.isSlowActive = false;
         this.isStarActive = false;
         this.starTimeout = null;
         this.isAimActive = false;
@@ -336,9 +340,10 @@ export default class Game {
         document.body.classList.remove("slow-mode");
         document.body.classList.remove("star-active");
         document.body.classList.remove("aim-mode");
-
-        this.clearBubbles();
         this.resetGameState();
+        this.clearBubbles();
+        const aimCursor = document.getElementById("aimCursor");
+        if (aimCursor) aimCursor.style.display = "none";
 
         clearTimeout(this.slowTimeout);
         this.isStarActive = false;
@@ -557,6 +562,12 @@ export default class Game {
         this.aimStartTime = Date.now();
         this.aimRemaining = 10000;
 
+        const aimCursor = document.getElementById("aimCursor");
+        if (aimCursor) aimCursor.style.display = "block";
+
+        const cursor = document.getElementById("customCursor");
+        if (cursor) cursor.style.display = "block";
+
         if (this.isSlowActive) {
             this.isSlowActive = false;
             document.body.classList.remove("slow-mode");
@@ -577,7 +588,6 @@ export default class Game {
             flash.classList.remove("flashAim-active");
         }, 800);
 
-        const cursor = document.getElementById("customCursor");
 
         cursor.style.left = (window.innerWidth / 2) + "px";
         cursor.style.top = (window.innerHeight / 2) + "px";
@@ -602,7 +612,8 @@ export default class Game {
         window.aimStep = 0;
         window.currentTarget = null;
         unlockCursor();
-
+        const aimCursor = document.getElementById("aimCursor");
+        if (aimCursor) aimCursor.style.display = "none";
         const cursor = document.getElementById("customCursor");
 
         cursor.style.left = window.innerWidth / 2 + "px";
@@ -916,6 +927,14 @@ export default class Game {
 
     gameOver() {
         document.body.classList.remove("slow-mode");
+        document.body.classList.remove("aim-mode");
+
+        unlockCursor();
+        this.isAimActive = false;
+
+        const aimCursor = document.getElementById("aimCursor");
+        if (aimCursor) aimCursor.style.display = "none";
+
         clearInterval(this.intervalId);
         this.isGameOver = true;
 
@@ -961,6 +980,7 @@ export default class Game {
         document.body.classList.remove("star-active");
         document.body.classList.remove("aim-mode");
 
+        resetCursorUI();
         clearInterval(this.intervalId);
 
         this.clearBubbles();

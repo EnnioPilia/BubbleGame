@@ -16,10 +16,17 @@ initAudioUI();
 initBackgroundPopup();
 
 const game = new Game();
-window.gameInstance = game;
 
+window.gameInstance = game;
+window.aimCursor
 window.aimStep = 0;
 window.currentTarget = null;
+
+let aimX = window.innerWidth / 2;
+let aimY = window.innerHeight / 2;
+let currentX = window.innerWidth / 2;
+let currentY = window.innerHeight / 2;
+let isTracking = false;
 
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;
@@ -71,11 +78,6 @@ function getNextTarget() {
 }
 
 
-let currentX = window.innerWidth / 2;
-let currentY = window.innerHeight / 2;
-
-let isTracking = false;
-
 document.addEventListener("click", (e) => {
     const game = window.gameInstance;
     if (!game || !game.isAimActive || game.isPaused) return;
@@ -108,6 +110,8 @@ document.addEventListener("click", (e) => {
     }
 });
 
+
+
 function followTarget() {
     if (!isTracking || !window.gameInstance.isAimActive) return;
     if (window.gameInstance.isPaused) return;
@@ -134,13 +138,27 @@ function followTarget() {
         currentY = targetY;
     } else {
         const smoothing = 0.2;
-
         currentX += dx * smoothing;
         currentY += dy * smoothing;
     }
 
     cursor.style.left = currentX + "px";
     cursor.style.top = currentY + "px";
+
+    if (window.aimCursor) {
+        const aimDx = currentX - aimX;
+        const aimDy = currentY - aimY;
+
+        const aimSmoothing = 0.2;
+
+        aimX += aimDx * aimSmoothing;
+        aimY += aimDy * aimSmoothing;
+
+        const offsetY = -7.5;
+
+        window.aimCursor.style.left = aimX + "px";
+        window.aimCursor.style.top = (aimY + offsetY) + "px";
+    }
 
     requestAnimationFrame(followTarget);
 }
@@ -157,6 +175,14 @@ function resetCursor() {
     cursor.style.top = currentY + "px";
 
     window.currentTarget = null;
+
+    if (aimCursor) {
+        aimX = currentX;
+        aimY = currentY;
+
+        aimCursor.style.left = aimX + "px";
+        aimCursor.style.top = aimY + "px";
+    }
 }
 
 function stopAimTracking() {

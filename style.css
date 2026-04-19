@@ -1011,20 +1011,20 @@ body.star-active::after {
     }
 }
 
-
-
 #aimCursor {
     position: fixed;
-    width: 60px; /* ajuste */
-    height: 60px;
+    width: 65px; 
+    height: 65px;
     pointer-events: none;
     transform: translate(-50%, -50%);
     display: none;
-    z-index: 9999;
+    z-index: 2001;
 }
 
-
-
+#aimCursor {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 6px rgb(255, 253, 253));
+}
 
 body.aim-mode::after {
     content: "";
