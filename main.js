@@ -18,6 +18,13 @@ initBackgroundPopup();
 const game = new Game();
 window.gameInstance = game;
 
+window.aimStep = 0;
+window.currentTarget = null;
+
+let aimDirX = 0;
+let aimDirY = 0;
+let aimMoving = false;
+
 document.addEventListener("click", (e) => {
     if (e.target.id === "startButton") return;
 
@@ -37,72 +44,35 @@ document.addEventListener("dblclick", e => e.preventDefault());
 const difficultyButton = document.getElementById("difficultyButton");
 const difficultyText = document.getElementById("difficultyText");
 
-let isEasy = true;
+const modes = ["easy", "hard", "expert"];
+let currentModeIndex = 0;
 
 difficultyButton.addEventListener("click", () => {
-    isEasy = !isEasy;
+    currentModeIndex = (currentModeIndex + 1) % modes.length;
 
-    if (isEasy) {
-        difficultyText.textContent = "EASY";
-        difficultyText.classList.remove("hard");
-        difficultyText.classList.add("easy");
-        game.difficulty = "easy";
-    } else {
-        difficultyText.textContent = "HARD";
-        difficultyText.classList.remove("easy");
-        difficultyText.classList.add("hard");
-        game.difficulty = "hard";
-    }
+    const mode = modes[currentModeIndex];
+    game.difficulty = mode;
+
+    difficultyText.textContent = mode.toUpperCase();
+    difficultyText.classList.remove("easy", "hard", "expert");
+    difficultyText.classList.add(mode);
 });
 
-let currentTarget = null;
+function getNextTarget() {
+    const bubbles = document.querySelectorAll(".bubble");
 
-function updateAim() {
-    const game = window.gameInstance;
+    return [...bubbles].find(b => {
+        const instance = b.instance;
 
-    if (!game || !game.isAimActive || game.isPaused) {
-        requestAnimationFrame(updateAim);
-        return;
-    }
-
-    const cursor = document.getElementById("customCursor");
-    if (!cursor) {
-        requestAnimationFrame(updateAim);
-        return;
-    }
-
-    if (!currentTarget || !document.body.contains(currentTarget)) {
-        const bubbles = document.querySelectorAll(".bubble");
-
-        currentTarget = [...bubbles].find(b => {
-            const instance = b.instance;
-
-            return instance &&
-                !instance.isBad &&
-                !instance.isHeart &&
-                !instance.isSlow &&
-                !instance.isStar &&
-                !instance.isAim &&
-                !instance.isSpecial;
-        }) || null;
-    }
-
-    if (currentTarget) {
-        const rect = currentTarget.getBoundingClientRect();
-        const targetX = rect.left + rect.width / 2;
-        const targetY = rect.top + rect.height / 2;
-
-        const currentX = parseFloat(cursor.style.left) || targetX;
-        const currentY = parseFloat(cursor.style.top) || targetY;
-
-        cursor.style.left = currentX + (targetX - currentX) * 0.2 + "px";
-        cursor.style.top = currentY + (targetY - currentY) * 0.2 + "px";
-    }
-
-    requestAnimationFrame(updateAim);
+        return instance &&
+            !instance.isBad &&
+            !instance.isHeart &&
+            !instance.isSlow &&
+            !instance.isStar &&
+            !instance.isAim &&
+            !instance.isSpecial;
+    }) || null;
 }
-
-updateAim();
 
 document.addEventListener("click", (e) => {
     const game = window.gameInstance;
@@ -111,13 +81,104 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (currentTarget) {
-        currentTarget.click();
+    const cursor = document.getElementById("customCursor");
+if (window.aimStep === 0) {
+
+    window.currentTarget = getNextTarget();
+
+    if (window.currentTarget) {
+
+        const rect = window.currentTarget.getBoundingClientRect();
+
+        const targetX = rect.left + rect.width / 2;
+        const targetY = rect.top + rect.height / 2;
+
+        const dx = targetX - currentX;
+        const dy = targetY - currentY;
+
+const distance = Math.sqrt(dx * dx + dy * dy); 
+
+        if (distance === 0) return;
+
+  
+        aimMoving = true;
+
+        followTarget();
+
+        window.aimStep = 1;
     }
 
-    currentTarget = null;
+
+    } else if (window.aimStep === 1) {
+aimMoving = false;
+        if (window.currentTarget) {
+            window.currentTarget.click();
+        }
+currentX = window.innerWidth / 2;
+currentY = window.innerHeight / 2;
+
+cursor.style.left = currentX + "px";
+cursor.style.top = currentY + "px";
+        window.currentTarget = null;
+        window.aimStep = 0;
+    }
 });
 
+let currentX = window.innerWidth / 2;
+let currentY = window.innerHeight / 2;
+
+function followTarget() {
+    if (!aimMoving || !window.gameInstance.isAimActive) return;
+
+    const cursor = document.getElementById("customCursor");
+
+    if (!window.currentTarget || !document.body.contains(window.currentTarget)) {
+        aimMoving = false;
+        resetCursor();
+        return;
+    }
+
+    const rect = window.currentTarget.getBoundingClientRect();
+
+    const targetX = rect.left + rect.width / 2;
+    const targetY = rect.top + rect.height / 2;
+
+    const dx = targetX - currentX;
+    const dy = targetY - currentY;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 10) {
+        aimMoving = false;
+
+        window.currentTarget.click();
+
+        resetCursor();
+        return;
+    }
+
+    const speed = 20;
+
+    currentX += (dx / distance) * speed;
+    currentY += (dy / distance) * speed;
+
+    cursor.style.left = currentX + "px";
+    cursor.style.top = currentY + "px";
+
+    requestAnimationFrame(followTarget);
+}
+function resetCursor() {
+    const cursor = document.getElementById("customCursor");
+
+    currentX = window.innerWidth / 2;
+    currentY = window.innerHeight / 2;
+
+    cursor.style.left = currentX + "px";
+    cursor.style.top = currentY + "px";
+
+    window.currentTarget = null;
+    window.aimStep = 0;
+}
 document.addEventListener("keydown", (e) => {
     const game = window.gameInstance;
     if (!game) return;

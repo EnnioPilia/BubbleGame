@@ -1,14 +1,12 @@
 import { sounds, play, pause } from "./sound.js";
 import Bubble from "./bubble.js";
 import { showRanking, hideRanking } from "./rankingPopup.js";
+import { lockCursor, unlockCursor } from "./cursor.js";
 
 const DIFFICULTY = {
-    easy: {
-        spawnSpeed: 800,
-    },
-    hard: {
-        spawnSpeed: 600,
-    }
+    easy: { spawnSpeed: 800 },
+    hard: { spawnSpeed: 600 },
+    expert: { spawnSpeed: 500 }
 };
 
 const POWERUPS = {
@@ -24,7 +22,8 @@ const POWERUPS = {
 
 const STAR_CONFIG = {
     easy: 15000,
-    hard: 15000
+    hard: 15000,
+    expert: 15000
 };
 
 export default class Game {
@@ -45,7 +44,8 @@ export default class Game {
 
         this.heartMilestones = {
             easy: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 300, 350, 450, 500, 650, 700],
-            hard: [80, 100, 140, 180, 210, 380, 550, 650, 700]
+            hard: [80, 100, 140, 180, 210, 380, 550, 650, 700],
+            expert: [80, 100, 140, 180, 200, 360, 460, 560, 600, 650, 700]
         };
 
         this.slowMilestones = {
@@ -60,7 +60,8 @@ export default class Game {
 
         this.starMilestones = {
             easy: [220, 360, 520],
-            hard: [260, 420, 620]
+            hard: [260, 420, 620],
+            expert: [250, 350, 450, 550]
         };
 
         this.heartMilestonesUsed = new Set();
@@ -121,6 +122,7 @@ export default class Game {
         this.resumeButton.onclick = () => this.resumeGame();
         const tabEasy = document.getElementById("tabEasy");
         const tabHard = document.getElementById("tabHard");
+        const tabExpert = document.getElementById("tabExpert");
 
         this.restartButtonGameOver.onclick = () => this.restart();
         this.menuButtonGameOver.onclick = () => this.backToMenu();
@@ -139,6 +141,13 @@ export default class Game {
                 e.stopPropagation();
                 showRanking(this.rankingList, "hard");
 
+            };
+        }
+
+        if (tabExpert) {
+            tabExpert.onclick = (e) => {
+                e.stopPropagation();
+                showRanking(this.rankingList, "expert");
             };
         }
 
@@ -503,6 +512,30 @@ export default class Game {
             else if (this.score >= 10) newSpeed = 500;
         }
 
+        else if (this.difficulty === "expert") {
+
+            if (
+                this.starMilestones.expert?.includes(this.score) &&
+                !this.starMilestonesUsed.has(this.score)
+            ) {
+                this.spawnStar();
+                this.starMilestonesUsed.add(this.score);
+            }
+
+            if (
+                this.heartMilestones.expert?.includes(this.score) &&
+                !this.heartMilestonesUsed.has(this.score)
+            ) {
+                this.spawnHeart();
+                this.heartMilestonesUsed.add(this.score);
+            }
+
+            if (this.score >= 200) newSpeed = 300;
+            else if (this.score >= 150) newSpeed = 350;
+            else if (this.score >= 100) newSpeed = 400;
+            else if (this.score >= 50) newSpeed = 450;
+        }
+
         if (newSpeed !== this.spawnSpeed) {
             this.spawnSpeed = newSpeed;
             this.run();
@@ -517,6 +550,9 @@ export default class Game {
         pause(sounds.starMode);
         play(sounds.aimMode);
 
+        lockCursor();
+
+
         if (this.isSlowActive) {
             this.isSlowActive = false;
             document.body.classList.remove("slow-mode");
@@ -530,12 +566,17 @@ export default class Game {
             pause(sounds.starMode);
         }
 
-        const flash = document.getElementById("flashEffect");
-        flash.classList.add("flash-active");
+        const flash = document.getElementById("flashEffectAim");
+        flash.classList.add("flashAim-active");
 
         setTimeout(() => {
-            flash.classList.remove("flash-active");
-        }, 300);
+            flash.classList.remove("flashAim-active");
+        }, 800);
+
+        const cursor = document.getElementById("customCursor");
+
+        cursor.style.left = (window.innerWidth / 2) + "px";
+        cursor.style.top = (window.innerHeight / 2) + "px";
 
         this.isAimActive = true;
         document.body.classList.add("aim-mode");
@@ -548,7 +589,7 @@ export default class Game {
 
         this.currentTarget = null;
 
-        this.aimRemaining = 10000;
+        this.aimRemaining = 910000;
         this.aimStartTime = Date.now();
 
         clearTimeout(this.aimTimeout);
@@ -559,6 +600,16 @@ export default class Game {
     }
 
     endAim() {
+        window.aimStep = 0;
+        window.currentTarget = null;
+        unlockCursor();
+        const cursor = document.getElementById("customCursor");
+        
+        cursor.style.left = window.innerWidth / 2 + "px";
+        cursor.style.top = window.innerHeight / 2 + "px";
+
+        document.body.classList.remove("no-custom-cursor");
+
         this.isAimActive = false;
         document.body.classList.remove("aim-mode");
 
@@ -570,12 +621,12 @@ export default class Game {
             b.remove();
         });
 
-        const flash = document.getElementById("flashEffect");
-        flash.classList.add("flash-active");
+        const flash = document.getElementById("flashEffectAim");
+        flash.classList.add("flashAim-active");
 
         setTimeout(() => {
-            flash.classList.remove("flash-active");
-        }, 300);
+            flash.classList.remove("flashAim-active");
+        }, 800);
 
         this.updateMusic();
     }
@@ -721,7 +772,7 @@ export default class Game {
             pause(sounds.musicGame);
             pause(sounds.stress);
             pause(sounds.slowMusic);
-            play(sounds.aimMode);
+            pause(sounds.aimMode);
             play(sounds.starMode);
             return;
         }
@@ -749,6 +800,9 @@ export default class Game {
     pauseGame() {
         if (this.isPaused) return;
 
+        if (this.isAimActive) {
+            unlockCursor();
+        }
         if (this.isSlowActive && this.slowTimeout) {
             clearTimeout(this.slowTimeout);
             this.slowRemaining -= Date.now() - this.slowStartTime;
@@ -823,8 +877,8 @@ export default class Game {
                 instance.isSpecial ||
                 instance.isHeart ||
                 instance.isBad ||
-                instance.isSlow ||
-                instance.isStar
+                instance.isStar ||
+                instance.isAim
             ) return;
 
             const rect = b.getBoundingClientRect();

@@ -16,12 +16,15 @@ export function showRanking(rankingList, difficulty) {
 
     openPopup("rankingPopup");
     toggleCustomCursor(false);
+    
+document.getElementById("tabEasy")
+    .classList.toggle("active", difficulty === "easy");
 
-    document.getElementById("tabEasy")
-        .classList.toggle("active", difficulty === "easy");
+document.getElementById("tabHard")
+    .classList.toggle("active", difficulty === "hard");
 
-    document.getElementById("tabHard")
-        .classList.toggle("active", difficulty === "hard");
+document.getElementById("tabExpert")
+    .classList.toggle("active", difficulty === "expert");
 }
 
 export function hideRanking() {

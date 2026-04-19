@@ -11,12 +11,12 @@ export default class Bubble {
         this.spawnedDuringStar = this.game.isStarActive;
 
         this.isBad = !this.game.isStarActive &&
-        !this.game.isAimActive && 
+            !this.game.isAimActive &&
             !this.isSpecial &&
             !this.isHeart &&
             !this.isSlow &&
             !this.isStar &&
-             !this.isAim &&
+            !this.isAim &&
             Math.random() < 0.45;
 
         this.counted = false;
@@ -50,6 +50,7 @@ export default class Bubble {
         if (this.isSlow) {
             size = isMobile ? 90 : 160;
         }
+
         else if (this.isSpecial) {
             if (this.game.difficulty === "easy") {
                 size = isMobile ? 120 : 180;
@@ -57,12 +58,23 @@ export default class Bubble {
                 size = isMobile ? 80 : 110;
             }
         }
+
         else {
-            size = Math.random() * (maxSize - minSize) + minSize;
+            if (this.game.difficulty === "expert") {
+                size = isMobile ? 80 : 110;
+            } else {
+                size = Math.random() * (maxSize - minSize) + minSize;
+            }
         }
+
         if (this.isStar) {
-            size = isMobile ? 90 : 150;
+            if (this.game.difficulty === "expert") {
+                size = isMobile ? 80 : 100;
+            } else {
+                size = isMobile ? 90 : 150;
+            }
         }
+
         else if (this.isSlow) {
             this.inner.classList.add("slow-bubble");
         }
@@ -145,11 +157,14 @@ export default class Bubble {
             if (this.isHeart && this.game.difficulty === "easy") {
                 duration *= 1.4;
             }
+
             if (this.isStar) {
-                if (this.game.difficulty === "easy") {
-                    duration = 6;
-                } else {
-                    duration = 5;
+                if (this.game.difficulty === "easy") duration = 6;
+                else if (this.game.difficulty === "hard") duration = 5;
+                else if (this.game.difficulty === "expert") duration = 3;
+            } else {
+                if (this.game.difficulty === "expert") {
+                    duration *= 0.8;
                 }
             }
             this.element.style.setProperty('--bubble-duration', duration + 's');

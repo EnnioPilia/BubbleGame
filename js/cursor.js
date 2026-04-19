@@ -11,29 +11,29 @@ export function initCursor() {
     let selectedCursor = localStorage.getItem("cursorImage") || "cursor1.png";
     const playerInput = document.getElementById("playerName");
 
-if (playerInput) {
-    playerInput.addEventListener("click", (e) => {
-        e.stopPropagation(); // 👈 empêche le document.click
-    });
+    if (playerInput) {
+        playerInput.addEventListener("click", (e) => {
+            e.stopPropagation(); // 👈 empêche le document.click
+        });
 
-    playerInput.addEventListener("focus", () => {
-        toggleCustomCursor(false);
-    });
+        playerInput.addEventListener("focus", () => {
+            toggleCustomCursor(false);
+        });
 
-    playerInput.addEventListener("blur", () => {
-        toggleCustomCursor(true);
-    });
-
-    playerInput.addEventListener("mouseenter", () => {
-        toggleCustomCursor(false);
-    });
-
-    playerInput.addEventListener("mouseleave", () => {
-        if (document.activeElement !== playerInput) {
+        playerInput.addEventListener("blur", () => {
             toggleCustomCursor(true);
-        }
-    });
-}
+        });
+
+        playerInput.addEventListener("mouseenter", () => {
+            toggleCustomCursor(false);
+        });
+
+        playerInput.addEventListener("mouseleave", () => {
+            if (document.activeElement !== playerInput) {
+                toggleCustomCursor(true);
+            }
+        });
+    }
 
     if (cursor) {
         cursor.src = "image/" + selectedCursor;
@@ -83,6 +83,8 @@ if (playerInput) {
     }
 
     document.addEventListener("mousemove", (e) => {
+        if (lock) return;
+
         if (cursor) {
             cursor.style.left = e.clientX + "px";
             cursor.style.top = e.clientY + "px";
@@ -152,3 +154,20 @@ function updateCursorSlider(slider) {
     slider.style.background =
         `linear-gradient(to right, gold ${percent}%, white ${percent}%)`;
 }
+
+let lock = false;
+
+export function lockCursor() {
+    lock = true;
+}
+
+export function unlockCursor() {
+    lock = false;
+}
+
+document.addEventListener("mousemove", (e) => {
+    if (!lock) return;
+
+    e.stopPropagation();
+    e.preventDefault();
+});
