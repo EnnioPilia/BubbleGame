@@ -1013,7 +1013,15 @@ body.star-active::after {
 
 
 
-
+#aimCursor {
+    position: fixed;
+    width: 60px; /* ajuste */
+    height: 60px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 9999;
+}
 
 
 

@@ -13,7 +13,7 @@ export function initCursor() {
 
     if (playerInput) {
         playerInput.addEventListener("click", (e) => {
-            e.stopPropagation(); // 👈 empêche le document.click
+            e.stopPropagation();
         });
 
         playerInput.addEventListener("focus", () => {
@@ -164,10 +164,3 @@ export function lockCursor() {
 export function unlockCursor() {
     lock = false;
 }
-
-document.addEventListener("mousemove", (e) => {
-    if (!lock) return;
-
-    e.stopPropagation();
-    e.preventDefault();
-});

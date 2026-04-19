@@ -110,6 +110,7 @@ document.addEventListener("click", (e) => {
 
 function followTarget() {
     if (!isTracking || !window.gameInstance.isAimActive) return;
+    if (window.gameInstance.isPaused) return;
 
     const cursor = document.getElementById("customCursor");
 

@@ -186,7 +186,8 @@ export default class Game {
         this.lifes = 4;
         this.lastSpecialSpawn = 0;
         this.currentTarget = null;
-
+        this.lastUpdateTime = Date.now();
+        this.gameTime = 0;
         const config = DIFFICULTY[this.difficulty] || DIFFICULTY.easy;
 
         this.baseSpawnSpeed = config.spawnSpeed;
@@ -552,6 +553,9 @@ export default class Game {
 
         lockCursor();
 
+        this.currentTarget = null;
+        this.aimStartTime = Date.now();
+        this.aimRemaining = 10000;
 
         if (this.isSlowActive) {
             this.isSlowActive = false;
@@ -587,11 +591,6 @@ export default class Game {
             b.remove();
         });
 
-        this.currentTarget = null;
-
-        this.aimRemaining = 10000;
-        this.aimStartTime = Date.now();
-
         clearTimeout(this.aimTimeout);
 
         this.aimTimeout = setTimeout(() => {
@@ -603,8 +602,9 @@ export default class Game {
         window.aimStep = 0;
         window.currentTarget = null;
         unlockCursor();
+
         const cursor = document.getElementById("customCursor");
-        isTracking = false;
+
         cursor.style.left = window.innerWidth / 2 + "px";
         cursor.style.top = window.innerHeight / 2 + "px";
 
@@ -620,6 +620,12 @@ export default class Game {
             if (instance) instance.counted = true;
             b.remove();
         });
+
+        window.currentTarget = null;
+
+        if (window.stopAimTracking) {
+            window.stopAimTracking();
+        }
 
         const flash = document.getElementById("flashEffectAim");
         flash.classList.add("flashAim-active");
@@ -837,6 +843,9 @@ export default class Game {
     resumeGame() {
         if (!this.isPaused) return;
 
+        if (this.isAimActive) {
+            lockCursor();
+        }
         if (this.isSlowActive) {
             this.slowStartTime = Date.now();
             this.slowTimeout = setTimeout(() => this.endSlow(), this.slowRemaining);
