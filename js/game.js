@@ -24,8 +24,8 @@ const POWERUPS = {
 
 const STAR_CONFIG = {
     easy: 15000,
-    hard: 15000,
-    expert: 15000
+    hard: 14000,
+    expert: 13000
 };
 
 export default class Game {
@@ -52,12 +52,12 @@ export default class Game {
 
         this.slowMilestones = {
             easy: [30, 120, 210, 330, 510, 680],
-            hard: [90, 170, 250, 410, 540, 620]
+            hard: [90, 170, 255, 410, 540, 620]
         };
 
         this.aimMilestones = {
             easy: [70, 170, 480, 640, 700],
-            hard: [120, 220, 380, 580, 680]
+            hard: [120, 220, 380, 580]
         };
 
         this.starMilestones = {
@@ -560,7 +560,7 @@ export default class Game {
 
         this.currentTarget = null;
         this.aimStartTime = Date.now();
-        this.aimRemaining = 10000;
+        this.aimRemaining = 9000;
 
         const aimCursor = document.getElementById("aimCursor");
         if (aimCursor) aimCursor.style.display = "block";

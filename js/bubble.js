@@ -148,10 +148,15 @@ export default class Bubble {
 
         } else {
             const screenFactor = window.innerHeight / 800;
-            let baseSpeed = this.game.isSlowActive
-                ? this.game.baseSpawnSpeed * this.game.getSlowFactor()
-                : this.game.spawnSpeed;
+            let baseSpeed;
 
+            if (this.game.isAimActive) {
+                baseSpeed = Math.max(this.game.spawnSpeed, 500); 
+            } else if (this.game.isSlowActive) {
+                baseSpeed = this.game.baseSpawnSpeed * this.game.getSlowFactor();
+            } else {
+                baseSpeed = this.game.spawnSpeed;
+            }
             let duration = Math.max(1.5, (baseSpeed / 1000) * 6 * screenFactor);
 
             if (this.isHeart && this.game.difficulty === "easy") {

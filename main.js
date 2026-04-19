@@ -137,7 +137,7 @@ function followTarget() {
         currentX = targetX;
         currentY = targetY;
     } else {
-        const smoothing = 0.2;
+        const smoothing = 0.15;
         currentX += dx * smoothing;
         currentY += dy * smoothing;
     }
@@ -149,12 +149,12 @@ function followTarget() {
         const aimDx = currentX - aimX;
         const aimDy = currentY - aimY;
 
-        const aimSmoothing = 0.2;
+        const aimSmoothing = 0.15;
 
         aimX += aimDx * aimSmoothing;
         aimY += aimDy * aimSmoothing;
 
-        const offsetY = -7.5;
+        const offsetY = -9;
 
         window.aimCursor.style.left = aimX + "px";
         window.aimCursor.style.top = (aimY + offsetY) + "px";
