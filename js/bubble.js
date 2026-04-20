@@ -153,9 +153,9 @@ export default class Bubble {
             const screenFactor = window.innerHeight / 800;
             let baseSpeed;
 
-if (this.game.isAimActive) {
-    baseSpeed = AIM_SPEED;
-} else if (this.game.isSlowActive) {
+            if (this.game.isAimActive) {
+                baseSpeed = AIM_SPEED;
+            } else if (this.game.isSlowActive) {
                 baseSpeed = this.game.baseSpawnSpeed * this.game.getSlowFactor();
 
             } else {
@@ -290,13 +290,22 @@ if (this.game.isAimActive) {
     }
 
     handleBad() {
-        play(sounds.error);
+        if (this.game.isGameOver) return;
 
-        this.destroy();
+        play(sounds.gameOver);
 
-        this.game.lifes = 0;
-        this.game.displayLifes();
-        this.game.gameOver();
+        this.inner.classList.add("bad-explosion");
+        this.element.style.pointerEvents = "none";
+
+        setTimeout(() => {
+
+            this.element.remove();
+            this.game.lifes = 0;
+            this.game.displayLifes();
+
+            this.game.gameOver();
+
+        }, 250);
     }
 
     handleNormal() {

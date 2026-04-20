@@ -56,7 +56,7 @@ export default class Game {
         };
 
         this.aimMilestones = {
-            easy: [1, 70, 170, 480, 640, 700],
+            easy: [70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580]
         };
 
@@ -281,7 +281,7 @@ export default class Game {
 
             case "gameover":
                 document.body.classList.add("gameover");
-                window.keyboardContext = "gameover"; 
+                window.keyboardContext = "gameover";
                 this.gameOverButtons.style.display = "flex";
                 this.hideLifes();
                 break;
@@ -878,7 +878,7 @@ export default class Game {
             }, this.aimRemaining);
         }
 
-window.keyboardContext = "game";
+        window.keyboardContext = "game";
 
         document.body.classList.remove("pause");
         this.isPaused = false;
@@ -945,7 +945,6 @@ window.keyboardContext = "game";
         clearTimeout(this.slowTimeout);
         this.isSlowActive = false;
 
-        play(sounds.gameOver);
         pause(sounds.musicGame);
         pause(sounds.stress);
         pause(sounds.slowMusic);
@@ -953,7 +952,10 @@ window.keyboardContext = "game";
 
         this.clearBubbles();
 
-        document.getElementById("gameOverBackground").style.display = "block";
+        const explosion = document.getElementById("gameOverBackground");
+
+        explosion.style.display = "block";
+        explosion.classList.add("active");
 
         this.setUI("gameover");
 
