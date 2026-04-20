@@ -56,7 +56,7 @@ export default class Game {
         };
 
         this.aimMilestones = {
-            easy: [70, 170, 480, 640, 700],
+            easy: [1, 70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580]
         };
 
@@ -264,6 +264,7 @@ export default class Game {
             case "game":
                 this.scoreDisplay.style.display = "block";
                 this.pauseButton.style.display = "block";
+                window.keyboardContext = "game";
                 break;
 
             case "pause":
@@ -275,11 +276,12 @@ export default class Game {
                 this.menuButton.style.display = "block";
                 this.settingsButtonPause.style.display = "block";
                 this.scoreDisplay.style.display = "block";
+                window.keyboardContext = "pause";
                 break;
 
             case "gameover":
                 document.body.classList.add("gameover");
-
+                window.keyboardContext = "gameover"; 
                 this.gameOverButtons.style.display = "flex";
                 this.hideLifes();
                 break;
@@ -586,7 +588,7 @@ export default class Game {
 
         setTimeout(() => {
             flash.classList.remove("flashAim-active");
-        }, 800);
+        }, 2000);
 
 
         cursor.style.left = (window.innerWidth / 2) + "px";
@@ -875,6 +877,8 @@ export default class Game {
                 this.endAim();
             }, this.aimRemaining);
         }
+
+window.keyboardContext = "game";
 
         document.body.classList.remove("pause");
         this.isPaused = false;

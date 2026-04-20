@@ -21,6 +21,7 @@ window.gameInstance = game;
 window.aimCursor
 window.aimStep = 0;
 window.currentTarget = null;
+window.keyboardContext = "menu";
 
 let aimX = window.innerWidth / 2;
 let aimY = window.innerHeight / 2;
@@ -154,7 +155,7 @@ function followTarget() {
         aimX += aimDx * aimSmoothing;
         aimY += aimDy * aimSmoothing;
 
-        const offsetY = -9;
+        const offsetY = -13;
 
         window.aimCursor.style.left = aimX + "px";
         window.aimCursor.style.top = (aimY + offsetY) + "px";
@@ -196,6 +197,17 @@ document.addEventListener("keydown", (e) => {
 
     if (e.key === "Escape") {
 
+        const anyPopupOpen = document.querySelector(
+            "#settingsPopup.active, #audioPopup.active, #cursorPopup.active, #backgroundPopup.active"
+        ) || document.getElementById("rankingPopup")?.style.display === "flex";
+
+        if (anyPopupOpen) {
+            closeAllPopups();
+            return;
+        }
+
+        if (window.currentGameState === "menu") return;
+
         if (!game.isPaused) {
             stopAimTracking();
             resetCursor();
@@ -204,4 +216,108 @@ document.addEventListener("keydown", (e) => {
             game.resumeGame();
         }
     }
+});
+
+
+
+const menuButtons = [
+    document.getElementById("startButton"),
+    document.getElementById("difficultyButton"),
+    document.getElementById("menuRankingButton"),
+    document.getElementById("settingsButtonMenu")
+];
+
+let selectedIndex = 0;
+
+function updateFocus() {
+    menuButtons[selectedIndex].focus();
+}
+
+document.addEventListener("keydown", (e) => {
+
+    if ((e.key === " " || e.code === "Space") && document.activeElement.tagName !== "INPUT") {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+    }
+    const contexts = {
+        menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu", "playerName"],
+        pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"],
+        gameover: ["restartButtonGameOver", "menuButtonGameOver", "rankingButtonGameOver"],
+        settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
+        audio: ["soundToggle", "closeAudio"],
+        cursor: ["validateCursor"],
+        background: ["closeBackground"],
+        ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]
+    };
+
+    const active = document.activeElement;
+
+    const isTyping =
+        active &&
+        (active.tagName === "INPUT" ||
+            active.tagName === "TEXTAREA" ||
+            active.isContentEditable);
+
+    if (isTyping) {
+
+        if (e.key === "Escape") {
+            document.activeElement.blur();
+
+            const ids = contexts[window.keyboardContext];
+            if (ids) {
+                window.selectedIndex = 0;
+                const el = document.getElementById(ids[0]);
+                if (el) el.focus();
+            }
+        }
+
+        return;
+    }
+    
+    if (e.key === " " || e.code === "Space") {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+    }
+
+    const ids = contexts[window.keyboardContext];
+    if (!ids) return;
+
+    const buttons = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+    if (buttons.length === 0) return;
+
+    if (typeof window.selectedIndex === "undefined") {
+        window.selectedIndex = 0;
+    }
+
+    if (e.key === "ArrowDown") {
+        window.selectedIndex = (window.selectedIndex + 1) % buttons.length;
+        const el = buttons[window.selectedIndex];
+
+        el.focus();
+
+        if (el.tagName === "INPUT") {
+            el.select();
+        }
+    }
+
+    if (e.key === "ArrowUp") {
+        window.selectedIndex = (window.selectedIndex - 1 + buttons.length) % buttons.length;
+        const el = buttons[window.selectedIndex];
+
+        el.focus();
+
+        if (el.tagName === "INPUT") {
+            el.select();
+        }
+    }
+
+    if (e.key === "Enter") {
+        if (window.keyboardContext === "pause") {
+        }
+        buttons[window.selectedIndex].click();
+    }
+
 });

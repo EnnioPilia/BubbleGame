@@ -21,14 +21,14 @@ export function initSettingsUI() {
             "#settingsPopup.active, #audioPopup.active, #cursorPopup.active"
         );
     }
-    
-settingsButtons.forEach(btn => {
-    btn?.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openPopup("settingsPopup");
-        updateCursorState();
+
+    settingsButtons.forEach(btn => {
+        btn?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openPopup("settingsPopup");
+            updateCursorState();
+        });
     });
-});
 
     closeSettings?.addEventListener("click", () => {
         settingsPopup.classList.remove("active");
@@ -38,17 +38,17 @@ settingsButtons.forEach(btn => {
         }
     });
 
-openSound?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openPopup("audioPopup");
-    updateCursorState();
-});
+    openSound?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openPopup("audioPopup");
+        updateCursorState();
+    });
 
-openCursor?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openPopup("cursorPopup");
-    updateCursorState();
-});
+    openCursor?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openPopup("cursorPopup");
+        updateCursorState();
+    });
 
     [settingsPopup, audioPopup, cursorPopup].forEach(popup => {
         popup?.addEventListener("click", (e) => {

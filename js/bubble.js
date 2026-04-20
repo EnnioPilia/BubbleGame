@@ -1,5 +1,7 @@
 import { sounds, play, pause } from "./sound.js";
 
+const AIM_SPEED = 600
+
 export default class Bubble {
     constructor(game, forceSpecial = false, isHeart = false, isSlow = false, isStar = false, isAim = false) {
         this.game = game;
@@ -22,6 +24,7 @@ export default class Bubble {
         this.counted = false;
         this.clickCount = 0;
         this.maxClicks = 100;
+
 
         this.createElement();
         this.setupStyle();
@@ -150,15 +153,17 @@ export default class Bubble {
             const screenFactor = window.innerHeight / 800;
             let baseSpeed;
 
-            if (this.game.isAimActive) {
-                baseSpeed = Math.max(this.game.spawnSpeed, 500); 
-            } else if (this.game.isSlowActive) {
+if (this.game.isAimActive) {
+    baseSpeed = AIM_SPEED;
+} else if (this.game.isSlowActive) {
                 baseSpeed = this.game.baseSpawnSpeed * this.game.getSlowFactor();
+
             } else {
                 baseSpeed = this.game.spawnSpeed;
-            }
-            let duration = Math.max(1.5, (baseSpeed / 1000) * 6 * screenFactor);
 
+            }
+
+            let duration = Math.max(1.5, (baseSpeed / 1000) * 6 * screenFactor);
             if (this.isHeart && this.game.difficulty === "easy") {
                 duration *= 1.4;
             }
@@ -167,6 +172,7 @@ export default class Bubble {
                 if (this.game.difficulty === "easy") duration = 6;
                 else if (this.game.difficulty === "hard") duration = 5;
                 else if (this.game.difficulty === "expert") duration = 3;
+
             } else {
                 if (this.game.difficulty === "expert") {
                     duration *= 0.8;
