@@ -46,8 +46,8 @@ export default class Game {
 
         this.heartMilestones = {
             easy: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 300, 350, 450, 500, 650, 700],
-            hard: [80, 100, 140, 180, 210, 380, 550, 650, 700],
-            expert: [80, 100, 140, 180, 200, 360, 460, 560, 600, 650, 700]
+            hard: [80, 100, 140, 180, 210, 380, 550, 650, 700, 750],
+            expert: [80, 100, 140, 180, 200, 360, 460, 560, 600, 650]
         };
 
         this.slowMilestones = {
@@ -61,8 +61,8 @@ export default class Game {
         };
 
         this.starMilestones = {
-            easy: [220, 360, 520],
-            hard: [260, 420, 620],
+            easy: [220, 360, 520, 650],
+            hard: [260, 420, 620, 750],
             expert: [250, 350, 450, 550]
         };
 
@@ -925,6 +925,8 @@ export default class Game {
         });
 
         if (this.lifes <= 0) {
+                    play(sounds.gameOver);
+
             this.gameOver();
         }
     }

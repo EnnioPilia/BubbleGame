@@ -753,6 +753,14 @@ body.pause #gameButtons {
     transform: scale(1.2);
 }
 
+#closeSettings:focus {
+    padding: 10px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    right: 11px;
+    margin-top: 40px;
+}
+
 .settings-content button {
     margin-top: 25px;
 }
@@ -1013,7 +1021,7 @@ body.star-active::after {
 
 #aimCursor {
     position: fixed;
-    width: 65px; 
+    width: 65px;
     height: 65px;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -1038,9 +1046,7 @@ body.aim-mode::after {
     width: 100px;
     height: 100px;
     animation: aimPulse 1.3s infinite;
-    filter: drop-shadow(0 0 10px red)
-            drop-shadow(0 0 20px red)
-            drop-shadow(0 0 30px red);
+    filter: drop-shadow(0 0 10px red) drop-shadow(0 0 20px red) drop-shadow(0 0 30px red);
 }
 
 @keyframes aimPulse {
@@ -1048,10 +1054,12 @@ body.aim-mode::after {
         transform: scale(1);
         filter: drop-shadow(0 0 5px rgb(255, 0, 0));
     }
+
     50% {
         transform: scale(1.2);
         filter: drop-shadow(0 0 11px rgb(255, 0, 0));
     }
+
     100% {
         transform: scale(1);
         filter: drop-shadow(0 0 5px rgb(255, 0, 0));
@@ -1083,8 +1091,6 @@ body.aim-mode {
     pointer-events: none;
 }
 
-
-
 #gameOverBackground {
     position: fixed;
     top: 50%;
@@ -1094,13 +1100,15 @@ body.aim-mode {
     z-index: 7;
     pointer-events: none;
 }
+
 body.gameover::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 6;
 }
+
 #gameOverBackground.active {
     animation: gameOverExplosion 1s ease-out forwards;
 }
@@ -1110,19 +1118,21 @@ body.gameover::before {
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
     }
+
     30% {
         transform: translate(-50%, -50%) scale(1.1);
         opacity: 1;
     }
+
     100% {
         transform: translate(-50%, -50%) scale(1.2);
-        opacity: 1; 
+        opacity: 1;
     }
 }
 
 .bad-explosion {
-    animation: explodeBubble 3.5s linear forwards;
-  border: 1px solid black;
+    animation: explodeBubble 15s linear forwards;
+    border: 1px solid black;
 }
 
 @keyframes explodeBubble {
@@ -1132,7 +1142,7 @@ body.gameover::before {
     }
 
     100% {
-        transform: scale(200); 
+        transform: scale(1000);
         opacity: 0.2;
     }
 }
