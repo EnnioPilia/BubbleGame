@@ -47,8 +47,22 @@ document.addEventListener("dblclick", e => e.preventDefault());
 
 const difficultyButton = document.getElementById("difficultyButton");
 const difficultyText = document.getElementById("difficultyText");
+const difficultyLabel = document.getElementById("difficultyLabel");
 
-const modes = ["easy", "hard", "expert"];
+const defaultMode = "easy";
+game.difficulty = defaultMode;
+
+difficultyText.textContent = defaultMode.toUpperCase();
+difficultyText.classList.remove("easy", "hard", "expert", "training");
+difficultyText.classList.add(defaultMode);
+
+if (defaultMode === "training") {
+    difficultyLabel.textContent = "";
+} else {
+    difficultyLabel.textContent = "MODE - ";
+}
+
+const modes = ["training", "easy", "hard", "expert"];
 let currentModeIndex = 0;
 
 difficultyButton.addEventListener("click", () => {
@@ -58,7 +72,14 @@ difficultyButton.addEventListener("click", () => {
     game.difficulty = mode;
 
     difficultyText.textContent = mode.toUpperCase();
-    difficultyText.classList.remove("easy", "hard", "expert");
+
+    if (mode === "training") {
+        difficultyLabel.textContent = "";
+    } else {
+        difficultyLabel.textContent = "MODE - ";
+    }
+
+    difficultyText.classList.remove("easy", "hard", "expert", "training");
     difficultyText.classList.add(mode);
 });
 
@@ -274,7 +295,7 @@ document.addEventListener("keydown", (e) => {
 
         return;
     }
-    
+
     if (e.key === " " || e.code === "Space") {
         e.preventDefault();
         e.stopPropagation();

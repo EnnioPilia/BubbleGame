@@ -6,9 +6,10 @@ import { resetCursorUI } from "./cursor.js";
 import { toggleCustomCursor } from "./cursor.js";
 
 const DIFFICULTY = {
+    training: { spawnSpeed: 600 },
     easy: { spawnSpeed: 800 },
     hard: { spawnSpeed: 600 },
-    expert: { spawnSpeed: 500 }
+    expert: { spawnSpeed: 600 }
 };
 
 const POWERUPS = {
@@ -38,6 +39,9 @@ export default class Game {
 
         window.currentGameState = "menu";
         this.difficulty = "easy";
+
+        this.trainingDifficulty = "easy";
+        this.trainingButton = document.getElementById("trainingDifficultyButton");
 
         this.baseSpawnSpeed = 700;
         this.spawnSpeed = 700;
@@ -100,6 +104,7 @@ export default class Game {
         this.settingsButtonPause = document.getElementById("settingsButtonPause");
 
         this.pauseButton = document.getElementById("pauseButton");
+        this.trainingDifficultyButton = document.getElementById("trainingDifficultyButton");
         this.resumeButton = document.getElementById("resumeButton");
 
         this.rankingPopup = document.getElementById("rankingPopup");
@@ -130,6 +135,7 @@ export default class Game {
 
         this.restartButtonGameOver.onclick = () => this.restart();
         this.menuButtonGameOver.onclick = () => this.backToMenu();
+
         this.rankingButtonGameOver.onclick = (e) => {
             e.stopPropagation();
             showRanking(this.rankingList, this.difficulty);
@@ -183,6 +189,16 @@ export default class Game {
                 hideRanking();
             }
         });
+
+        this.trainingButton.onclick = () => {
+            const modes = ["easy", "medium", "hard"];
+            let index = modes.indexOf(this.trainingDifficulty);
+
+            index = (index + 1) % modes.length;
+            this.trainingDifficulty = modes[index];
+
+            this.trainingButton.textContent = "MODE : " + this.trainingDifficulty.toUpperCase();
+        };
     }
 
     resetGameState() {
@@ -217,6 +233,20 @@ export default class Game {
 
         this.gameStartTime = Date.now();
         this.isGameOver = false;
+
+        if (this.difficulty === "training") {
+            this.applyTrainingSettings();
+        }
+    }
+
+    applyTrainingSettings() {
+        if (this.trainingDifficulty === "easy") {
+            this.spawnSpeed = 500;
+        } else if (this.trainingDifficulty === "medium") {
+            this.spawnSpeed = 400;
+        } else if (this.trainingDifficulty === "hard") {
+            this.spawnSpeed = 300;
+        }
     }
 
     clearBubbles() {
@@ -229,6 +259,7 @@ export default class Game {
         this.yourScore.style.display = "none";
         this.gameButtons.style.display = "none";
         this.gameOverButtons.style.display = "none";
+        this.trainingDifficultyButton.style.display = "none";
         this.yourScore.innerHTML = "";
         document.body.classList.remove("gameover", "pause");
         window.currentGameState = state;
@@ -265,6 +296,11 @@ export default class Game {
                 this.scoreDisplay.style.display = "block";
                 this.pauseButton.style.display = "block";
                 window.keyboardContext = "game";
+                if (this.difficulty === "training") {
+                    this.trainingButton.style.display = "block";
+                } else {
+                    this.trainingButton.style.display = "none";
+                }
                 break;
 
             case "pause":
@@ -331,6 +367,12 @@ export default class Game {
 
         this.setUI("game");
 
+        if (this.difficulty === "training") {
+            document.body.classList.add("training-mode");
+        } else {
+            document.body.classList.remove("training-mode");
+        }
+
         pause(sounds.musicMenu);
         this.updateMusic();
 
@@ -393,6 +435,10 @@ export default class Game {
 
         let forceSpecial = false;
 
+        if (this.difficulty === "training") {
+            new Bubble(this, false, false, false, false, false);
+            return;
+        }
         if (now - this.gameStartTime > this.specialStartDelay) {
             if (now - this.lastSpecialSpawn > this.specialCooldown) {
                 if (!this.isStarActive && !this.isAimActive && Math.random() < 0.3) {
@@ -773,15 +819,17 @@ export default class Game {
     updateMusic() {
         if (this.isPaused || this.isGameOver) return;
 
-        if (this.isAimActive) {
-            if (!sounds.aimMode.paused) return;
+        if (this.difficulty === "training") {
+            if (!sounds.musicTraining.paused) return;
 
             pause(sounds.musicGame);
             pause(sounds.stress);
             pause(sounds.slowMusic);
             pause(sounds.starMode);
+            pause(sounds.aimMode);
 
-            play(sounds.aimMode);
+            play(sounds.musicTraining);
+
             return;
         }
 
@@ -846,6 +894,7 @@ export default class Game {
         pause(sounds.slowMusic);
         pause(sounds.starMode);
         pause(sounds.aimMode);;
+        pause(sounds.musicTraining);
 
         document.querySelectorAll('.bubble').forEach(b => {
             b.style.animationPlayState = 'paused';
@@ -892,41 +941,42 @@ export default class Game {
     }
 
     checkLife() {
-        document.querySelectorAll('.bubble').forEach(b => {
-            const instance = b.instance;
+document.querySelectorAll('.bubble').forEach(b => {
+    const instance = b.instance;
 
-            if (
-                !instance ||
-                instance.counted ||
-                instance.isSpecial ||
-                instance.isHeart ||
-                instance.isBad ||
-                instance.isStar ||
-                instance.isAim
-            ) return;
+    if (
+        !instance ||
+        instance.counted ||
+        instance.isSpecial ||
+        instance.isHeart ||
+        instance.isBad ||
+        instance.isStar ||
+        instance.isAim
+    ) return;
 
-            const rect = b.getBoundingClientRect();
+    const rect = b.getBoundingClientRect();
 
-            if (rect.top + rect.height < 0) {
-                instance.counted = true;
+if (rect.top + rect.height < 0) {
+    instance.counted = true;
 
-                if (
-                    !this.isStarActive &&
-                    !instance.isStar &&
-                    !instance.spawnedDuringStar
-                ) {
-                    this.lifes--;
-                    this.displayLifes();
-                    play(sounds.error);
-                }
+    if (this.difficulty === "training") {
+        this.score = 0;
+        this.scoreDisplay.textContent = 0;
+    } else {
+        if (!this.isStarActive && !instance.isSlow) {
+            this.lifes--;
 
-                b.remove();
-            }
+            this.displayLifes();
+            play(sounds.error);
+        }
+    }
+
+    b.remove();
+}
         });
 
         if (this.lifes <= 0) {
-                    play(sounds.gameOver);
-
+            play(sounds.gameOver);
             this.gameOver();
         }
     }
@@ -951,6 +1001,7 @@ export default class Game {
         pause(sounds.stress);
         pause(sounds.slowMusic);
         pause(sounds.aimMode);
+        pause(sounds.musicTraining);
 
         this.clearBubbles();
 
@@ -987,6 +1038,7 @@ export default class Game {
         document.body.classList.remove("slow-mode");
         document.body.classList.remove("star-active");
         document.body.classList.remove("aim-mode");
+        document.body.classList.remove("training-mode");
 
         resetCursorUI();
         clearInterval(this.intervalId);
@@ -1013,6 +1065,7 @@ export default class Game {
         pause(sounds.musicGame);
         pause(sounds.gameOver);
         pause(sounds.starMode);
+        pause(sounds.musicTraining);
 
         play(sounds.musicMenu);
 

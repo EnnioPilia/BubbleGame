@@ -21,6 +21,7 @@
         <div id="life1"><img src="image/croix.png"></div>
         <div id="life2"><img src="image/croix.png"></div>
         <div id="life3"><img src="image/croix.png"></div>
+        <button id="trainingDifficultyButton">MODE : EASY</button>
       </div>
     </div>
 
@@ -33,7 +34,7 @@
     <div id="menu">
       <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
       <button id="startButton">PLAY</button>
-      <button id="difficultyButton" class="easy"> MODE - <span id="difficultyText" class="easy">EASY</span></button>
+      <button id="difficultyButton"><span id="difficultyLabel">MODE - </span><span id="difficultyText">EASY</span></button>
       <button id="menuRankingButton">LEADERBOARD</button>
       <button id="settingsButtonMenu">SETTINGS</button>
     </div>
@@ -132,6 +133,8 @@
   <audio id="clicStar" src="son/clic_star.mp3"></audio>
   <audio id="soundAimClick" src="son/aim_click.mp3"></audio>
   <audio id="soundAimMode" src="son/aim.mp3" loop></audio>
+  <audio id="musicTraining" src="son/musicTraining.mp3" loop></audio>
+  <audio id="bubbleTraining" src="son/bubble.mp3" ></audio>
 
   <script type="module" src="main.js"></script>
 </body>

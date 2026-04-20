@@ -17,6 +17,8 @@ export const sounds = {
     clicStar: getSound('clicStar'),
     soundAim: getSound('soundAimClick'),
     aimMode: getSound('soundAimMode'),
+    musicTraining: getSound('musicTraining'),
+    bubbleTraining: getSound('bubbleTraining'),
 };
 
 let soundEnabled = localStorage.getItem("soundEnabled") !== "false";

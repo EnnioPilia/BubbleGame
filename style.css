@@ -809,6 +809,15 @@ body.no-custom-cursor {
         0.7px 0.7px 0 rgb(253, 5, 5);
 }
 
+#difficultyText.training {
+    color: #33ceaf;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
 .gameover-score span {
     color: red;
     text-shadow: 5px 5px 7px rgb(0, 0, 0), 0 0 20px rgb(128, 108, 1), 0 0 20px rgb(0, 0, 0);
@@ -989,9 +998,6 @@ body.star-active::after {
     }
 }
 
-
-
-
 #flashEffectAim {
     position: fixed;
     inset: 0;
@@ -1147,12 +1153,28 @@ body.gameover::before {
     }
 }
 
+body.training-mode::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(0.6px);
+    -webkit-backdrop-filter: blur(0.6px);
+    background: rgba(0, 200, 255, 0.25); 
+    z-index: 1;
+    pointer-events: none;
+}
 
+#trainingDifficultyButton {
+    text-align: center;
+    width: auto;
+    padding: 12px 30px;
+    margin-top: 10px;
+    font-size: 25px;
+    border-radius: 15px;
+    z-index: 2000;
+}
 
-
-/* 
-.next  bubble  color style  {
-
+.training-bubble {
     background: radial-gradient(#00ffff, #0066ff);
     box-shadow: 
         0 0 20px cyan,
@@ -1160,7 +1182,23 @@ body.gameover::before {
         0 0 80px rgba(0, 150, 255, 0.9);
 
     animation: sparkle 0.15s infinite;
-} */
+    opacity: 1;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(0.95);
+        filter: brightness(1.2);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
 
 @media (max-width: 768px) {
 

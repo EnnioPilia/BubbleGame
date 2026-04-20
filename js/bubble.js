@@ -12,14 +12,16 @@ export default class Bubble {
         this.isAim = isAim;
         this.spawnedDuringStar = this.game.isStarActive;
 
-        this.isBad = !this.game.isStarActive &&
+        this.isBad = this.game.difficulty !== "training" && (
+            !this.game.isStarActive &&
             !this.game.isAimActive &&
             !this.isSpecial &&
             !this.isHeart &&
             !this.isSlow &&
             !this.isStar &&
             !this.isAim &&
-            Math.random() < 0.45;
+            Math.random() < 0.45
+        );
 
         this.counted = false;
         this.clickCount = 0;
@@ -50,36 +52,41 @@ export default class Bubble {
 
         let size;
 
-        if (this.isSlow) {
-            size = isMobile ? 90 : 160;
-        }
+        if (this.game.difficulty === "training") {
+            this.inner.classList.add("training-bubble")
+            
+            const ranges = {
+                easy: [150, 155],
+                medium: [110, 115],
+                hard: [80, 85]
+            };
 
-        else if (this.isSpecial) {
+            const [min, max] = ranges[this.game.trainingDifficulty];
+            size = Math.random() * (max - min) + min;
+
+        } else if (this.isSlow) {
+            size = isMobile ? 90 : 160;
+
+        } else if (this.isSpecial) {
             if (this.game.difficulty === "easy") {
                 size = isMobile ? 120 : 180;
             } else {
                 size = isMobile ? 80 : 110;
             }
-        }
 
-        else {
-            if (this.game.difficulty === "expert") {
-                size = isMobile ? 80 : 110;
-            } else {
-                size = Math.random() * (maxSize - minSize) + minSize;
-            }
-        }
-
-        if (this.isStar) {
+        } else if (this.isStar) {
             if (this.game.difficulty === "expert") {
                 size = isMobile ? 80 : 100;
             } else {
                 size = isMobile ? 90 : 150;
             }
-        }
 
-        else if (this.isSlow) {
-            this.inner.classList.add("slow-bubble");
+        } else {
+            if (this.game.difficulty === "expert") {
+                size = isMobile ? 80 : 110;
+            } else {
+                size = Math.random() * (maxSize - minSize) + minSize;
+            }
         }
 
         this.element.style.width = size + "px";
@@ -98,6 +105,7 @@ export default class Bubble {
 
         } else if (this.isSlow) {
             this.element.style.zIndex = "2001";
+            this.inner.classList.add("slow-bubble");
 
         } else if (this.isAim) {
             this.element.style.zIndex = "2001";
@@ -122,7 +130,7 @@ export default class Bubble {
             if (this.game.isStarActive) {
 
                 this.inner.classList.add("star-mode");
-            } else {
+            } else if (this.game.difficulty !== "training") {
                 let hue;
                 do {
                     hue = Math.random() * 360;
@@ -178,6 +186,17 @@ export default class Bubble {
                     duration *= 0.8;
                 }
             }
+
+            if (this.game.difficulty === "training") {
+                if (this.game.trainingDifficulty === "easy") {
+                    duration = 4;
+                } else if (this.game.trainingDifficulty === "medium") {
+                    duration = 3;
+                } else if (this.game.trainingDifficulty === "hard") {
+                    duration = 2.5;
+                }
+            }
+
             this.element.style.setProperty('--bubble-duration', duration + 's');
             this.element.style.animationDuration = duration + 's';
             this.element.dataset.baseDuration = duration;
@@ -308,7 +327,17 @@ export default class Bubble {
         }, 250);
     }
 
-    handleNormal() {
+handleNormal() {
+    if (this.game.difficulty === "training") {
+        const s = sounds.bubbleTraining.cloneNode();
+        s.play();
+
+        this.game.increaseScore(); 
+
+        this.destroy();
+        return;
+    }
+
         if (this.game.isStarActive) {
             const s = sounds.star.cloneNode();
             s.volume = Math.min(1, sounds.star.volume * 50);
