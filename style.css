@@ -68,20 +68,20 @@ body,
     width: 100%;
 }
 
-/* centre parfait */
 #lifes-container {
     display: flex;
     gap: 8px;
-    margin: 0 auto; /* 🔥 magie */
+    margin: 0 auto;
 }
-
 
 #lifes-container img {
     width: clamp(40px, 8vw, 120px);
     z-index: 5;
     position: relative;
-    filter:
-        drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black) drop-shadow(0 1px 0 black) drop-shadow(0 -1px 0 black);
+    filter: drop-shadow(1px 0 0 black) 
+            drop-shadow(-1px 0 0 black) 
+            drop-shadow(0 1px 0 black) 
+            drop-shadow(0 -1px 0 black);
 }
 
 #title {
@@ -309,9 +309,7 @@ body,
 #score,
 #YourScore {
     filter: drop-shadow(0 0 15px rgba(0, 0, 0, 1));
-    text-shadow:
-        4px 4px 8px rgba(0, 0, 0, 0.9),
-        0 0 12px rgba(0, 0, 0, 0.7);
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.7);
 }
 
 #gameOverBackground {
@@ -336,9 +334,7 @@ button {
     border-radius: 1.5rem;
     cursor: none;
     transition: transform 0.3s ease, background 0.3s ease;
-    box-shadow:
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 15px 5px rgba(0, 0, 0, 1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 15px 5px rgba(0, 0, 0, 1);
 }
 
 button:hover {
@@ -667,12 +663,14 @@ h4 {
     color: gold;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 0 20px rgba(255, 217, 0, 0.322), 0 0 15px 5px rgba(0, 0, 0, 1);
+    box-shadow: 0 0 20px rgb(255, 217, 0), 0 0 15px 5px rgba(0, 0, 0, 1);
+    border: 1px solid gold;
 }
 
 .toggleBtn button.active {
-    border: 2px solid gold;
+    border: 1px solid gold;
     box-shadow: 0 0 20px gold;
+    background: rgba(255, 217, 0, 0.918);
 }
 
 #customCursor {
@@ -1195,11 +1193,25 @@ body.training-mode::before {
 #trainingDifficultyButton {
     width: auto;
     padding: 12px 30px;
-    margin-top: 10px;
-    margin-right: 5px;
+    margin-top: 15px;
+    margin-right: 15px;
     font-size: 25px;
     border-radius: 15px;
     z-index: 2000;
+}
+
+#bestScoreTraining {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: gold;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px black, 0 0 16px black;
+    z-index: 1000;
+    pointer-events: none;
 }
 
 .training-bubble {
@@ -1208,7 +1220,6 @@ body.training-mode::before {
         0 0 20px cyan,
         0 0 40px blue,
         0 0 80px rgba(0, 150, 255, 0.9);
-
     animation: sparkle 0.15s infinite;
     opacity: 1;
 }
@@ -1229,6 +1240,9 @@ body.training-mode::before {
         filter: brightness(1);
     }
 }
+
+
+
 
 @media (max-width: 768px) {
 

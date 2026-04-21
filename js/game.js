@@ -39,7 +39,6 @@ export default class Game {
 
         window.currentGameState = "menu";
         this.difficulty = "easy";
-
         this.trainingDifficulty = "easy";
         this.trainingButton = document.getElementById("trainingDifficultyButton");
 
@@ -49,23 +48,23 @@ export default class Game {
         this.currentPlayerName = "";
 
         this.heartMilestones = {
-            easy: [1, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 300, 350, 450, 500, 650, 700],
+            easy: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 300, 350, 450, 500, 650, 700],
             hard: [80, 100, 140, 180, 210, 380, 550, 650, 700, 750],
             expert: [80, 100, 140, 180, 200, 360, 460, 560, 600, 650]
         };
 
         this.slowMilestones = {
-            easy: [1, 30, 120, 210, 330, 510, 680],
+            easy: [30, 120, 210, 330, 510, 680],
             hard: [90, 170, 255, 410, 540, 620]
         };
 
         this.aimMilestones = {
-            easy: [1, 70, 170, 480, 640, 700],
+            easy: [70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580]
         };
 
         this.starMilestones = {
-            easy: [1, 220, 360, 520, 650],
+            easy: [220, 360, 520, 650],
             hard: [260, 420, 620, 750],
             expert: [250, 350, 450, 550]
         };
@@ -105,6 +104,7 @@ export default class Game {
 
         this.pauseButton = document.getElementById("pauseButton");
         this.trainingDifficultyButton = document.getElementById("trainingDifficultyButton");
+        this.bestScoreTraining = document.getElementById("bestScoreTraining");
         this.resumeButton = document.getElementById("resumeButton");
 
         this.rankingPopup = document.getElementById("rankingPopup");
@@ -198,6 +198,7 @@ export default class Game {
             this.trainingDifficulty = modes[index];
 
             this.trainingButton.textContent = "MODE : " + this.trainingDifficulty.toUpperCase();
+            this.updateBestScoreDisplay();
         };
     }
 
@@ -277,7 +278,8 @@ export default class Game {
             this.settingsButtonPause,
             this.playerName,
             this.titleMenu,
-            this.cursorButton
+            this.cursorButton,
+            this.bestScoreTraining
         ];
 
         elements.forEach(el => el && (el.style.display = "none"));
@@ -298,8 +300,10 @@ export default class Game {
                 window.keyboardContext = "game";
                 if (this.difficulty === "training") {
                     this.trainingButton.style.display = "block";
+                    this.bestScoreTraining.style.display = "block";
                 } else {
                     this.trainingButton.style.display = "none";
+                    this.bestScoreTraining.style.display = "none";
                 }
                 break;
 
@@ -373,6 +377,9 @@ export default class Game {
             document.body.classList.remove("training-mode");
         }
 
+        if (this.difficulty === "training") {
+            this.updateBestScoreDisplay();
+        }
         pause(sounds.musicMenu);
         this.updateMusic();
 
@@ -845,6 +852,18 @@ export default class Game {
             return;
         }
 
+        if (this.isAimActive) {
+            if (!sounds.aimMode.paused) return;
+
+            pause(sounds.musicGame);
+            pause(sounds.stress);
+            pause(sounds.slowMusic);
+            pause(sounds.starMode);
+
+            play(sounds.aimMode);
+            return;
+        }
+
         if (this.isStarActive) {
             if (!sounds.starMode.paused) return;
 
@@ -973,12 +992,22 @@ export default class Game {
                 instance.counted = true;
 
                 if (this.difficulty === "training") {
+
+                    const key = this.getTrainingKey();
+                    const best = parseInt(localStorage.getItem(key)) || 0;
+
+                    if (this.score > best) {
+                        localStorage.setItem(key, this.score);
+                    }
+
                     this.score = 0;
                     this.scoreDisplay.textContent = 0;
+
+                    this.updateBestScoreDisplay();
+
                 } else {
                     if (!this.isStarActive && !instance.isSlow) {
                         this.lifes--;
-
                         this.displayLifes();
                         play(sounds.error);
                     }
@@ -1083,5 +1112,18 @@ export default class Game {
         play(sounds.musicMenu);
 
         this.displayLifes();
+    }
+
+    updateBestScoreDisplay() {
+        const el = document.getElementById("bestScoreTraining");
+        if (!el) return;
+
+        const key = this.getTrainingKey();
+        const best = localStorage.getItem(key) || 0;
+
+        el.textContent = "Best Score : " + best;
+    }
+    getTrainingKey() {
+        return `training_best_${this.trainingDifficulty}`;
     }
 }

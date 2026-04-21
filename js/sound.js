@@ -2,9 +2,6 @@ function getSound(id) {
     return document.getElementById(id) || null;
 }
 
-// =======================
-// 🎧 SOUNDS
-// =======================
 export const sounds = {
     bubble: getSound('soundBubbleExplos'),
     error: getSound('soundError'),
@@ -27,9 +24,6 @@ export const sounds = {
     bubbleTraining: getSound('bubbleTraining'),
 };
 
-// =======================
-// 🎵 GROUPES
-// =======================
 const musicSounds = [
     sounds.musicMenu,
     sounds.musicGame,
@@ -52,19 +46,12 @@ const sfxSounds = [
     sounds.bubbleTraining
 ];
 
-// =======================
-// 💾 STATE
-// =======================
-
-// ✅ volume musique (corrigé)
 let musicVolume = localStorage.getItem("musicVolume");
 musicVolume = musicVolume !== null ? parseFloat(musicVolume) : 0.3;
 
-// ✅ volume sfx (corrigé aussi)
 let sfxVolume = localStorage.getItem("sfxVolume");
 sfxVolume = sfxVolume !== null ? parseFloat(sfxVolume) : 0.3;
 
-// ✅ musicEnabled (FIX PRINCIPAL)
 let musicEnabled = localStorage.getItem("musicEnabled");
 if (musicEnabled === null) {
     musicEnabled = true;
@@ -73,10 +60,8 @@ if (musicEnabled === null) {
     musicEnabled = musicEnabled === "true";
 }
 
-// ✅ sfxEnabled
 let sfxEnabled = localStorage.getItem("sfxEnabled") !== "false";
 
-// ✅ global
 let soundEnabled = localStorage.getItem("soundEnabled");
 if (soundEnabled === null) {
     soundEnabled = true;
@@ -84,9 +69,6 @@ if (soundEnabled === null) {
     soundEnabled = soundEnabled === "true";
 }
 
-// =======================
-// 🔊 APPLY VOLUMES
-// =======================
 export function applyVolumes() {
     musicSounds.forEach(s => {
         if (s) {
@@ -103,9 +85,6 @@ export function applyVolumes() {
     });
 }
 
-// =======================
-// 🎚️ SET VOLUME
-// =======================
 export function setMusicVolume(v) {
     musicVolume = Math.min(1, v);
     localStorage.setItem("musicVolume", musicVolume);
@@ -118,9 +97,6 @@ export function setSFXVolume(v) {
     applyVolumes();
 }
 
-// =======================
-// 🔘 TOGGLE GLOBAL
-// =======================
 export function toggleSound() {
     soundEnabled = !soundEnabled;
     localStorage.setItem("soundEnabled", soundEnabled);
@@ -128,9 +104,6 @@ export function toggleSound() {
     return soundEnabled;
 }
 
-// =======================
-// 🔘 TOGGLE INDIVIDUEL
-// =======================
 export function toggleMusic() {
     musicEnabled = !musicEnabled;
     localStorage.setItem("musicEnabled", musicEnabled);
@@ -145,9 +118,6 @@ export function toggleSFX() {
     return sfxEnabled;
 }
 
-// =======================
-// ▶️ PLAY
-// =======================
 export function play(sound) {
     if (!sound || !soundEnabled) return;
 
@@ -158,25 +128,16 @@ export function play(sound) {
     sound.play().catch(() => { });
 }
 
-// =======================
-// ⏸ PAUSE
-// =======================
 export function pause(sound) {
     if (sound) sound.pause();
 }
 
-// =======================
-// ⏹ STOP ALL
-// =======================
 export function pauseAll() {
     Object.values(sounds).forEach(s => {
         if (s) s.pause();
     });
 }
 
-// =======================
-// 📊 STATE
-// =======================
 export function getState() {
     return {
         musicVolume,
@@ -187,9 +148,6 @@ export function getState() {
     };
 }
 
-// =======================
-// 🚀 INIT
-// =======================
 export function initSoundSystem() {
     applyVolumes();
 }

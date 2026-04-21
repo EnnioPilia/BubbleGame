@@ -15,17 +15,19 @@
 <body>
   <div id="ui">
 
-<div id="topBar">
-  <button id="pauseButton">⏸</button>
+    <div id="topBar">
+      <button id="pauseButton">⏸</button>
 
-  <div id="lifes-container">
-    <div id="life1"><img src="image/croix.png"></div>
-    <div id="life2"><img src="image/croix.png"></div>
-    <div id="life3"><img src="image/croix.png"></div>
-  </div>
+      <div id="lifes-container">
+        <div id="life1"><img src="image/croix.png"></div>
+        <div id="life2"><img src="image/croix.png"></div>
+        <div id="life3"><img src="image/croix.png"></div>
+      </div>
 
-  <button id="trainingDifficultyButton">MODE : EASY</button>
-</div>
+      <div id="bestScoreTraining" class="best-score">Best Score : 0</div>
+      <button id="trainingDifficultyButton">MODE : EASY</button>
+    </div>
+
     <div id="flashEffect"></div>
     <div id="flashEffectAim"></div>
 
@@ -80,35 +82,31 @@
         </div>
         <button id="validateCursor">APPLY</button>
       </div>
-
     </div>
+
     <div id="YourScore"></div>
 
     <img id="gameOverBackground" src="image/img_explo.png">
 
     <div id="audioPopup">
       <div class="popup-content audio-column">
-
         <div class="toggleBtn">
           <button id="soundOn">🔊</button>
           <button id="soundOff">🔇</button>
         </div>
-
         <div class="slider">
           <div class="contentSlider">
             <h4 class="titleMusic">MUSIC : </h4>
             <input type="range" id="musicSlider" class="volumeSlider" min="0" max="100">
           </div>
-
           <div class="contentSlider">
             <h4>EFFECTS : </h4>
             <input type="range" id="sfxSlider" class="volumeSlider" min="0" max="100">
           </div>
         </div>
-
         <button id="closeAudio">APPLY</button>
-
       </div>
+
     </div>
     <div id="backgroundPopup">
       <div class="background-content">
@@ -125,7 +123,6 @@
     <div id="rankingPopup">
       <div>
         <h2>🏆LEADERBOARD 🏆</h2>
-
         <div id="rankingTabs">
           <button id="tabEasy">EASY</button>
           <button id="tabHard">HARD</button>
@@ -137,22 +134,22 @@
     </div>
   </div>
 
-  <audio id="soundBubbleExplos" src="son/ballon explose.mp3"></audio>
-  <audio id="soundError" src="son/erreur.wav"></audio>
-  <audio id="soundSucess" src="son/sucess.mp3"></audio>
-  <audio id="soundHeart" src="son/heart.mp3"></audio>
-  <audio id="soundGameOver" src="son/game over explose.mp3"></audio>
-  <audio id="soundStresse" src="son/stress.wav" loop></audio>
-  <audio id="musicGame" src="son/game.ogg" loop></audio>
-  <audio id="musicMenu" src="son/menu.ogg" loop></audio>
-  <audio id="slowMusic" src="son/time_stop.mp3" loop></audio>
-  <audio id="soundStarMode" src="son/star_mode.mp3" loop></audio>
-  <audio id="soundStar" src="son/star.mp3"></audio>
-  <audio id="clicStar" src="son/clic_star.mp3"></audio>
-  <audio id="soundAimClick" src="son/aim_click.mp3"></audio>
-  <audio id="soundAimMode" src="son/aim.mp3" loop></audio>
-  <audio id="musicTraining" src="son/musicTraining.mp3" loop></audio>
-  <audio id="bubbleTraining" src="son/bubble.mp3"></audio>
+  <audio id="soundBubbleExplos" src="sound/ballon explose.mp3"></audio>
+  <audio id="soundError" src="sound/erreur.wav"></audio>
+  <audio id="soundSucess" src="sound/sucess.mp3"></audio>
+  <audio id="soundHeart" src="sound/heart.mp3"></audio>
+  <audio id="soundGameOver" src="sound/game over explose.mp3"></audio>
+  <audio id="soundStresse" src="sound/stress.wav" loop></audio>
+  <audio id="musicGame" src="sound/game.ogg" loop></audio>
+  <audio id="musicMenu" src="sound/menu.ogg" loop></audio>
+  <audio id="slowMusic" src="sound/time_stop.mp3" loop></audio>
+  <audio id="soundStarMode" src="sound/star_mode.mp3" loop></audio>
+  <audio id="soundStar" src="sound/star.mp3"></audio>
+  <audio id="clicStar" src="sound/clic_star.mp3"></audio>
+  <audio id="soundAimClick" src="sound/aim_click.mp3"></audio>
+  <audio id="soundAimMode" src="sound/aim.mp3" loop></audio>
+  <audio id="musicTraining" src="sound/musicTraining.mp3" loop></audio>
+  <audio id="bubbleTraining" src="sound/bubble.mp3"></audio>
 
   <script type="module" src="main.js"></script>
 </body>

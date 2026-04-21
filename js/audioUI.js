@@ -9,17 +9,17 @@ export function initAudioUI() {
 
     const applyBtn = document.getElementById("closeAudio");
 
-function refresh() {
-    const { musicVolume, sfxVolume, soundEnabled } = getState();
+    function refresh() {
+        const { musicVolume, sfxVolume, soundEnabled } = getState();
 
-    if (musicSlider) musicSlider.value = musicVolume * 100;
-    if (sfxSlider) sfxSlider.value = sfxVolume * 100;
+        if (musicSlider) musicSlider.value = musicVolume * 100;
+        if (sfxSlider) sfxSlider.value = sfxVolume * 100;
 
-    if (btnOn && btnOff) {
-        btnOn.classList.toggle("active", soundEnabled);
-        btnOff.classList.toggle("active", !soundEnabled);
+        if (btnOn && btnOff) {
+            btnOn.classList.toggle("active", soundEnabled);
+            btnOff.classList.toggle("active", !soundEnabled);
+        }
     }
-}
 
     if (musicSlider) {
         musicSlider.addEventListener("input", () => {

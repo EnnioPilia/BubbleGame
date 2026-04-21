@@ -37,7 +37,7 @@ export function initDifficultyButton(onChange) {
     btn.onclick = () => {
         difficulty = difficulty === "easy" ? "hard" : "easy";
         update();
-        onChange(difficulty); 
+        onChange(difficulty);
     };
 
     update();
