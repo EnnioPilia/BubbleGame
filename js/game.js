@@ -67,7 +67,7 @@ export default class Game {
         this.starMilestones = {
             easy: [220, 360, 520, 650],
             hard: [260, 420, 620, 750],
-            expert: [1, 250, 450, 650]
+            expert: [250, 450, 650]
         };
 
         this.heartMilestonesUsed = new Set();

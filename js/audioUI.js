@@ -7,7 +7,7 @@ export function initAudioUI() {
     const btnOn = document.getElementById("soundOn");
     const btnOff = document.getElementById("soundOff");
 
-    const applyBtn = document.getElementById("closeAudio");
+    const applyBtn = document.getElementById("closeSettingsAudio");
 
     function refresh() {
         const { musicVolume, sfxVolume, soundEnabled } = getState();

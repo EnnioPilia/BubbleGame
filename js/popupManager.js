@@ -67,7 +67,7 @@ export function openPopup(id) {
     setTimeout(() => {
         const contexts = {
             settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
-            audio: ["soundToggle", "closeAudio"],
+            audio: ["soundToggle", "closeSettingsAudio"],
             cursor: ["validateCursor"],
             background: ["closeBackground"],
             ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]

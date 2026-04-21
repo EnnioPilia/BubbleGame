@@ -570,7 +570,6 @@ body.pause #gameButtons {
     border-radius: 16px;
     background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(10px);
-    gap: 35px;
     box-shadow: 0 0 20px gold;
 }
 
@@ -624,7 +623,6 @@ body.pause #gameButtons {
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    padding-left: 2px;
     gap: 22px;
 }
 
@@ -652,7 +650,7 @@ h4 {
 }
 
 .toggleBtn {
-    gap: 28px;
+    gap: 20px;
 }
 
 .toggleBtn button {
@@ -668,7 +666,7 @@ h4 {
 .toggleBtn button.active {
     border: 1px solid gold;
     box-shadow: 0 0 20px gold;
-    background: rgba(255, 217, 0, 0.918);
+    background: rgba(255, 217, 0, 0.726);
 }
 
 #customCursor {
@@ -685,7 +683,7 @@ h4 {
 #cursorPopup {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.788);
     display: none;
     justify-content: center;
     align-items: center;
@@ -759,7 +757,7 @@ h4 {
     box-shadow: 0 0 20px gold;
 }
 
-#closeSettings {
+#closeSettings, #closeSettingsAudio {
     position: absolute;
     top: -30px;
     right: 5px;
@@ -773,11 +771,19 @@ h4 {
     cursor: pointer;
 }
 
-#closeSettings:hover {
+#closeSettingsAudio {
+    padding: 10px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    right: 11px;
+    margin-top: 40px;
+}
+
+#closeSettings:hover, #closeSettingsAudio:hover {
     transform: scale(1.2);
 }
 
-#closeSettings:focus {
+#closeSettings:focus, #closeSettingsAudio:focus {
     padding: 10px;
     padding-bottom: 1px;
     padding-top: 1px;

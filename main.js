@@ -262,7 +262,7 @@ document.addEventListener("keydown", (e) => {
         pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"],
         gameover: ["restartButtonGameOver", "menuButtonGameOver", "rankingButtonGameOver"],
         settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
-        audio: ["soundToggle", "closeAudio"],
+        audio: ["soundToggle", "closeSettingsAudio"],
         cursor: ["validateCursor"],
         background: ["closeBackground"],
         ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]
