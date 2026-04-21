@@ -15,16 +15,17 @@
 <body>
   <div id="ui">
 
-    <div id="topBar">
-      <button id="pauseButton">⏸</button>
-      <div id="lifes-container">
-        <div id="life1"><img src="image/croix.png"></div>
-        <div id="life2"><img src="image/croix.png"></div>
-        <div id="life3"><img src="image/croix.png"></div>
-        <button id="trainingDifficultyButton">MODE : EASY</button>
-      </div>
-    </div>
+<div id="topBar">
+  <button id="pauseButton">⏸</button>
 
+  <div id="lifes-container">
+    <div id="life1"><img src="image/croix.png"></div>
+    <div id="life2"><img src="image/croix.png"></div>
+    <div id="life3"><img src="image/croix.png"></div>
+  </div>
+
+  <button id="trainingDifficultyButton">MODE : EASY</button>
+</div>
     <div id="flashEffect"></div>
     <div id="flashEffectAim"></div>
 
@@ -84,23 +85,13 @@
     <div id="YourScore"></div>
 
     <img id="gameOverBackground" src="image/img_explo.png">
-    <!-- 
-    <div id="audioPopup">
-      <div class="popup-content">
-        <button id="closeAudio">✖</button>
-        <button id="soundToggle">🔊</button>
-        <input type="range" id="volumeSlider">
-      </div>
-    </div> -->
 
     <div id="audioPopup">
       <div class="popup-content audio-column">
 
-        <div class="toggleBtn ">
-
-          <button id="soundOn" class="">🔊</button>
-          <button id="soundOff" class="">🔇</button>
-
+        <div class="toggleBtn">
+          <button id="soundOn">🔊</button>
+          <button id="soundOff">🔇</button>
         </div>
 
         <div class="slider">
@@ -114,10 +105,6 @@
             <input type="range" id="sfxSlider" class="volumeSlider" min="0" max="100">
           </div>
         </div>
-
-
-
-
 
         <button id="closeAudio">APPLY</button>
 

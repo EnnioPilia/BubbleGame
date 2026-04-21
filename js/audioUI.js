@@ -9,93 +9,88 @@ export function initAudioUI() {
 
     const applyBtn = document.getElementById("closeAudio");
 
-    function refresh() {
-        const { musicVolume, sfxVolume, soundEnabled } = getState();
+function refresh() {
+    const { musicVolume, sfxVolume, soundEnabled } = getState();
 
-        if (musicSlider) musicSlider.value = musicVolume * 100;
-        if (sfxSlider) sfxSlider.value = sfxVolume * 100;
+    if (musicSlider) musicSlider.value = musicVolume * 100;
+    if (sfxSlider) sfxSlider.value = sfxVolume * 100;
 
-        if (btnOn && btnOff) {
-            btnOn.style.opacity = soundEnabled ? "1" : "0.3";
-            btnOff.style.opacity = soundEnabled ? "0.3" : "1";
-        }
+    if (btnOn && btnOff) {
+        btnOn.classList.toggle("active", soundEnabled);
+        btnOff.classList.toggle("active", !soundEnabled);
     }
-if (musicSlider) {
-    musicSlider.addEventListener("input", () => {
-        setMusicVolume(musicSlider.value / 100);
-        applyVolumes();
-    });
 }
 
-if (sfxSlider) {
-    sfxSlider.addEventListener("input", () => {
-        setSFXVolume(sfxSlider.value / 100);
-        applyVolumes();
-    });
-}
+    if (musicSlider) {
+        musicSlider.addEventListener("input", () => {
+            setMusicVolume(musicSlider.value / 100);
+            applyVolumes();
+        });
+    }
+
+    if (sfxSlider) {
+        sfxSlider.addEventListener("input", () => {
+            setSFXVolume(sfxSlider.value / 100);
+            applyVolumes();
+        });
+    }
 
     refresh();
 
-btnOn.onclick = () => {
-    if (!getState().soundEnabled) {
-        toggleSound();
-        applyVolumes();
-
-        // 🎯 laisse le jeu décider
-        if (window.gameInstance) {
-            window.gameInstance.updateMusic();
-        }
-
-        refresh();
-    }
-};
-
-if (btnOff) {
-    btnOff.onclick = () => {
-        if (getState().soundEnabled) {
+    btnOn.onclick = () => {
+        if (!getState().soundEnabled) {
             toggleSound();
-
-            // 🔥 AJOUT IMPORTANT
             applyVolumes();
+
+            if (window.gameInstance) {
+                window.gameInstance.updateMusic();
+            }
 
             refresh();
         }
     };
-}
 
-if (applyBtn) {
-    applyBtn.onclick = () => {
-        setMusicVolume(musicSlider.value / 100);
-        setSFXVolume(sfxSlider.value / 100);
+    if (btnOff) {
+        btnOff.onclick = () => {
+            if (getState().soundEnabled) {
+                toggleSound();
+                applyVolumes();
+                refresh();
+            }
+        };
+    }
 
-        applyVolumes();
+    if (applyBtn) {
+        applyBtn.onclick = () => {
+            setMusicVolume(musicSlider.value / 100);
+            setSFXVolume(sfxSlider.value / 100);
 
-        refresh(); // 🔥 ajoute ça
+            applyVolumes();
 
-        document.getElementById("audioPopup")?.classList.remove("active");
-    };
-}
-const sliders = document.querySelectorAll(".volumeSlider");
+            refresh();
 
-sliders.forEach(slider => {
-    slider.addEventListener("input", () => {
-        const value = slider.value;
+            document.getElementById("audioPopup")?.classList.remove("active");
+        };
+    }
+
+    const sliders = document.querySelectorAll(".volumeSlider");
+
+    sliders.forEach(slider => {
+        slider.addEventListener("input", () => {
+            const value = slider.value;
+
+            slider.style.background =
+                `linear-gradient(to right, gold ${value}%, white ${value}%)`;
+
+            if (slider.id === "musicSlider") {
+                setVolume(value / 100);
+            }
+
+            if (slider.id === "sfxSlider") {
+            }
+        });
 
         slider.style.background =
-            `linear-gradient(to right, gold ${value}%, white ${value}%)`;
-
-        // si tu veux gérer les volumes séparés :
-        if (slider.id === "musicSlider") {
-            setVolume(value / 100); // ou setMusicVolume si tu sépares
-        }
-
-        if (slider.id === "sfxSlider") {
-            // setSfxVolume(value / 100);
-        }
+            `linear-gradient(to right, gold ${slider.value}%, white ${slider.value}%)`;
     });
-
-    // INIT au chargement
-    slider.style.background =
-        `linear-gradient(to right, gold ${slider.value}%, white ${slider.value}%)`;
-});
 }

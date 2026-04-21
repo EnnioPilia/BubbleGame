@@ -36,7 +36,8 @@ const musicSounds = [
     sounds.slowMusic,
     sounds.musicTraining,
     sounds.starMode,
-    sounds.aimMode
+    sounds.aimMode,
+    sounds.stress
 ];
 
 const sfxSounds = [

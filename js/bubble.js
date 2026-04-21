@@ -54,7 +54,7 @@ export default class Bubble {
 
         if (this.game.difficulty === "training") {
             this.inner.classList.add("training-bubble")
-            
+
             const ranges = {
                 easy: [150, 155],
                 medium: [110, 115],
@@ -193,7 +193,7 @@ export default class Bubble {
                 } else if (this.game.trainingDifficulty === "medium") {
                     duration = 3;
                 } else if (this.game.trainingDifficulty === "hard") {
-                    duration = 2.5;
+                    duration = 2;
                 }
             }
 
@@ -327,16 +327,16 @@ export default class Bubble {
         }, 250);
     }
 
-handleNormal() {
-    if (this.game.difficulty === "training") {
-        const s = sounds.bubbleTraining.cloneNode();
-        s.play();
+    handleNormal() {
+        if (this.game.difficulty === "training") {
 
-        this.game.increaseScore(); 
+            play(sounds.bubbleTraining);
 
-        this.destroy();
-        return;
-    }
+            this.game.increaseScore();
+
+            this.destroy();
+            return;
+        }
 
         if (this.game.isStarActive) {
             const s = sounds.star.cloneNode();

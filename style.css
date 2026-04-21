@@ -63,22 +63,18 @@ body,
 }
 
 #topBar {
-    width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
+/* centre parfait */
 #lifes-container {
     display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
-    z-index: 5;
-    left: 50%;
-    transform: translateX(-50%);
+    margin: 0 auto; /* 🔥 magie */
 }
+
 
 #lifes-container img {
     width: clamp(40px, 8vw, 120px);
@@ -606,7 +602,7 @@ body.pause #gameButtons {
 
 .volumeSlider {
     -webkit-appearance: none;
-    width: 250px;
+    width: 220px;
     height: 8px;
     border-radius: 5px;
     outline: none;
@@ -634,7 +630,8 @@ body.pause #gameButtons {
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    gap: 15px;
+    padding-left: 2px;
+    gap: 22px;
 }
 
 h4 {
@@ -661,11 +658,21 @@ h4 {
 }
 
 .toggleBtn {
-    gap: 20px;
+    gap: 28px;
 }
 
 .toggleBtn button {
-    width: 140px;
+    width: 162px;
+    background: rgba(0, 0, 0, 0);
+    color: gold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 20px rgba(255, 217, 0, 0.322), 0 0 15px 5px rgba(0, 0, 0, 1);
+}
+
+.toggleBtn button.active {
+    border: 2px solid gold;
+    box-shadow: 0 0 20px gold;
 }
 
 #customCursor {
@@ -831,7 +838,7 @@ body.no-custom-cursor {
 }
 
 #difficultyText.training {
-    color: #33ceaf;
+    color: #38b49b;
     text-shadow:
         -1px -1px 0 black,
         1px -1px 0 black,
@@ -1186,10 +1193,10 @@ body.training-mode::before {
 }
 
 #trainingDifficultyButton {
-    text-align: center;
     width: auto;
     padding: 12px 30px;
     margin-top: 10px;
+    margin-right: 5px;
     font-size: 25px;
     border-radius: 15px;
     z-index: 2000;
