@@ -18,7 +18,7 @@ const POWERUPS = {
         slowFactor: 1.8
     },
     hard: {
-        slowDuration: 8000,
+        slowDuration: 10000,
         slowFactor: 1.5
     }
 };
@@ -40,7 +40,6 @@ export default class Game {
         window.currentGameState = "menu";
         this.difficulty = "easy";
         this.trainingDifficulty = "easy";
-        this.trainingButton = document.getElementById("trainingDifficultyButton");
 
         this.baseSpawnSpeed = 700;
         this.spawnSpeed = 700;
@@ -50,23 +49,25 @@ export default class Game {
         this.heartMilestones = {
             easy: [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 300, 350, 450, 500, 650, 700],
             hard: [80, 100, 140, 180, 210, 380, 550, 650, 700, 750],
-            expert: [80, 100, 140, 180, 200, 360, 460, 560, 600, 650]
+            expert: [100, 150, 200, 400, 600]
         };
 
         this.slowMilestones = {
             easy: [30, 120, 210, 330, 510, 680],
-            hard: [90, 170, 255, 410, 540, 620]
+            hard: [90, 170, 255, 410, 540, 620],
+            // expert: [100, 200, 380]
         };
 
         this.aimMilestones = {
             easy: [70, 170, 480, 640, 700],
-            hard: [120, 220, 380, 580]
+            hard: [120, 220, 390, 580],
+            // expert: [120, 400, 580]
         };
 
         this.starMilestones = {
             easy: [220, 360, 520, 650],
             hard: [260, 420, 620, 750],
-            expert: [250, 350, 450, 550]
+            expert: [1, 250, 450, 650]
         };
 
         this.heartMilestonesUsed = new Set();
@@ -101,6 +102,7 @@ export default class Game {
 
         this.settingsButtonMenu = document.getElementById("settingsButtonMenu");
         this.settingsButtonPause = document.getElementById("settingsButtonPause");
+        this.trainingButton = document.getElementById("trainingDifficultyButton");
 
         this.pauseButton = document.getElementById("pauseButton");
         this.trainingDifficultyButton = document.getElementById("trainingDifficultyButton");

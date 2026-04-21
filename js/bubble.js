@@ -193,7 +193,7 @@ export default class Bubble {
                 } else if (this.game.trainingDifficulty === "medium") {
                     duration = 3;
                 } else if (this.game.trainingDifficulty === "hard") {
-                    duration = 2;
+                    duration = 2.2;
                 }
             }
 

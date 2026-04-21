@@ -513,6 +513,7 @@ body.pause #gameButtons {
 
 #backgroundPopup.active {
     display: flex;
+    background: rgba(0, 0, 0, 0.788);
 }
 
 .background-content {
@@ -537,6 +538,7 @@ body.pause #gameButtons {
 .bg-option {
     width: 200px;
     height: 120px;
+    margin-bottom: 20px;
     object-fit: cover;
     border-radius: 10px;
     border: 2px solid transparent;
@@ -564,7 +566,7 @@ body.pause #gameButtons {
     display: flex;
     align-items: center;
     width: min(90%, 500px);
-    padding: 50px;
+    padding: 55px;
     border-radius: 16px;
     background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(10px);
@@ -588,12 +590,8 @@ body.pause #gameButtons {
 #audioPopup.active {
     opacity: 1;
     pointer-events: auto;
-}
-
-#audioPopup.active {
-    opacity: 1;
-    pointer-events: auto;
     transform: translateY(0);
+    background: rgba(0, 0, 0, 0.788);
 }
 
 .volumeSlider {
@@ -740,7 +738,7 @@ h4 {
 #settingsPopup {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.788);
     display: none;
     justify-content: center;
     align-items: center;
@@ -1191,7 +1189,7 @@ body.training-mode::before {
 }
 
 #trainingDifficultyButton {
-    width: auto;
+    width: 228px;
     padding: 12px 30px;
     margin-top: 15px;
     margin-right: 15px;
