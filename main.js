@@ -1,14 +1,12 @@
-import { initSound, applyVolume, sounds } from "./js/sound.js";
+import { sounds, getState, initSoundSystem, play } from "./js/sound.js";
 import { initAudioUI } from "./js/audioUI.js";
 import { initCursor } from "./js/cursor.js";
 import { initSettingsUI } from "./js/settings.js";
 import { initUI } from "./js/UI.js";
 import { initBackgroundPopup } from "./js/backgroundPopup.js";
-import { initDifficultyButton } from "./js/UI.js";
-import { getState } from "./js/sound.js";
 import Game from "./js/game.js";
 
-initSound();
+initSoundSystem();
 initCursor();
 initUI();
 initSettingsUI();
@@ -29,19 +27,17 @@ let currentX = window.innerWidth / 2;
 let currentY = window.innerHeight / 2;
 let isTracking = false;
 
-document.addEventListener("click", (e) => {
-    if (e.target.id === "startButton") return;
+document.addEventListener("click", () => {
+    const { soundEnabled, musicEnabled } = getState();
 
-    if (!sounds.musicMenu) return;
+    if (window.currentGameState !== "menu") return;
 
-    const { soundEnabled } = getState();
-
-    if (soundEnabled && sounds.musicMenu.paused) {
-        sounds.musicMenu.play();
-        applyVolume();
+    if (soundEnabled && musicEnabled && sounds.musicMenu) {
+        if (sounds.musicMenu.paused) {
+            sounds.musicMenu.play().catch(() => {});
+        }
     }
-
-}, { once: true });
+});
 
 document.addEventListener("dblclick", e => e.preventDefault());
 

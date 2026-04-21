@@ -1,64 +1,101 @@
-import { setVolume, toggleSound, getState } from "./sound.js";
-import { updateCursorState } from "./UI.js";
-import { openPopup, closeAllPopups } from "./popupManager.js";
+import { toggleSound, getState, setMusicVolume, setSFXVolume, applyVolumes } from "./sound.js";
 
 export function initAudioUI() {
-    const soundToggle = document.getElementById("soundToggle");
-    const volumeSlider = document.getElementById("volumeSlider");
-    const audioPopup = document.getElementById("audioPopup");
-    const closeBtn = document.getElementById("closeAudio");
-    const soundButton = document.getElementById("soundButton");
-    const menuSoundButton = document.getElementById("menuSoundButton");
-    const { volume, soundEnabled } = getState();
+    const musicSlider = document.getElementById("musicSlider");
+    const sfxSlider = document.getElementById("sfxSlider");
 
-    if (volumeSlider) volumeSlider.value = volume * 100;
-    if (soundToggle) soundToggle.textContent = soundEnabled ? "🔊" : "🔇";
+    const btnOn = document.getElementById("soundOn");
+    const btnOff = document.getElementById("soundOff");
 
-    [soundButton, menuSoundButton].forEach(btn => {
-        if (btn) {
-            btn.onclick = (e) => {
-                e.stopPropagation();
-                openPopup("audioPopup");
-                updateCursorState();
-            };
+    const applyBtn = document.getElementById("closeAudio");
+
+    function refresh() {
+        const { musicVolume, sfxVolume, soundEnabled } = getState();
+
+        if (musicSlider) musicSlider.value = musicVolume * 100;
+        if (sfxSlider) sfxSlider.value = sfxVolume * 100;
+
+        if (btnOn && btnOff) {
+            btnOn.style.opacity = soundEnabled ? "1" : "0.3";
+            btnOff.style.opacity = soundEnabled ? "0.3" : "1";
+        }
+    }
+if (musicSlider) {
+    musicSlider.addEventListener("input", () => {
+        setMusicVolume(musicSlider.value / 100);
+        applyVolumes();
+    });
+}
+
+if (sfxSlider) {
+    sfxSlider.addEventListener("input", () => {
+        setSFXVolume(sfxSlider.value / 100);
+        applyVolumes();
+    });
+}
+
+    refresh();
+
+btnOn.onclick = () => {
+    if (!getState().soundEnabled) {
+        toggleSound();
+        applyVolumes();
+
+        // 🎯 laisse le jeu décider
+        if (window.gameInstance) {
+            window.gameInstance.updateMusic();
+        }
+
+        refresh();
+    }
+};
+
+if (btnOff) {
+    btnOff.onclick = () => {
+        if (getState().soundEnabled) {
+            toggleSound();
+
+            // 🔥 AJOUT IMPORTANT
+            applyVolumes();
+
+            refresh();
+        }
+    };
+}
+
+if (applyBtn) {
+    applyBtn.onclick = () => {
+        setMusicVolume(musicSlider.value / 100);
+        setSFXVolume(sfxSlider.value / 100);
+
+        applyVolumes();
+
+        refresh(); // 🔥 ajoute ça
+
+        document.getElementById("audioPopup")?.classList.remove("active");
+    };
+}
+const sliders = document.querySelectorAll(".volumeSlider");
+
+sliders.forEach(slider => {
+    slider.addEventListener("input", () => {
+        const value = slider.value;
+
+        slider.style.background =
+            `linear-gradient(to right, gold ${value}%, white ${value}%)`;
+
+        // si tu veux gérer les volumes séparés :
+        if (slider.id === "musicSlider") {
+            setVolume(value / 100); // ou setMusicVolume si tu sépares
+        }
+
+        if (slider.id === "sfxSlider") {
+            // setSfxVolume(value / 100);
         }
     });
 
-    if (audioPopup) {
-        audioPopup.addEventListener("click", (e) => {
-            e.stopPropagation();
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.onclick = () => {
-            closeAllPopups();
-            updateCursorState();
-        };
-    }
-
-    if (volumeSlider) {
-        volumeSlider.oninput = () => {
-            const v = volumeSlider.value / 100;
-            setVolume(v);
-            updateSlider(volumeSlider);
-        };
-    }
-
-    if (soundToggle) {
-        soundToggle.onclick = () => {
-            const enabled = toggleSound();
-            soundToggle.textContent = enabled ? "🔊" : "🔇";
-        };
-    }
-
-    updateSlider(volumeSlider);
-}
-
-function updateSlider(slider) {
-    if (!slider) return;
-
-    const value = slider.value;
+    // INIT au chargement
     slider.style.background =
-        `linear-gradient(to right, gold ${value}%, white ${value}%)`;
+        `linear-gradient(to right, gold ${slider.value}%, white ${slider.value}%)`;
+});
 }

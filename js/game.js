@@ -819,6 +819,18 @@ export default class Game {
     updateMusic() {
         if (this.isPaused || this.isGameOver) return;
 
+        if (window.currentGameState === "menu") {
+            pause(sounds.musicGame);
+            pause(sounds.stress);
+            pause(sounds.slowMusic);
+            pause(sounds.starMode);
+            pause(sounds.aimMode);
+            pause(sounds.musicTraining);
+
+            play(sounds.musicMenu);
+            return;
+        }
+
         if (this.difficulty === "training") {
             if (!sounds.musicTraining.paused) return;
 
@@ -860,6 +872,7 @@ export default class Game {
         pause(sounds.musicGame);
         pause(sounds.stress);
         pause(sounds.slowMusic);
+        pause(sounds.musicMenu);
 
         play(target);
     }
@@ -941,38 +954,38 @@ export default class Game {
     }
 
     checkLife() {
-document.querySelectorAll('.bubble').forEach(b => {
-    const instance = b.instance;
+        document.querySelectorAll('.bubble').forEach(b => {
+            const instance = b.instance;
 
-    if (
-        !instance ||
-        instance.counted ||
-        instance.isSpecial ||
-        instance.isHeart ||
-        instance.isBad ||
-        instance.isStar ||
-        instance.isAim
-    ) return;
+            if (
+                !instance ||
+                instance.counted ||
+                instance.isSpecial ||
+                instance.isHeart ||
+                instance.isBad ||
+                instance.isStar ||
+                instance.isAim
+            ) return;
 
-    const rect = b.getBoundingClientRect();
+            const rect = b.getBoundingClientRect();
 
-if (rect.top + rect.height < 0) {
-    instance.counted = true;
+            if (rect.top + rect.height < 0) {
+                instance.counted = true;
 
-    if (this.difficulty === "training") {
-        this.score = 0;
-        this.scoreDisplay.textContent = 0;
-    } else {
-        if (!this.isStarActive && !instance.isSlow) {
-            this.lifes--;
+                if (this.difficulty === "training") {
+                    this.score = 0;
+                    this.scoreDisplay.textContent = 0;
+                } else {
+                    if (!this.isStarActive && !instance.isSlow) {
+                        this.lifes--;
 
-            this.displayLifes();
-            play(sounds.error);
-        }
-    }
+                        this.displayLifes();
+                        play(sounds.error);
+                    }
+                }
 
-    b.remove();
-}
+                b.remove();
+            }
         });
 
         if (this.lifes <= 0) {

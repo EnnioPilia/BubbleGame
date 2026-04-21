@@ -34,7 +34,8 @@
     <div id="menu">
       <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
       <button id="startButton">PLAY</button>
-      <button id="difficultyButton"><span id="difficultyLabel">MODE - </span><span id="difficultyText">EASY</span></button>
+      <button id="difficultyButton"><span id="difficultyLabel">MODE - </span><span
+          id="difficultyText">EASY</span></button>
       <button id="menuRankingButton">LEADERBOARD</button>
       <button id="settingsButtonMenu">SETTINGS</button>
     </div>
@@ -83,15 +84,45 @@
     <div id="YourScore"></div>
 
     <img id="gameOverBackground" src="image/img_explo.png">
-
+    <!-- 
     <div id="audioPopup">
       <div class="popup-content">
         <button id="closeAudio">✖</button>
         <button id="soundToggle">🔊</button>
         <input type="range" id="volumeSlider">
       </div>
-    </div>
+    </div> -->
 
+    <div id="audioPopup">
+      <div class="popup-content audio-column">
+
+        <div class="toggleBtn ">
+
+          <button id="soundOn" class="">🔊</button>
+          <button id="soundOff" class="">🔇</button>
+
+        </div>
+
+        <div class="slider">
+          <div class="contentSlider">
+            <h4 class="titleMusic">MUSIC : </h4>
+            <input type="range" id="musicSlider" class="volumeSlider" min="0" max="100">
+          </div>
+
+          <div class="contentSlider">
+            <h4>EFFECTS : </h4>
+            <input type="range" id="sfxSlider" class="volumeSlider" min="0" max="100">
+          </div>
+        </div>
+
+
+
+
+
+        <button id="closeAudio">APPLY</button>
+
+      </div>
+    </div>
     <div id="backgroundPopup">
       <div class="background-content">
         <div id="backgroundChoices">
@@ -134,7 +165,7 @@
   <audio id="soundAimClick" src="son/aim_click.mp3"></audio>
   <audio id="soundAimMode" src="son/aim.mp3" loop></audio>
   <audio id="musicTraining" src="son/musicTraining.mp3" loop></audio>
-  <audio id="bubbleTraining" src="son/bubble.mp3" ></audio>
+  <audio id="bubbleTraining" src="son/bubble.mp3"></audio>
 
   <script type="module" src="main.js"></script>
 </body>

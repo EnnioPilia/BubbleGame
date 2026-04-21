@@ -563,21 +563,6 @@ body.pause #gameButtons {
     box-shadow: 0 0 10px gold;
 }
 
-#closeAudio {
-    width: auto;
-    max-width: none;
-    padding: 5px 10px;
-    color: gold;
-    font-size: 25px;
-    background: none;
-    border: none;
-    box-shadow: none;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-}
-
 #closeAudio:hover {
     transform: scale(1.2);
 }
@@ -619,32 +604,68 @@ body.pause #gameButtons {
     transform: translateY(0);
 }
 
-#soundToggle {
-    width: 155px;
-    height: 90px;
-    font-size: 40px;
-    background: none;
-    border: none;
-    background-color: rgb(191 163 0);
-    box-shadow: 0 0 20px rgb(155, 155, 155);
-    cursor: pointer;
-}
-
-#volumeSlider {
+.volumeSlider {
     -webkit-appearance: none;
-    width: 500px;
+    width: 250px;
     height: 8px;
     border-radius: 5px;
     outline: none;
+    background: linear-gradient(to right, gold 50%, white 50%);
+    box-shadow: 0 0 10px gold;
+
 }
 
-#volumeSlider::-webkit-slider-thumb {
+.volumeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 25px;
     height: 25px;
     border-radius: 50%;
     background: gold;
     cursor: pointer;
+}
+
+.audio-column {
+    flex-direction: column;
+    gap: 35px;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 15px;
+}
+
+h4 {
+    color: gold;
+    font-size: 25px;
+    text-align: right;
+}
+
+.titleMusic {
+    padding-right: 22px !important;
+}
+
+.toggleBtn,
+.contentSlider {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.contentSlider {
+    gap: 20px;
+}
+
+.toggleBtn {
+    gap: 20px;
+}
+
+.toggleBtn button {
+    width: 140px;
 }
 
 #customCursor {
@@ -1159,7 +1180,7 @@ body.training-mode::before {
     inset: 0;
     backdrop-filter: blur(0.6px);
     -webkit-backdrop-filter: blur(0.6px);
-    background: rgba(0, 200, 255, 0.25); 
+    background: rgba(0, 200, 255, 0.25);
     z-index: 1;
     pointer-events: none;
 }
@@ -1176,7 +1197,7 @@ body.training-mode::before {
 
 .training-bubble {
     background: radial-gradient(#00ffff, #0066ff);
-    box-shadow: 
+    box-shadow:
         0 0 20px cyan,
         0 0 40px blue,
         0 0 80px rgba(0, 150, 255, 0.9);
@@ -1190,10 +1211,12 @@ body.training-mode::before {
         transform: scale(1);
         filter: brightness(1);
     }
+
     50% {
         transform: scale(0.95);
         filter: brightness(1.2);
     }
+
     100% {
         transform: scale(1);
         filter: brightness(1);
