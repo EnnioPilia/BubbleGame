@@ -157,9 +157,10 @@ index.html
 
 ## Lancer le jeu
 
+- Entrer votre pseudo
 - Cliquer sur **Start**
-- Entrer un pseudo
 - Jouer 
+
 
 ---
 
@@ -193,9 +194,8 @@ Le jeu est entièrement responsive :
 
 ## Contexte du projet
 
-- Formation : **Simplon CDA 2025**
-- Travail en promotion 
-- Projet présenté en concours
+- Formation : **CDA Simplon Grenoble 2025**
+- Travail "concours" entre promotion 
 - Récompensé parmi les meilleurs projets
 
 ---
@@ -209,4 +209,4 @@ Développeur Fullstack
 
 ##  Licence
 
-Projet pédagogique – Simplon 2025
+Projet pédagogique – Simplon Grenoble 2025
