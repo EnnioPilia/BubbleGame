@@ -78,10 +78,7 @@ body,
     width: clamp(40px, 8vw, 120px);
     z-index: 5;
     position: relative;
-    filter: drop-shadow(1px 0 0 black) 
-            drop-shadow(-1px 0 0 black) 
-            drop-shadow(0 1px 0 black) 
-            drop-shadow(0 -1px 0 black);
+    filter: drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black) drop-shadow(0 1px 0 black) drop-shadow(0 -1px 0 black);
 }
 
 #title {
@@ -205,6 +202,16 @@ body,
 
     to {
         transform: translateX(120vw);
+    }
+}
+
+@keyframes animHorizontalReverse {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-120vw);
     }
 }
 
@@ -757,7 +764,8 @@ h4 {
     box-shadow: 0 0 20px gold;
 }
 
-#closeSettings, #closeSettingsAudio {
+#closeSettings,
+#closeSettingsAudio {
     position: absolute;
     top: -30px;
     right: 5px;
@@ -779,11 +787,13 @@ h4 {
     margin-top: 40px;
 }
 
-#closeSettings:hover, #closeSettingsAudio:hover {
+#closeSettings:hover,
+#closeSettingsAudio:hover {
     transform: scale(1.2);
 }
 
-#closeSettings:focus, #closeSettingsAudio:focus {
+#closeSettings:focus,
+#closeSettingsAudio:focus {
     padding: 10px;
     padding-bottom: 1px;
     padding-top: 1px;

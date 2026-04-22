@@ -56,9 +56,9 @@ export default class Bubble {
             this.inner.classList.add("training-bubble")
 
             const ranges = {
-                easy: [150, 155],
-                medium: [110, 115],
-                hard: [80, 85]
+                easy: [140, 141],
+                medium: [110, 111],
+                hard: [95, 96]
             };
 
             const [min, max] = ranges[this.game.trainingDifficulty];
@@ -144,18 +144,25 @@ export default class Bubble {
     }
 
     setupAnimation(size) {
-        if (this.isSpecial) {
-            this.element.style.top = Math.random() * (window.innerHeight - size) + "px";
+    if (this.isSpecial) {
+
+        const fromLeft = Math.random() < 0.5;
+
+        this.element.style.top = Math.random() * (window.innerHeight - size) + "px";
+
+        let duration = 8;
+        this.element.style.animationDuration = duration + 's';
+
+        if (fromLeft) {
             this.element.style.left = "-150px";
-
-            let duration = 8;
-
-            this.element.style.setProperty('--bubble-duration', duration + 's');
-            this.element.style.animationDuration = duration + 's';
-
             this.element.style.animationName = "animHorizontal";
-            this.element.style.animationTimingFunction = "linear";
-            this.element.style.animationFillMode = "forwards";
+        } else {
+            this.element.style.left = window.innerWidth + "px";
+            this.element.style.animationName = "animHorizontalReverse";
+        }
+
+        this.element.style.animationTimingFunction = "linear";
+        this.element.style.animationFillMode = "forwards";
 
         } else {
             const screenFactor = window.innerHeight / 800;
@@ -168,7 +175,6 @@ export default class Bubble {
 
             } else {
                 baseSpeed = this.game.spawnSpeed;
-
             }
 
             let duration = Math.max(1.5, (baseSpeed / 1000) * 6 * screenFactor);
@@ -191,9 +197,9 @@ export default class Bubble {
                 if (this.game.trainingDifficulty === "easy") {
                     duration = 4;
                 } else if (this.game.trainingDifficulty === "medium") {
-                    duration = 3;
+                    duration = 3.4;
                 } else if (this.game.trainingDifficulty === "hard") {
-                    duration = 2.5;
+                    duration = 3;
                 }
             }
 

@@ -25,7 +25,7 @@ const POWERUPS = {
 
 const STAR_CONFIG = {
     easy: 15000,
-    hard: 14000,
+    hard: 13000,
     expert: 13000
 };
 
@@ -60,7 +60,7 @@ export default class Game {
 
         this.aimMilestones = {
             easy: [70, 170, 480, 640, 700],
-            hard: [120, 220, 390, 580],
+            hard: [120, 220, 380, 580],
             // expert: [120, 400, 580]
         };
 
@@ -75,11 +75,11 @@ export default class Game {
         this.starMilestonesUsed = new Set();
         this.aimMilestonesUsed = new Set();
 
-        this.specialStartDelay = 10000;
-        this.gameStartTime = Date.now();
 
         this.lastSpecialSpawn = 0;
         this.specialCooldown = 17000;
+        this.specialStartDelay = 10000;
+        this.gameStartTime = Date.now();
 
         this.isSlowActive = false;
         this.isStarActive = false;
