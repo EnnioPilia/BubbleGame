@@ -118,6 +118,7 @@ Les modes modifient les paramètres du jeu sans changer les règles :
   - Slow mode
   - Star mode
   - Aim mode
+  - Training mode
 - Effets sonores :
   - Explosion
   - Erreur
