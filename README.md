@@ -109,6 +109,14 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 ---
 
+## Système de score
+
+- Sauvegarde automatique en LocalStorage
+- Classement Top 10 par difficulté
+- Tri décroissant
+- Affichage dans une popup
+
+---
 
 ##  Système audio
 - Musiques dynamiques :
@@ -165,14 +173,6 @@ index.html
 
 ---
 
-## Système de score
-
-- Sauvegarde automatique en LocalStorage
-- Classement Top 10 par difficulté
-- Tri décroissant
-- Affichage dans une popup
-
----
 
 ##  Responsive
 
