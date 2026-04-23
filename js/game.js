@@ -198,8 +198,12 @@ export default class Game {
 
             index = (index + 1) % modes.length;
             this.trainingDifficulty = modes[index];
-
             this.trainingButton.textContent = "MODE : " + this.trainingDifficulty.toUpperCase();
+
+            this.score = 0;
+            this.scoreDisplay.textContent = 0;
+
+            this.clearBubbles();
             this.updateBestScoreDisplay();
         };
     }

@@ -390,5 +390,4 @@ document.addEventListener("keydown", (e) => {
         }
         buttons[window.selectedIndex].click();
     }
-
 });

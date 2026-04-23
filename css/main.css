@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Winky Rough", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: url("image/fond1.jpg") center/cover no-repeat;
+    overflow: hidden;
+    background-attachment: fixed;
+}
+
+::selection {
+    background: transparent;
+}
+
+::-moz-selection {
+    background: transparent;
+}
+
+body,
+#score,
+#YourScore {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+::selection {
+    background: rgb(158, 0, 0);
+    color: black;
+}
+
+#ui {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+#topBar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+#score,
+#YourScore,
+#restartButton,
+#rankingButton,
+#menuButton {
+    z-index: 20;
+    position: relative;
+}
+
+#resumeButton {
+    z-index: 2000;
+    position: relative;
+}
+
+
+#lifes-container {
+    display: flex;
+    gap: 8px;
+    margin: 0 auto;
+}
+
+#lifes-container img {
+    width: clamp(40px, 8vw, 120px);
+    z-index: 5;
+    position: relative;
+    filter: drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black) drop-shadow(0 1px 0 black) drop-shadow(0 -1px 0 black);
+}
+
+#title {
+    text-align: center;
+    font-size: clamp(2.5rem, 10vw, 10rem);
+    color: gold;
+    margin-top: 50px;
+    text-shadow:
+        5px 5px 7px rgb(0, 0, 0),
+        0 0 20px rgb(219, 0, 0),
+        0 0 20px rgb(206, 1, 1);
+}
+
+#score {
+    display: none;
+    text-align: center;
+    font-size: clamp(3rem, 10vw, 10rem);
+    color: gold;
+    position: fixed;
+    top: 140px;
+    left: 50%;
+    z-index: 1;
+    transform: translateX(-50%);
+    text-shadow:
+        4px 4px 8px rgba(0, 0, 0, 0.9),
+        0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+#menu {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#menu input {
+    padding: 15px;
+}
+
+#playerName {
+    padding: 15px;
+    width: 100%;
+    max-width: 350px;
+    background: linear-gradient(135deg, gold, orange);
+    color: black;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    border: none;
+    border-radius: 1.5rem;
+    text-align: center;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 15px 5px rgba(0, 0, 0, 1);
+}
+
+#playerName::placeholder {
+    color: black;
+    opacity: 0.5;
+}
+
+#playerName:focus {
+    outline: none;
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 0 10px gold, 0 0 20px orange;
+}
+
+#playerName:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgb(231, 197, 1) inset !important;
+}
+
+#playerName:hover {
+    box-shadow: 0 0 20px gold;
+    border: 1px solid black;
+}
+
+
+#YourScore {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.gameover-score {
+    margin-top: -30px;
+}
+
+.gameover-title {
+    font-size: clamp(3rem, 10vw, 10rem);
+    color: red;
+    font-weight: bold;
+    text-shadow:
+        5px 5px 7px gold,
+        0 0 20px rgb(0, 0, 0),
+        0 0 20px rgb(0, 0, 0);
+}
+
+.gameover-score {
+    font-size: clamp(1.5rem, 5vw, 4.5rem);
+    color: gold;
+}
+
+#score,
+#YourScore {
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 1));
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+.volumeSlider {
+    -webkit-appearance: none;
+    width: 220px;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    background: linear-gradient(to right, gold 50%, white 50%);
+    box-shadow: 0 0 10px gold;
+
+}
+
+.volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: gold;
+    cursor: pointer;
+}
+
+
+h4 {
+    color: gold;
+    font-size: 25px;
+    text-align: right;
+}
+
+.titleMusic {
+    padding-right: 22px !important;
+}
+
+.bg-option {
+    width: 200px;
+    height: 120px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: 0.2s;
+    object-fit: cover;
+}
+
+.bg-option:hover {
+    transform: scale(1.1);
+    border: 2px solid gold;
+}
+
+.bg-option.selected {
+    border: 2px solid gold;
+    box-shadow: 0 0 10px gold;
+}
+
+#closeAudio:hover {
+    transform: scale(1.2);
+}

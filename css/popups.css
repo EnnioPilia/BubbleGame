@@ -1,0 +1,279 @@
+#rankingTabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    margin-top: 20px;
+}
+
+#rankingTabs button {
+    width: 140px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 20px;
+    background: black;
+    color: gold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 5px;
+}
+
+#rankingTabs button:hover {
+    transform: scale(1.1);
+}
+
+#rankingTabs button.active {
+    border: 2px solid gold;
+    box-shadow: 0 0 10px gold;
+    transform: scale(1.1);
+}
+
+#rankingPopup {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#rankingPopup>* {
+    width: auto;
+    max-width: 381px;
+    background: black;
+    color: gold;
+    padding: 27px;
+    border-radius: 20px;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 15px 5px rgba(0, 0, 0, 1);
+}
+
+#closeRanking {
+    width: 100%;
+    cursor: pointer;
+}
+
+#rankingPopup h2 {
+    font-size: clamp(2rem, 5vw, 2.2rem);
+}
+
+#rankingList {
+    margin: 25px 0;
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    width: 100%;
+    max-width: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#backgroundPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+#backgroundPopup.active {
+    display: flex;
+    background: rgba(0, 0, 0, 0.788);
+}
+
+.background-content {
+    width: 90%;
+    max-width: 850px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: gold;
+    background: black;
+    box-shadow: 0 0 20px gold;
+}
+
+#backgroundChoices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+
+
+.popup-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: min(90%, 500px);
+    padding: 55px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px gold;
+}
+
+#audioPopup {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 3000;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s;
+}
+
+#audioPopup.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    background: rgba(0, 0, 0, 0.788);
+}
+
+
+
+#settingsPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.788);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+}
+
+#settingsPopup.active {
+    display: flex;
+}
+
+.settings-content {
+    position: relative;
+    background: black;
+    color: gold;
+    padding: 40px 0px 50px 0px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px gold;
+}
+
+#closeSettings,
+#closeSettingsAudio {
+    position: absolute;
+    top: -30px;
+    right: 5px;
+    width: auto;
+    max-width: none;
+    color: gold;
+    font-size: 30px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+#closeSettingsAudio {
+    padding: 10px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    right: 11px;
+    margin-top: 40px;
+}
+
+#closeSettings:hover,
+#closeSettingsAudio:hover {
+    transform: scale(1.2);
+}
+
+#closeSettings:focus,
+#closeSettingsAudio:focus {
+    padding: 10px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    right: 11px;
+    margin-top: 40px;
+}
+
+.audio-column {
+    flex-direction: column;
+    gap: 35px;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 22px;
+}
+.toggleBtn,
+.contentSlider {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.contentSlider {
+    gap: 20px;
+}
+
+#customCursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    filter:
+        drop-shadow(1px 0 0 black) 
+        drop-shadow(-1px 0 0 black) 
+        drop-shadow(0 1px 0 black) 
+        drop-shadow(0 -1px 0 black);
+}
+
+#cursorPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.788);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+#cursorPopup.active {
+    display: flex;
+}
+
+.cursor-content {
+    background: black;
+    padding: 45px;
+    border-radius: 20px;
+    text-align: center;
+    color: gold;
+    box-shadow: 0 0 20px gold;
+}
+
+#cursorPreview {
+    width: 100px;
+    height: 100px;
+    margin: 30px 0;
+    pointer-events: none;
+}
+
+#validateCursor {
+    margin-top: 30px;
+    cursor: pointer;
+}

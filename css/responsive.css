@@ -1,0 +1,155 @@
+@media (max-width: 768px) {
+
+    #title {
+        font-size: 85px;
+    }
+
+    #YourScore {
+        margin-top: 185px;
+    }
+
+    #score {
+        font-size: 140px;
+    }
+
+    #lifes-container img {
+        width: 60px;
+        height: 60px;
+    }
+
+    #pauseButton {
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+        top: 10px;
+        left: 10px;
+    }
+
+    #gameOverBackground {
+        margin-top: 53px;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.6);
+    }
+
+    .gameover-title {
+        font-size: 70px;
+    }
+
+    .gameover-score {
+        font-size: 55px;
+        margin-top: -20px;
+    }
+
+    .settings-content {
+        padding: 30px;
+    }
+
+    #rankingPopup>* {
+        width: 105%;
+    }
+
+    .audio-column {
+        width: 96%;
+    }
+
+    h4,
+    .titleMusic {
+        font-size: 16px;
+    }
+
+    .toggleBtn {
+        gap: 15px;
+    }
+
+    .cursor-content {
+        width: 95%;
+    }
+
+    #backgroundChoices {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .bg-option {
+        width: 45%;
+        max-width: 200px;
+        height: auto;
+    }
+    
+    .fond3,
+    .fond2 {
+        height: 75px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    #title {
+        font-size: clamp(5rem, 8vw, 7rem);
+    }
+
+    #menu {
+        max-width: 355px;
+    }
+
+    .gameover-title {
+        font-size: 125px;
+    }
+
+    .gameover-score {
+        font-size: 70px;
+        margin-top: -30px;
+    }
+
+    #pauseButton {
+        width: 75px;
+        height: 75px;
+        font-size: 30px;
+        top: 20px;
+        left: 20px;
+    }
+}
+
+@media (min-width: 1800px) {
+
+    #title {
+        font-size: 12rem;
+    }
+
+    #score {
+        font-size: 12rem;
+    }
+
+    #playerName {
+        max-width: 500px;
+    }
+
+    .gameover-title {
+        font-size: 12rem;
+        margin-top: 75px;
+    }
+
+    .gameover-score {
+        font-size: 5rem;
+    }
+
+    button {
+        font-size: 2rem;
+        padding: 1.5rem;
+        max-width: 500px;
+    }
+
+    .settings-content {
+        padding: 50px;
+    }
+
+    #gameButtons,
+    #gameOverButtons {
+        margin-top: 500px;
+        gap: 18px;
+    }
+}

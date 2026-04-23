@@ -1,0 +1,483 @@
+.bubble-inner.bad-bubble {
+    background: red;
+}
+
+.bubble {
+    position: absolute;
+    animation: anim linear forwards;
+    z-index: 2000;
+}
+
+.bubble-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.6;
+    border: 2px solid black;
+    transform: scale(1);
+    transition: transform 0.2s ease, opacity 0.2s;
+}
+
+.bubble.pop .bubble-inner {
+    transform: scale(1.3);
+    opacity: 0;
+}
+
+@keyframes anim {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-150vh);
+    }
+}
+
+.bubble-inner.special {
+    opacity: 1;
+    box-shadow: 0 0 20px violet, 0 0 40px cyan;
+}
+
+@keyframes animHorizontal {
+    from {
+        transform: translateX(-130px);
+    }
+
+    to {
+        transform: translateX(120vw);
+    }
+}
+
+@keyframes animHorizontalReverse {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-120vw);
+    }
+}
+
+.heart {
+    background: none !important;
+    border: none !important;
+    opacity: 0.9 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    animation: pulseHeart 0.6s infinite;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}
+
+@keyframes pulseHeart {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.heart-click {
+    animation: heartClickAnim 0.18s ease forwards;
+}
+
+@keyframes heartClickAnim {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.pulse {
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+        filter: brightness(2);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+.zoom-effect {
+    animation: zoomFlash 0.6s ease;
+}
+
+@keyframes zoomFlash {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.star-bubble .bubble-inner {
+    border-radius: 0%;
+    animation:
+        starSparkle 0.4s infinite,
+        starColorShift 2s linear infinite;
+}
+
+@keyframes starSparkle {
+    0% {
+        transform: scale(0.9);
+        filter: brightness(2) drop-shadow(0 0 5px gold);
+    }
+
+    25% {
+        transform: scale(1.1);
+        filter: brightness(2) drop-shadow(0 0 15px yellow);
+    }
+
+    50% {
+        transform: scale(0.9);
+        filter: brightness(2) drop-shadow(0 0 25px orange);
+    }
+
+    75% {
+        transform: scale(1.1);
+        filter: brightness(2) drop-shadow(0 0 20px white);
+    }
+
+    100% {
+        transform: scale(0.9);
+        filter: brightness(2) drop-shadow(0 0 5px gold);
+    }
+}
+
+body.slow-mode::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+body.star-active::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: rgb(250, 250, 250);
+    animation: pulseGlow 0.6s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        opacity: 0.91;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.slow-bubble {
+    background: url("image/sablier.png") no-repeat center;
+    background-size: 60%;
+    opacity: 1;
+    border: none;
+    opacity: 0.9;
+    animation: flip180 3s ease-in-out infinite;
+}
+
+@keyframes flip180 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    40% {
+        transform: rotate(180deg);
+    }
+
+    60% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+#flashEffect {
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.flash-active {
+    animation: flash 0.8s ease;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.star-mode {
+    opacity: 1;
+    background: radial-gradient(#ff13ff, #01ffff);
+    box-shadow:
+        0 0 25px cyan,
+        0 0 40px rgb(255, 0, 119),
+        0 0 20px rgb(255, 0, 119),
+        0 0 40px rgb(255, 0, 119),
+        0 0 80px rgb(255, 0, 119);
+
+    transform-origin: center;
+    animation: sparkle 0.15s infinite;
+    filter: hue-rotate(20deg);
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+        filter: brightness(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+#flashEffectAim {
+    position: fixed;
+    inset: 0;
+    background: rgb(0, 0, 0);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.flashAim-active {
+    animation: flashAim 0.8s ease;
+}
+
+@keyframes flashAim {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.aim-bubble .bubble-inner {
+    width: 100px;
+    height: 100px;
+    filter: drop-shadow(0 0 10px red) drop-shadow(0 0 20px red) drop-shadow(0 0 30px red);
+    animation: aimPulse 1.3s infinite;
+}
+
+@keyframes aimPulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgb(255, 0, 0));
+    }
+
+    50% {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 11px rgb(255, 0, 0));
+    }
+
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgb(255, 0, 0));
+    }
+}
+
+#gameOverBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#gameOverBackground.active {
+    animation: gameOverExplosion 1s ease-out forwards;
+}
+
+@keyframes gameOverExplosion {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    30% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+}
+
+.bad-explosion {
+    animation: explodeBubble 15s linear forwards;
+    border: 1px solid black;
+}
+
+@keyframes explodeBubble {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1000);
+        opacity: 0.2;
+    }
+}
+
+.training-bubble {
+    background: radial-gradient(#00ffff, #0066ff);
+    box-shadow:
+        0 0 20px cyan,
+        0 0 40px blue,
+        0 0 80px rgba(0, 150, 255, 0.9);
+    animation: sparkle 0.15s infinite;
+    opacity: 1;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+        filter: brightness(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+#aimCursor {
+    position: fixed;
+    width: 65px;
+    height: 65px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 2001;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 6px rgb(255, 253, 253));
+}
+
+body.aim-mode::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(226, 0, 0, 0.7), transparent);
+}
+
+body.aim-mode {
+    cursor: none;
+}
+
+body.gameover::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 6;
+}
+
+body.training-mode::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(0.6px);
+    -webkit-backdrop-filter: blur(0.6px);
+    background: rgba(0, 200, 255, 0.25);
+    z-index: 1;
+    pointer-events: none;
+}
+
+#bestScoreTraining {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: gold;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px black, 0 0 16px black;
+    z-index: 1000;
+    pointer-events: none;
+}
