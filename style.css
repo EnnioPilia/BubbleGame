@@ -1327,8 +1327,61 @@ body.training-mode::before {
 .cursor-option.selected {
     border: 2px solid gold;
     box-shadow: 0 0 10px gold;
+    outline: none;
 }
 
+.cursor-option:focus-visible {
+    border: 2px solid rgb(253, 253, 252);
+    outline: none;
+}
+
+input[type="range"] {
+    outline: none;
+}
+
+input[type="range"]:focus-visible {
+    outline: 2px solid gold;
+    outline-offset: 4px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+input[type="range"]:focus-visible::-webkit-slider-thumb {
+    border: 2px solid gold;
+    box-shadow: 0 0 6px gold;
+}
+
+#cursorSizeSlider {
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 5px;
+    background: linear-gradient(to right, gold 50%, white 50%);
+    box-shadow: 0 0 10px gold;
+}
+
+#cursorSizeSlider:focus-visible {
+    outline: 2px solid gold;
+    outline-offset: 4px;
+    box-shadow: 0 0 10px gold; 
+}
+
+#cursorSizeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: gold;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+#cursorSizeSlider:focus-visible::-webkit-slider-thumb {
+    border: 2px solid gold;
+    box-shadow: 0 0 6px gold;
+}
 
 @media (min-width: 769px) and (max-width: 1024px) {
 

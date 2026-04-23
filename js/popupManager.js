@@ -18,35 +18,52 @@ export function closeAllPopups() {
         }
     });
 
-    const game = window.gameInstance;
+    // 🔥 RESET GLOBAL CLEAN
+    document.activeElement?.blur();
+    window.isUsingSlider = false;
     window.selectedIndex = 0;
 
+    const game = window.gameInstance;
+
+    // 🔥 CONTEXTE PROPRE
     if (window.currentGameState === "gameover") {
         window.keyboardContext = "gameover";
-    } else if (game?.isPaused) {
+    } 
+    else if (game?.isPaused) {
         window.keyboardContext = "pause";
-    } else if (window.currentGameState === "menu") {
+    } 
+    else {
         window.keyboardContext = "menu";
-    } else {
-        window.keyboardContext = "game";
     }
 
-    setTimeout(() => {
-        const contexts = {
-            menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu"],
-            pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"]
-        };
+setTimeout(() => {
+    const contexts = {
+        menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu"],
+        pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"]
+    };
 
-        const ids = contexts[window.keyboardContext];
-        if (!ids) return;
+    const ids = contexts[window.keyboardContext];
+    if (!ids) return;
 
-        const firstBtn = document.getElementById(ids[0]);
-        if (firstBtn) firstBtn.focus();
-    }, 0);
+    window.selectedIndex = 0;
+
+    const firstBtn = document.getElementById(ids[0]);
+
+    if (firstBtn) {
+        firstBtn.focus();
+
+        if (document.activeElement !== firstBtn) {
+            firstBtn.focus();
+        }
+    }
+}, 50);
 }
 
 export function openPopup(id) {
     closeAllPopups();
+
+    window.isUsingSlider = false;
+    document.activeElement?.blur();
 
     window.selectedIndex = 0;
     const el = document.getElementById(id);
@@ -67,9 +84,9 @@ export function openPopup(id) {
     setTimeout(() => {
         const contexts = {
             settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
-            audio: ["soundToggle", "closeSettingsAudio"],
-            cursor: ["validateCursor"],
-            background: ["closeBackground"],
+            audio: ["musicSlider", "sfxSlider", "soundOn", "soundOff", "closeSettingsAudio"],
+            cursor: ["cursorSizeSlider", "cursor1", "cursor2", "cursor3", "cursor4", "validateCursor"],
+            background: ["bg1", "bg2", "bg3", "bg4", "closeBackground"],
             ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]
         };
 
@@ -99,4 +116,24 @@ export function goToPopup(fromId, toId) {
         if (toId === "cursorPopup") window.keyboardContext = "cursor";
         if (toId === "backgroundPopup") window.keyboardContext = "background";
     }
+}
+
+export function initKeyboardFixes() {
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+        slider.addEventListener("focus", () => {
+            window.isUsingSlider = true;
+        });
+
+        slider.addEventListener("blur", () => {
+            window.isUsingSlider = false;
+        });
+    });
+
+    document.querySelectorAll(".cursor-option, .bg-option").forEach(el => {
+        el.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                el.click();
+            }
+        });
+    });
 }

@@ -1,4 +1,5 @@
 import { toggleSound, getState, setMusicVolume, setSFXVolume, applyVolumes } from "./sound.js";
+import { closeAllPopups } from "./popupManager.js";
 
 export function initAudioUI() {
     const musicSlider = document.getElementById("musicSlider");
@@ -64,12 +65,9 @@ export function initAudioUI() {
         applyBtn.onclick = () => {
             setMusicVolume(musicSlider.value / 100);
             setSFXVolume(sfxSlider.value / 100);
-
             applyVolumes();
 
-            refresh();
-
-            document.getElementById("audioPopup")?.classList.remove("active");
+            closeAllPopups();
         };
     }
 
@@ -83,9 +81,8 @@ export function initAudioUI() {
                 `linear-gradient(to right, gold ${value}%, white ${value}%)`;
 
             if (slider.id === "musicSlider") {
-                setVolume(value / 100);
+                setMusicVolume(value / 100);
             }
-
             if (slider.id === "sfxSlider") {
             }
         });

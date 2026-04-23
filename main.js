@@ -4,6 +4,8 @@ import { initCursor } from "./js/cursor.js";
 import { initSettingsUI } from "./js/settings.js";
 import { initUI } from "./js/UI.js";
 import { initBackgroundPopup } from "./js/backgroundPopup.js";
+import { initKeyboardFixes } from "./js/popupManager.js";
+import { closeAllPopups } from "./js/popupManager.js";
 import Game from "./js/game.js";
 
 initSoundSystem();
@@ -12,6 +14,7 @@ initUI();
 initSettingsUI();
 initAudioUI();
 initBackgroundPopup();
+initKeyboardFixes();
 
 const game = new Game();
 
@@ -34,7 +37,7 @@ document.addEventListener("click", () => {
 
     if (soundEnabled && musicEnabled && sounds.musicMenu) {
         if (sounds.musicMenu.paused) {
-            sounds.musicMenu.play().catch(() => {});
+            sounds.musicMenu.play().catch(() => { });
         }
     }
 });
@@ -127,8 +130,6 @@ document.addEventListener("click", (e) => {
         resetCursor();
     }
 });
-
-
 
 function followTarget() {
     if (!isTracking || !window.gameInstance.isAimActive) return;
@@ -235,8 +236,6 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-
-
 const menuButtons = [
     document.getElementById("startButton"),
     document.getElementById("difficultyButton"),
@@ -252,6 +251,23 @@ function updateFocus() {
 
 document.addEventListener("keydown", (e) => {
 
+    const active = document.activeElement;
+    const isAudio = window.keyboardContext === "audio";
+
+    if (active && active.type === "range") {
+
+        if (e.key === "ArrowLeft" || e.key === "ArrowRight") return;
+
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            active.blur();
+            window.isUsingSlider = false;
+            return;
+        }
+    }
+
+    if (window.isUsingSlider) return;
+
     if ((e.key === " " || e.code === "Space") && document.activeElement.tagName !== "INPUT") {
         e.preventDefault();
         e.stopPropagation();
@@ -262,13 +278,37 @@ document.addEventListener("keydown", (e) => {
         pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"],
         gameover: ["restartButtonGameOver", "menuButtonGameOver", "rankingButtonGameOver"],
         settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
-        audio: ["soundToggle", "closeSettingsAudio"],
-        cursor: ["validateCursor"],
-        background: ["closeBackground"],
+        audio: ["musicSlider", "sfxSlider", "soundOn", "soundOff", "closeSettingsAudio"],
+        cursor: ["cursorSizeSlider", "cursor1", "cursor2", "cursor3", "cursor4", "validateCursor"],
+        background: ["bg1", "bg2", "bg3", "bg4", "closeBackground"],
         ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]
     };
 
-    const active = document.activeElement;
+    if (isAudio) {
+
+        const ids = contexts.audio;
+
+        if (typeof window.selectedIndex === "undefined") {
+            window.selectedIndex = 0;
+        }
+
+        const buttons = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+        if (buttons.length === 0) return;
+
+        if (e.key === "ArrowDown") {
+            window.selectedIndex = (window.selectedIndex + 1) % buttons.length;
+        }
+
+        if (e.key === "ArrowUp") {
+            window.selectedIndex = (window.selectedIndex - 1 + buttons.length) % buttons.length;
+        }
+
+        const el = buttons[window.selectedIndex];
+        if (el) el.focus();
+
+        return;
+    }
 
     const isTyping =
         active &&
@@ -278,18 +318,32 @@ document.addEventListener("keydown", (e) => {
 
     if (isTyping) {
 
-        if (e.key === "Escape") {
-            document.activeElement.blur();
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+
+            active.blur();
 
             const ids = contexts[window.keyboardContext];
-            if (ids) {
-                window.selectedIndex = 0;
-                const el = document.getElementById(ids[0]);
-                if (el) el.focus();
-            }
-        }
+            if (!ids) return;
 
-        return;
+            const buttons = ids.map(id => document.getElementById(id)).filter(Boolean);
+            if (buttons.length === 0) return;
+
+            let startIndex = buttons.length - 1;
+
+            if (e.key === "ArrowDown") {
+                window.selectedIndex = (startIndex + 1) % buttons.length;
+            }
+
+            if (e.key === "ArrowUp") {
+                window.selectedIndex = (startIndex - 1 + buttons.length) % buttons.length;
+            }
+
+            const el = buttons[window.selectedIndex];
+            if (el) el.focus();
+
+            return;
+        }
     }
 
     if (e.key === " " || e.code === "Space") {

@@ -1114,6 +1114,14 @@ export default class Game {
         play(sounds.musicMenu);
 
         this.displayLifes();
+
+        window.keyboardContext = "menu";
+        window.selectedIndex = 0;
+
+        requestAnimationFrame(() => {
+            const first = document.getElementById("startButton");
+            if (first) first.focus();
+        });
     }
 
     updateBestScoreDisplay() {
@@ -1123,7 +1131,7 @@ export default class Game {
         const key = this.getTrainingKey();
         const best = localStorage.getItem(key) || 0;
 
-        el.textContent = "Best Score : " + best;
+        el.textContent = "Best : " + best;
     }
     getTrainingKey() {
         return `training_best_${this.trainingDifficulty}`;
