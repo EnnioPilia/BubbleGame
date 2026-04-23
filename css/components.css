@@ -229,6 +229,25 @@ body.no-custom-cursor {
     transition: transform 0.2s, border 0.2s;
 }
 
+.volumeSlider {
+    -webkit-appearance: none;
+    width: 220px;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    background: linear-gradient(to right, gold 50%, white 50%);
+    box-shadow: 0 0 10px gold;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: gold;
+    cursor: pointer;
+}
+
 #cursorSizeSlider {
     -webkit-appearance: none;
     width: 100%;

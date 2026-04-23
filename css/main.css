@@ -54,7 +54,6 @@ body,
     width: 100%;
 }
 
-
 #score,
 #YourScore,
 #restartButton,
@@ -69,7 +68,6 @@ body,
     position: relative;
 }
 
-
 #lifes-container {
     display: flex;
     gap: 8px;
@@ -80,7 +78,10 @@ body,
     width: clamp(40px, 8vw, 120px);
     z-index: 5;
     position: relative;
-    filter: drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black) drop-shadow(0 1px 0 black) drop-shadow(0 -1px 0 black);
+    filter: drop-shadow(1px 0 0 black) 
+            drop-shadow(-1px 0 0 black) 
+            drop-shadow(0 1px 0 black) 
+            drop-shadow(0 -1px 0 black);
 }
 
 #title {
@@ -157,7 +158,6 @@ body,
     border: 1px solid black;
 }
 
-
 #YourScore {
     position: fixed;
     inset: 0;
@@ -194,27 +194,6 @@ body,
     filter: drop-shadow(0 0 15px rgba(0, 0, 0, 1));
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.7);
 }
-
-.volumeSlider {
-    -webkit-appearance: none;
-    width: 220px;
-    height: 8px;
-    border-radius: 5px;
-    outline: none;
-    background: linear-gradient(to right, gold 50%, white 50%);
-    box-shadow: 0 0 10px gold;
-
-}
-
-.volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: gold;
-    cursor: pointer;
-}
-
 
 h4 {
     color: gold;
