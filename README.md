@@ -167,7 +167,7 @@ index.html
 ## Lancer le jeu
 
 - Entrer votre pseudo
-- Cliquer sur **Start**
+- Cliquer sur **PLAY**
 - Jouer 
 
 
@@ -178,7 +178,7 @@ index.html
 
 Le jeu est entièrement responsive :
 
--  Desktop  
+- Desktop  
 - Mobile  
 - Tablette  
 
