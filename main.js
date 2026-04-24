@@ -386,8 +386,9 @@ document.addEventListener("keydown", (e) => {
     }
 
     if (e.key === "Enter") {
-        if (window.keyboardContext === "pause") {
-        }
+        e.preventDefault();
+        e.stopPropagation();
+
         buttons[window.selectedIndex].click();
     }
 });

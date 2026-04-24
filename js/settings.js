@@ -1,5 +1,5 @@
 import { updateCursorState } from "./UI.js";
-import { openPopup } from "./popupManager.js";
+import { openPopup, closeAllPopups } from "./popupManager.js";
 
 export function initSettingsUI() {
 
@@ -31,13 +31,9 @@ export function initSettingsUI() {
     });
 
     closeSettings?.addEventListener("click", () => {
-        settingsPopup.classList.remove("active");
-
-        if (!isAnyPopupOpen()) {
-            updateCursorState();
-        }
+        closeAllPopups();
     });
-
+    
     openSound?.addEventListener("click", (e) => {
         e.stopPropagation();
         openPopup("audioPopup");

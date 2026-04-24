@@ -1,4 +1,4 @@
-import { openPopup, goToPopup } from "./popupManager.js";
+import { openPopup, goToPopup, closeAllPopups } from "./popupManager.js";
 import { updateCursorState } from "./UI.js";
 
 export function initBackgroundPopup() {
@@ -14,9 +14,9 @@ export function initBackgroundPopup() {
         updateCursorState();
     };
 
-    closeBtn.onclick = () => {
-        goToPopup("backgroundPopup", "settingsPopup");
-    };
+closeBtn.onclick = () => {
+    closeAllPopups();   
+};
 
     bgOptions.forEach(img => {
         img.onclick = () => {

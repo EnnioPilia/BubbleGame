@@ -18,45 +18,47 @@ export function closeAllPopups() {
         }
     });
 
-    // 🔥 RESET GLOBAL CLEAN
     document.activeElement?.blur();
     window.isUsingSlider = false;
     window.selectedIndex = 0;
 
     const game = window.gameInstance;
 
-    // 🔥 CONTEXTE PROPRE
     if (window.currentGameState === "gameover") {
         window.keyboardContext = "gameover";
-    } 
+    }
     else if (game?.isPaused) {
         window.keyboardContext = "pause";
-    } 
+    }
     else {
         window.keyboardContext = "menu";
     }
 
-setTimeout(() => {
-    const contexts = {
-        menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu"],
-        pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"]
-    };
-
-    const ids = contexts[window.keyboardContext];
-    if (!ids) return;
-
-    window.selectedIndex = 0;
-
-    const firstBtn = document.getElementById(ids[0]);
-
-    if (firstBtn) {
-        firstBtn.focus();
-
-        if (document.activeElement !== firstBtn) {
-            firstBtn.focus();
-        }
+    if (window.currentGameState === "menu") {
+        window.keyboardContext = "menu";
     }
-}, 50);
+
+    setTimeout(() => {
+        const contexts = {
+            menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu"],
+            pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton"]
+        };
+
+        const ids = contexts[window.keyboardContext];
+        if (!ids) return;
+
+        window.selectedIndex = 0;
+
+        const firstBtn = document.getElementById(ids[0]);
+
+        if (firstBtn) {
+            firstBtn.focus();
+
+            if (document.activeElement !== firstBtn) {
+                firstBtn.focus();
+            }
+        }
+    }, 50);
 }
 
 export function openPopup(id) {
