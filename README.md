@@ -34,7 +34,7 @@ Le joueur doit :
 - Éviter les bulles rouges (Game Over immédiat)
 - Ne pas rater les bulles normales (perte de vie)
 - Des Items bonus à disposition pour aider le joueur 
-- Augmentation progressive de la vitesse des bulles
+- Faire face à une difficulté croissante : accélération progressive du jeu
 - Survivre le plus longtemps possible pour maximiser le score
 
 
