@@ -167,7 +167,7 @@ index.html
 ## Lancer le jeu
 
 - Entrer votre pseudo
-- Cliquer sur **PLAY**
+- Cliquer sur **"PLAY"**
 - Jouer 
 
 
