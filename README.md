@@ -198,6 +198,7 @@ Le jeu est entièrement responsive :
 - Formation : **CDA Simplon Grenoble 2025**
 - Travail "concours" entre promotion 
 - Récompensé parmi les meilleurs projets
+- Le projet a été amélioré après le concours avec de nouvelles fonctionnalités, des optimisations et des ajustements de gameplay.
 
 ---
 
