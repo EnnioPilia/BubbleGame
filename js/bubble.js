@@ -57,7 +57,8 @@ export default class Bubble {
             const ranges = {
                 easy: [140, 145],
                 medium: [110, 115],
-                hard: [95, 100]
+                hard: [95, 100],
+                expert: [80, 85]
             };
 
             const [min, max] = ranges[this.game.trainingDifficulty];
@@ -211,6 +212,8 @@ export default class Bubble {
                     duration = 3.4;
                 } else if (this.game.trainingDifficulty === "hard") {
                     duration = 3;
+                } else if (this.game.trainingDifficulty === "expert") {
+                    duration = 2.5;
                 }
             }
 

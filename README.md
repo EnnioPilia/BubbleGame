@@ -90,7 +90,7 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 - Permet de s'entraîner librement
 - Pas de Game Over
-- Vitesse et tailles des bulles augmenté selon la difficulté (Easy / Medium / Hard)
+- Vitesse et tailles des bulles augmenté selon la difficulté (Easy / Medium / Hard / Expert)
 
 
 ---

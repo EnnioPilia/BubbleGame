@@ -63,7 +63,7 @@ export default class Game {
         };
 
         this.aimMilestones = {
-            easy: [70, 170, 480, 640, 700],
+            easy: [1, 70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580],
             expert: [120, 400, 580]
         };
@@ -196,7 +196,7 @@ export default class Game {
         });
 
         this.trainingButton.onclick = () => {
-            const modes = ["easy", "medium", "hard"];
+            const modes = ["easy", "medium", "hard", "expert"];
             let index = modes.indexOf(this.trainingDifficulty);
 
             index = (index + 1) % modes.length;
