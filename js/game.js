@@ -20,6 +20,10 @@ const POWERUPS = {
     hard: {
         slowDuration: 10000,
         slowFactor: 1.5
+    },
+    expert: {
+        slowDuration: 8000,
+        slowFactor: 1.3
     }
 };
 
@@ -53,19 +57,19 @@ export default class Game {
         };
 
         this.slowMilestones = {
-            easy: [30, 120, 210, 330, 510, 680],
+            easy: [30, 120, 210, 330, 510, 680, 730],
             hard: [90, 170, 255, 410, 540, 620],
-            // expert: [100, 200, 380]
+            expert: [100, 200, 380]
         };
 
         this.aimMilestones = {
             easy: [70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580],
-            // expert: [120, 400, 580]
+            expert: [120, 400, 580]
         };
 
         this.starMilestones = {
-            easy: [220, 360, 520, 650],
+            easy: [220, 360, 520, 650, 750],
             hard: [260, 420, 620, 750],
             expert: [250, 450, 650]
         };
@@ -74,7 +78,6 @@ export default class Game {
         this.usedSlowMilestones = new Set();
         this.starMilestonesUsed = new Set();
         this.aimMilestonesUsed = new Set();
-
 
         this.lastSpecialSpawn = 0;
         this.specialCooldown = 17000;
@@ -582,7 +585,8 @@ export default class Game {
         else if (this.difficulty === "expert") {
 
             if (
-                this.starMilestones.expert?.includes(this.score) &&
+                !this.isAimActive &&
+                this.starMilestones[this.difficulty].includes(this.score) &&
                 !this.starMilestonesUsed.has(this.score)
             ) {
                 this.spawnStar();
@@ -590,7 +594,25 @@ export default class Game {
             }
 
             if (
-                this.heartMilestones.expert?.includes(this.score) &&
+                this.aimMilestones[this.difficulty].includes(this.score) &&
+                !this.aimMilestonesUsed.has(this.score)
+            ) {
+                this.spawnAim();
+                this.aimMilestonesUsed.add(this.score);
+            }
+
+            if (
+                !this.isAimActive &&
+                this.slowMilestones[this.difficulty].includes(this.score) &&
+                !this.usedSlowMilestones.has(this.score)
+            ) {
+                this.spawnSlow();
+                this.usedSlowMilestones.add(this.score);
+            }
+
+            if (
+                !this.isAimActive &&
+                this.heartMilestones[this.difficulty].includes(this.score) &&
                 !this.heartMilestonesUsed.has(this.score)
             ) {
                 this.spawnHeart();

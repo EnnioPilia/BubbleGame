@@ -44,10 +44,10 @@ export function initCursor() {
     }
 
     if (cursor) {
-        cursor.src = "image/" + selectedCursor;
+        cursor.src = "assets/image/" + selectedCursor;
     }
     if (cursorPreview) {
-        cursorPreview.src = "image/" + selectedCursor;
+        cursorPreview.src = "assets/image/" + selectedCursor;
     }
 
     cursorOptions.forEach(option => {
@@ -58,8 +58,8 @@ export function initCursor() {
         option.addEventListener("click", () => {
             selectedCursor = option.dataset.cursor;
 
-            if (cursor) cursor.src = "image/" + selectedCursor;
-            if (cursorPreview) cursorPreview.src = "image/" + selectedCursor;
+            if (cursor) cursor.src = "assets/image/" + selectedCursor;
+            if (cursorPreview) cursorPreview.src = "assets/image/" + selectedCursor;
 
             cursorOptions.forEach(o => o.classList.remove("selected"));
             option.classList.add("selected");

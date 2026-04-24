@@ -79,11 +79,26 @@
         max-width: 200px;
         height: auto;
     }
-    
+
     .fond3,
     .fond2 {
         height: 75px;
     }
+
+    #trainingDifficultyButton {
+        font-size: 13px;
+        padding: 6px 10px;
+        width: 30%;
+        top: 40%;
+        right: -2%;
+        position: absolute;
+    }
+
+    #bestScoreTraining {
+        font-size: 13px;
+
+    }
+
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {

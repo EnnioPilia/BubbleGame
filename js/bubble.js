@@ -27,7 +27,6 @@ export default class Bubble {
         this.clickCount = 0;
         this.maxClicks = 100;
 
-
         this.createElement();
         this.setupStyle();
         this.setupBehavior();
@@ -56,9 +55,9 @@ export default class Bubble {
             this.inner.classList.add("training-bubble")
 
             const ranges = {
-                easy: [140, 141],
-                medium: [110, 111],
-                hard: [95, 96]
+                easy: [140, 145],
+                medium: [110, 115],
+                hard: [95, 100]
             };
 
             const [min, max] = ranges[this.game.trainingDifficulty];
@@ -109,7 +108,7 @@ export default class Bubble {
 
         } else if (this.isAim) {
             this.element.style.zIndex = "2001";
-            this.inner.style.background = "url('image/viseur.png') no-repeat center";
+            this.inner.style.background = "url('assets/image/viseur.png') no-repeat center";
             this.inner.style.backgroundSize = "contain";
             this.inner.style.opacity = "1";
             this.inner.style.border = "none";
@@ -117,7 +116,7 @@ export default class Bubble {
 
         } else if (this.isStar) {
             this.element.style.zIndex = "2003";
-            this.inner.style.background = "url('image/star.png') no-repeat center";
+            this.inner.style.background = "url('assets/image/star.png') no-repeat center";
             this.inner.style.backgroundSize = "contain";
             this.inner.style.opacity = "1";
             this.inner.style.border = "none";
@@ -144,25 +143,37 @@ export default class Bubble {
     }
 
     setupAnimation(size) {
-    if (this.isSpecial) {
+        if (this.isSpecial) {
 
-        const fromLeft = Math.random() < 0.5;
+            let fromLeft;
 
-        this.element.style.top = Math.random() * (window.innerHeight - size) + "px";
+            if (Bubble.lastSide === null) {
+                fromLeft = Math.random() < 0.5;
+            } else {
+                if (Math.random() < 0.8) {
+                    fromLeft = !Bubble.lastSide; 
+                } else {
+                    fromLeft = Bubble.lastSide; 
+                }
+            }
 
-        let duration = 8;
-        this.element.style.animationDuration = duration + 's';
+            Bubble.lastSide = fromLeft;
 
-        if (fromLeft) {
-            this.element.style.left = "-150px";
-            this.element.style.animationName = "animHorizontal";
-        } else {
-            this.element.style.left = window.innerWidth + "px";
-            this.element.style.animationName = "animHorizontalReverse";
-        }
+            this.element.style.top = Math.random() * (window.innerHeight - size) + "px";
 
-        this.element.style.animationTimingFunction = "linear";
-        this.element.style.animationFillMode = "forwards";
+            let duration = 8;
+            this.element.style.animationDuration = duration + 's';
+
+            if (fromLeft) {
+                this.element.style.left = "-150px";
+                this.element.style.animationName = "animHorizontal";
+            } else {
+                this.element.style.left = window.innerWidth + "px";
+                this.element.style.animationName = "animHorizontalReverse";
+            }
+
+            this.element.style.animationTimingFunction = "linear";
+            this.element.style.animationFillMode = "forwards";
 
         } else {
             const screenFactor = window.innerHeight / 800;

@@ -23,7 +23,7 @@ export function initBackgroundPopup() {
             const bg = img.dataset.bg;
 
             document.body.style.background =
-                `url("image/${bg}") center / cover no-repeat`;
+                `url("assets/image/${bg}") center / cover no-repeat`;
 
             localStorage.setItem("background", bg);
 
@@ -35,7 +35,7 @@ export function initBackgroundPopup() {
     const savedBg = localStorage.getItem("background");
     if (savedBg) {
         document.body.style.background =
-            `url("image/${savedBg}") center / cover no-repeat`;
+            `url("assets/image/${savedBg}") center / cover no-repeat`;
 
         bgOptions.forEach(img => {
             if (img.dataset.bg === savedBg) {

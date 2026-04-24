@@ -210,7 +210,7 @@ body.star-active::after {
 }
 
 .slow-bubble {
-    background: url("image/sablier.png") no-repeat center;
+    background: url("../assets/image/sablier.png") no-repeat center;
     background-size: 60%;
     opacity: 1;
     border: none;

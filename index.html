@@ -7,13 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/popups.css">
-<link rel="stylesheet" href="css/game.css">
-<link rel="stylesheet" href="css/responsive.css">
-
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/popups.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/responsive.css">
   <title>Bubble Game</title>
 </head>
 
@@ -24,9 +22,9 @@
       <button id="pauseButton">⏸</button>
 
       <div id="lifes-container">
-        <div id="life1"><img src="image/croix.png"></div>
-        <div id="life2"><img src="image/croix.png"></div>
-        <div id="life3"><img src="image/croix.png"></div>
+        <div id="life1"><img src="assets/image/croix.png" alt="life1 icon"></div>
+        <div id="life2"><img src="assets/image/croix.png" alt="life2 icon"></div>
+        <div id="life3"><img src="assets/image/croix.png" alt="life3 icon"></div>
       </div>
 
       <div id="bestScoreTraining" class="best-score">Best : 0</div>
@@ -71,8 +69,8 @@
       </div>
     </div>
 
-    <img id="customCursor" src="Cursor">
-    <img id="aimCursor" src="image/viseur.png" />
+    <img id="customCursor" src="assets/image/cursor1.png">
+    <img id="aimCursor" src="assets/image/viseur.png" />
 
     <div id="cursorPopup">
       <div class="cursor-content">
@@ -80,22 +78,20 @@
         <img id="cursorPreview" src="">
         <input type="range" id="cursorSizeSlider" min="15" max="150" value="60">
         <div id="cursorChoices">
-          <img src="image/cursor1.png" data-cursor="cursor1.png" id="cursor1" class="cursor-option" tabindex="0">
-          <img src="image/cursor2.png" data-cursor="cursor2.png" id="cursor2" class="cursor-option"tabindex="0">
-          <img src="image/cursor3.png" data-cursor="cursor3.png" id="cursor3" class="cursor-option"tabindex="0">
-          <img src="image/cursor4.png" data-cursor="cursor4.png" id="cursor4" class="cursor-option"tabindex="0">
+          <img src="assets/image/cursor1.png" data-cursor="cursor1.png" id="cursor1" class="cursor-option" tabindex="0">
+          <img src="assets/image/cursor2.png" data-cursor="cursor2.png" id="cursor2" class="cursor-option" tabindex="0">
+          <img src="assets/image/cursor3.png" data-cursor="cursor3.png" id="cursor3" class="cursor-option" tabindex="0">
+          <img src="assets/image/cursor4.png" data-cursor="cursor4.png" id="cursor4" class="cursor-option" tabindex="0">
         </div>
         <button id="validateCursor">APPLY</button>
       </div>
     </div>
 
     <div id="YourScore"></div>
-
-    <img id="gameOverBackground" src="image/img_explo.png">
+    <img id="gameOverBackground" src="assets/image/img_explo.png">
 
     <div id="audioPopup">
       <div class="popup-content audio-column">
-
         <div class="slider">
           <div class="contentSlider">
             <h4 class="titleMusic">MUSIC : </h4>
@@ -111,17 +107,16 @@
           <button id="soundOn">🔊</button>
           <button id="soundOff">🔇</button>
         </div>
-        <!-- <button id="closeAudio">APPLY</button> -->
       </div>
-
     </div>
+
     <div id="backgroundPopup">
       <div class="background-content">
         <div id="backgroundChoices">
-          <img src="image/fond1.jpg" data-bg="fond1.jpg" id="bg1" class="bg-option" tabindex="0">
-          <img src="image/fond2.jpg" data-bg="fond2.jpg" id="bg2" class="bg-option fond2" tabindex="0">
-          <img src="image/fond3.jpg" data-bg="fond3.jpg" id="bg3" class="bg-option fond3" tabindex="0">
-          <img src="image/fond4.jpg" data-bg="fond4.jpg" id="bg4" class="bg-option" tabindex="0">
+          <img src="assets/image/fond1.jpg" data-bg="fond1.jpg" id="bg1" class="bg-option" tabindex="0">
+          <img src="assets/image/fond2.jpg" data-bg="fond2.jpg" id="bg2" class="bg-option fond2" tabindex="0">
+          <img src="assets/image/fond3.jpg" data-bg="fond3.jpg" id="bg3" class="bg-option fond3" tabindex="0">
+          <img src="assets/image/fond4.jpg" data-bg="fond4.jpg" id="bg4" class="bg-option" tabindex="0">
         </div>
         <button id="closeBackground">APPLY</button>
       </div>
@@ -141,24 +136,23 @@
     </div>
   </div>
 
-  <audio id="soundBubbleExplos" src="sound/ballon explose.mp3"></audio>
-  <audio id="soundError" src="sound/erreur.wav"></audio>
-  <audio id="soundSucess" src="sound/sucess.mp3"></audio>
-  <audio id="soundHeart" src="sound/heart.mp3"></audio>
-  <audio id="soundGameOver" src="sound/game over explose.mp3"></audio>
-  <audio id="soundStresse" src="sound/stress.wav" loop></audio>
-  <audio id="musicGame" src="sound/game.ogg" loop></audio>
-  <audio id="musicMenu" src="sound/menu.ogg" loop></audio>
-  <audio id="slowMusic" src="sound/time_stop.mp3" loop></audio>
-  <audio id="soundStarMode" src="sound/star_mode.mp3" loop></audio>
-  <audio id="soundStar" src="sound/star.mp3"></audio>
-  <audio id="clicStar" src="sound/clic_star.mp3"></audio>
-  <audio id="soundAimClick" src="sound/aim_click.mp3"></audio>
-  <audio id="soundAimMode" src="sound/aim.mp3" loop></audio>
-  <audio id="musicTraining" src="sound/musicTraining.mp3" loop></audio>
-  <audio id="bubbleTraining" src="sound/bubble.mp3"></audio>
+  <audio id="soundBubbleExplos" src="assets/sound/soundBubbleExplos.mp3"></audio>
+  <audio id="soundError" src="assets/sound/soundError.wav"></audio>
+  <audio id="soundSucess" src="assets/sound/soundSucess.mp3"></audio>
+  <audio id="soundHeart" src="assets/sound/soundHeart.mp3"></audio>
+  <audio id="soundGameOver" src="assets/sound/soundGameOver.mp3"></audio>
+  <audio id="soundStresse" src="assets/sound/soundStresse.wav" loop></audio>
+  <audio id="musicGame" src="assets/sound/musicGame.ogg" loop></audio>
+  <audio id="musicMenu" src="assets/sound/musicMenu.ogg" loop></audio>
+  <audio id="slowMusic" src="assets/sound/time_stop.mp3" loop></audio>
+  <audio id="soundStarMode" src="assets/sound/soundStarMode.mp3" loop></audio>
+  <audio id="soundStar" src="assets/sound/soundStar.mp3"></audio>
+  <audio id="clicStar" src="assets/sound/clicStar.mp3"></audio>
+  <audio id="soundAimClick" src="assets/sound/soundAimClick.mp3"></audio>
+  <audio id="soundAimMode" src="assets/sound/soundAimMode.mp3" loop></audio>
+  <audio id="musicTraining" src="assets/sound/musicTraining.mp3" loop></audio>
+  <audio id="bubbleTraining" src="assets/sound/bubbleTraining.mp3"></audio>
 
   <script type="module" src="main.js"></script>
 </body>
-
 </html>
