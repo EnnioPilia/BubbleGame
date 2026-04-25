@@ -34,7 +34,7 @@ Le joueur doit :
 - Éviter les bulles rouges (Game Over immédiat)
 - Ne pas rater les bulles normales (perte de vie)
 - Des Items bonus à disposition pour aider le joueur 
-- Augmentation progressive de la vitesse des bulles
+- Faire face à une difficulté croissante : accélération progressive du jeu
 - Survivre le plus longtemps possible pour maximiser le score
 
 
@@ -167,7 +167,7 @@ index.html
 ## Lancer le jeu
 
 - Entrer votre pseudo
-- Cliquer sur **Start**
+- Cliquer sur **"PLAY"**
 - Jouer 
 
 
@@ -178,7 +178,7 @@ index.html
 
 Le jeu est entièrement responsive :
 
--  Desktop  
+- Desktop  
 - Mobile  
 - Tablette  
 
@@ -198,6 +198,7 @@ Le jeu est entièrement responsive :
 - Formation : **CDA Simplon Grenoble 2025**
 - Travail "concours" entre promotion 
 - Récompensé parmi les meilleurs projets
+- Le projet a été amélioré après le concours avec de nouvelles fonctionnalités, des optimisations et des ajustements de gameplay.
 
 ---
 
