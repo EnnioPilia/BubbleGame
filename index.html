@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/popups.css">
@@ -19,8 +20,8 @@
   <div id="ui">
 
     <div id="topBar">
-      <button id="pauseButton">⏸</button>
-
+      <button id="pauseButton"><img id="fsIcon" src="assets/image/pause.png"></button>
+      <button id="fullscreenBtn"><img id="fsIcon1" src="assets/image/fullScreen.png"></button>
       <div id="lifes-container">
         <div id="life1"><img src="assets/image/croix.png" alt="life1 icon"></div>
         <div id="life2"><img src="assets/image/croix.png" alt="life2 icon"></div>
@@ -28,7 +29,7 @@
       </div>
 
       <div id="bestScoreTraining" class="best-score">Best : 0</div>
-      <button id="trainingDifficultyButton">MODE : EASY</button>
+      <button id="trainingDifficultyButton">EASY</button>
     </div>
 
     <div id="flashEffect"></div>
@@ -155,4 +156,5 @@
 
   <script type="module" src="main.js"></script>
 </body>
+
 </html>

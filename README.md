@@ -102,7 +102,7 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 - Popups interactives
 - Classement (Top 10 local)
 - Paramètres :
-  - Réglage du système audio
+  - Réglage du système audio (musique et effets sonores)
   - Curseur personnalisables 
   - Choix de différents fonds d’écran
 

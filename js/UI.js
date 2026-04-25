@@ -8,37 +8,45 @@ export function updateCursorState() {
     toggleCustomCursor(!anyPopupOpen);
 }
 
-export function initUI() {
-    document.addEventListener("click", () => {
-        document.querySelectorAll(
-            "#settingsPopup, #audioPopup, #cursorPopup"
-        ).forEach(p => p.classList.remove("active"));
+function toggleFullscreen() {
+    const el = document.documentElement;
 
-        updateCursorState();
-    });
-}
-
-export function initDifficultyButton(onChange) {
-    const btn = document.getElementById("difficultyButton");
-    let difficulty = "easy";
-
-    function update() {
-        if (difficulty === "easy") {
-            btn.innerHTML = "Mode : EASY";
-            btn.classList.remove("hard");
-            btn.classList.add("easy");
-        } else {
-            btn.innerHTML = "Mode : HARD";
-            btn.classList.remove("easy");
-            btn.classList.add("hard");
+    if (!document.fullscreenElement) {
+        if (el.requestFullscreen) {
+            el.requestFullscreen();
+        } else if (el.webkitRequestFullscreen) {
+            el.webkitRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
         }
     }
+}
 
-    btn.onclick = () => {
-        difficulty = difficulty === "easy" ? "hard" : "easy";
-        update();
-        onChange(difficulty);
-    };
+export function initUI() {
 
-    update();
+const fsBtn = document.getElementById("fullscreenBtn");
+const fsIcon = document.getElementById("fsIcon1");
+
+fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+});
+
+document.addEventListener("fullscreenchange", () => {
+    if (!fsIcon1) return;
+
+    if (document.fullscreenElement) {
+        fsIcon1.src = "assets/image/exit.png";
+    } else {
+        fsIcon1.src = "assets/image/fullScreen.png";
+    }
+});
+
 }

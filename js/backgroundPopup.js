@@ -16,6 +16,7 @@ export function initBackgroundPopup() {
 
 closeBtn.onclick = () => {
     closeAllPopups();   
+      updateCursorState();
 };
 
     bgOptions.forEach(img => {

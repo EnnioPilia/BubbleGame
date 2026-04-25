@@ -63,7 +63,7 @@ export default class Game {
         };
 
         this.aimMilestones = {
-            easy: [1, 70, 170, 480, 640, 700],
+            easy: [70, 170, 480, 640, 700],
             hard: [120, 220, 380, 580],
             expert: [120, 400, 580]
         };
@@ -111,6 +111,7 @@ export default class Game {
         this.trainingDifficultyButton = document.getElementById("trainingDifficultyButton");
         this.bestScoreTraining = document.getElementById("bestScoreTraining");
         this.resumeButton = document.getElementById("resumeButton");
+        this.fullscreenBtn = document.getElementById("fullscreenBtn");
 
         this.rankingPopup = document.getElementById("rankingPopup");
         this.rankingList = document.getElementById("rankingList");
@@ -201,7 +202,7 @@ export default class Game {
 
             index = (index + 1) % modes.length;
             this.trainingDifficulty = modes[index];
-            this.trainingButton.textContent = "MODE : " + this.trainingDifficulty.toUpperCase();
+            this.trainingButton.textContent = this.trainingDifficulty.toUpperCase();
 
             this.score = 0;
             this.scoreDisplay.textContent = 0;
@@ -265,6 +266,8 @@ export default class Game {
 
     setUI(state) {
 
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
+
         this.scoreDisplay.style.display = "none";
         this.yourScore.style.display = "none";
         this.gameButtons.style.display = "none";
@@ -288,12 +291,14 @@ export default class Game {
             this.playerName,
             this.titleMenu,
             this.cursorButton,
+            this.fullscreenBtn,
             this.bestScoreTraining
         ];
 
         elements.forEach(el => el && (el.style.display = "none"));
 
         switch (state) {
+
             case "menu":
                 this.startButton.style.display = "block";
                 this.difficultyButton.style.display = "block";
@@ -301,12 +306,15 @@ export default class Game {
                 this.settingsButtonMenu.style.display = "block";
                 this.playerName.style.display = "block";
                 this.titleMenu.style.display = "block";
+                this.fullscreenBtn.style.display = "block";
+
                 break;
 
             case "game":
                 this.scoreDisplay.style.display = "block";
                 this.pauseButton.style.display = "block";
                 window.keyboardContext = "game";
+
                 if (this.difficulty === "training") {
                     this.trainingButton.style.display = "block";
                     this.bestScoreTraining.style.display = "block";
@@ -325,6 +333,8 @@ export default class Game {
                 this.menuButton.style.display = "block";
                 this.settingsButtonPause.style.display = "block";
                 this.scoreDisplay.style.display = "block";
+                this.fullscreenBtn.style.display = "block";
+
                 window.keyboardContext = "pause";
                 break;
 
@@ -1111,6 +1121,8 @@ export default class Game {
         document.body.classList.remove("training-mode");
 
         resetCursorUI();
+        toggleCustomCursor(true);
+        
         clearInterval(this.intervalId);
 
         this.clearBubbles();
