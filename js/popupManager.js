@@ -1,3 +1,5 @@
+import { toggleCustomCursor } from "./cursor.js";
+
 const POPUPS = [
     "settingsPopup",
     "audioPopup",
@@ -38,6 +40,13 @@ export function closeAllPopups() {
         window.keyboardContext = "menu";
     }
 
+    document.activeElement?.blur();
+    const active = document.activeElement;
+
+    if (!active || active.tagName !== "INPUT") {
+        toggleCustomCursor(true);
+    }
+    
     setTimeout(() => {
         const contexts = {
             menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu"],

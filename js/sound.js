@@ -4,6 +4,7 @@ function getSound(id) {
 
 export const sounds = {
     bubble: getSound('soundBubbleExplos'),
+    button: getSound('soundButton'),
     error: getSound('soundError'),
     gameOver: getSound('soundGameOver'),
     stress: getSound('soundStresse'),
@@ -43,6 +44,7 @@ const sfxSounds = [
     sounds.star,
     sounds.clicStar,
     sounds.soundAim,
+    sounds.button,
     sounds.bubbleTraining
 ];
 
@@ -152,3 +154,10 @@ export function initSoundSystem() {
     applyVolumes();
 }
 
+document.addEventListener("click", (e) => {
+    const btn = e.target.closest("button, .cursor-option, .bg-option, input");
+
+    if (!btn) return;
+
+    play(sounds.button, 0.05);
+}, true); 

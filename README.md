@@ -33,8 +33,8 @@ Le joueur doit :
 - Cliquer sur les bulles normales pour gagner des points
 - Éviter les bulles rouges (Game Over immédiat)
 - Ne pas rater les bulles normales (perte de vie)
-- Des Items bonus à disposition pour aider le joueur 
 - Faire face à une difficulté croissante : accélération progressive du jeu
+- Des Items bonus à disposition pour aider le joueur 
 - Survivre le plus longtemps possible pour maximiser le score
 
 
@@ -61,8 +61,8 @@ Cliquer → Éviter → Survivre → Score
 ###  Items bonus
 -  Cœur  → Récupére une vie
 -  Sablier → Mode slow : ralentit temporairement le jeu
+-  Cible  → Mode aimbot : vise automatiquement au clic
 -  Etoile  → Mode bonus : bulles avec multiplicateur de score
--  Cible  → AimBot : vise automatiquement au clic
 
 ---
 
@@ -124,14 +124,15 @@ Les modes modifient les paramètres du jeu sans changer les règles :
   - Gameplay
   - Stress (dernière vie)
   - Slow mode
+  - AimBot mode
   - Star mode
-  - Aim mode
   - Training mode
+
 - Effets sonores :
-  - Explosion
+  - Bulles (normales, spéciales, star...)
+  - Items bonus
   - Erreur
-  - Bonus
-  - Game Over
+  - Explosion Game Over
 
 ---
 
