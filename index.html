@@ -22,21 +22,20 @@
     <div id="topBar">
       <button id="pauseButton"><img id="fsIcon" src="assets/image/pause.png"></button>
       <button id="fullscreenBtn"><img id="fsIcon1" src="assets/image/fullScreen.png"></button>
+
       <div id="lifes-container">
-        <div id="life1"><img src="assets/image/croix.png" alt="life1 icon"></div>
-        <div id="life2"><img src="assets/image/croix.png" alt="life2 icon"></div>
-        <div id="life3"><img src="assets/image/croix.png" alt="life3 icon"></div>
+        <div id="life1"><img src="assets/image/skull.png" alt="life1 icon"></div>
+        <div id="life2"><img src="assets/image/skull.png" alt="life2 icon"></div>
+        <div id="life3"><img src="assets/image/skull.png" alt="life3 icon"></div>
       </div>
 
       <div id="bestScoreTraining" class="best-score">Best : 0</div>
       <button id="trainingDifficultyButton">EASY</button>
     </div>
 
-    <div id="flashEffect"></div>
-    <div id="flashEffectAim"></div>
-
     <h3 id="score">0</h3>
     <h4 id="title">BUBBLE GAME</h4>
+
 
     <div id="menu">
       <input type="text" id="playerName" placeholder="Enter your name" maxlength="15">
@@ -61,6 +60,11 @@
       <button id="rankingButtonGameOver">LEADERBOARD</button>
     </div>
 
+    <div id="YourScore"></div>
+    <img id="gameOverBackground" src="assets/image/gameOverExplos.png">
+    <div id="flashEffect"></div>
+    <div id="flashEffectAim"></div>
+
     <div id="settingsPopup">
       <div class="settings-content">
         <button id="closeSettings">✖</button>
@@ -69,27 +73,6 @@
         <button id="openBackground">BACKGROUND</button>
       </div>
     </div>
-
-    <img id="customCursor" src="assets/image/cursor1.png">
-    <img id="aimCursor" src="assets/image/viseur.png" />
-
-    <div id="cursorPopup">
-      <div class="cursor-content">
-        <h2>CURSOR SIZE</h2>
-        <img id="cursorPreview" src="">
-        <input type="range" id="cursorSizeSlider" min="15" max="150" value="60">
-        <div id="cursorChoices">
-          <img src="assets/image/cursor1.png" data-cursor="cursor1.png" id="cursor1" class="cursor-option" tabindex="0">
-          <img src="assets/image/cursor2.png" data-cursor="cursor2.png" id="cursor2" class="cursor-option" tabindex="0">
-          <img src="assets/image/cursor3.png" data-cursor="cursor3.png" id="cursor3" class="cursor-option" tabindex="0">
-          <img src="assets/image/cursor4.png" data-cursor="cursor4.png" id="cursor4" class="cursor-option" tabindex="0">
-        </div>
-        <button id="validateCursor">APPLY</button>
-      </div>
-    </div>
-
-    <div id="YourScore"></div>
-    <img id="gameOverBackground" src="assets/image/img_explo.png">
 
     <div id="audioPopup">
       <div class="popup-content audio-column">
@@ -108,6 +91,21 @@
           <button id="soundOn">🔊</button>
           <button id="soundOff">🔇</button>
         </div>
+      </div>
+    </div>
+
+    <div id="cursorPopup">
+      <div class="cursor-content">
+        <h2>CURSOR SIZE</h2>
+        <img id="cursorPreview" src="">
+        <input type="range" id="cursorSizeSlider" min="15" max="150" value="60">
+        <div id="cursorChoices">
+          <img src="assets/image/cursor1.png" data-cursor="cursor1.png" id="cursor1" class="cursor-option" tabindex="0">
+          <img src="assets/image/cursor2.png" data-cursor="cursor2.png" id="cursor2" class="cursor-option" tabindex="0">
+          <img src="assets/image/cursor3.png" data-cursor="cursor3.png" id="cursor3" class="cursor-option" tabindex="0">
+          <img src="assets/image/cursor4.png" data-cursor="cursor4.png" id="cursor4" class="cursor-option" tabindex="0">
+        </div>
+        <button id="validateCursor">APPLY</button>
       </div>
     </div>
 
@@ -137,6 +135,9 @@
     </div>
   </div>
 
+  <img id="customCursor" src="assets/image/cursor1.png">
+  <img id="aimCursor" src="assets/image/viseur.png" />
+
   <audio id="soundBubbleExplos" src="assets/sound/soundBubbleExplos.mp3"></audio>
   <audio id="soundError" src="assets/sound/soundError.wav"></audio>
   <audio id="soundSucess" src="assets/sound/soundSucess.mp3"></audio>
@@ -145,7 +146,7 @@
   <audio id="soundStresse" src="assets/sound/soundStresse.wav" loop></audio>
   <audio id="musicGame" src="assets/sound/musicGame.ogg" loop></audio>
   <audio id="musicMenu" src="assets/sound/musicMenu.ogg" loop></audio>
-  <audio id="slowMusic" src="assets/sound/time_stop.mp3" loop></audio>
+  <audio id="slowMusic" src="assets/sound/slowMusic.mp3" loop></audio>
   <audio id="soundStarMode" src="assets/sound/soundStarMode.mp3" loop></audio>
   <audio id="soundStar" src="assets/sound/soundStar.mp3"></audio>
   <audio id="clicStar" src="assets/sound/clicStar.mp3"></audio>

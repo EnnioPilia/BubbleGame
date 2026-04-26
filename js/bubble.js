@@ -1,6 +1,6 @@
 import { sounds, play, pause } from "./sound.js";
 
-const AIM_SPEED = 600
+const AIM_SPEED = 520
 
 export default class Bubble {
     constructor(game, forceSpecial = false, isHeart = false, isSlow = false, isStar = false, isAim = false) {

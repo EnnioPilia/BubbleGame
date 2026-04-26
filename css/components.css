@@ -21,7 +21,6 @@ button:active {
     transform: scale(1);
 }
 
-
 #fullscreenBtn {
     display: none;
     position: absolute;
@@ -33,7 +32,6 @@ button:active {
     align-items: center;
     justify-content: center;
     z-index: 999;
-    font-size: 40px;
     filter: drop-shadow(2px 0 0 black) 
             drop-shadow(-2px 0 0 black) 
             drop-shadow(0 2px 0 black) 
@@ -67,43 +65,32 @@ button:active {
 }
 
 #fullscreenBtn {
-    right: 45px;
-    width: 75px;
-    height: 75px;
-    padding-top: 7px;
+    right: 15px;
+    top: 15px;
+    width: 100px;
+    height: 95px;
 }
 
 #fullscreenBtn img {
-    width: 65px;
-    height: 65px;
-    margin-top: -10px;
-    margin-right: -45px;
     transition: transform 0.3s ease;
     transform: scale(1);
-
 }
 
-/* Hover normal */
 #fullscreenBtn:hover img {
     transform: scale(1.1);
 }
 
-/* Mode fullscreen (exit) → scale inversé */
 #fullscreenBtn.fullscreen img {
     transform: scale(1.3);
-    /* 👈 plus petit */
 }
 
-/* Hover en fullscreen */
 #fullscreenBtn.fullscreen:hover img {
     transform: scale(0.95);
 }
 
-/* Click */
 #fullscreenBtn:active img {
     transform: scale(0.9);
 }
-
 
 .toggleBtn {
     gap: 20px;
@@ -119,10 +106,15 @@ button:active {
     border: 1px solid gold;
 }
 
+.toggleBtn button.active:hover {
+    transform: none;
+    cursor: default;
+}
+
 .toggleBtn button.active {
     border: 1px solid gold;
     box-shadow: 0 0 20px gold;
-    background: rgba(255, 217, 0, 0.726);
+    background: rgba(255, 217, 0, 0.658);
 }
 
 .toggleBtn button:hover {

@@ -43,7 +43,7 @@ document.addEventListener("fullscreenchange", () => {
     if (!fsIcon || !fsBtn) return;
 
     if (document.fullscreenElement) {
-        fsIcon.src = "assets/image/exit.png";
+        fsIcon.src = "assets/image/fullScreenExit.png";
         fsBtn.classList.add("fullscreen");
     } else {
         fsIcon1.src = "assets/image/fullScreen.png";

@@ -278,27 +278,28 @@ document.addEventListener("keydown", (e) => {
         e.stopPropagation();
         return;
     }
-const contexts = {
-    menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu", "fullscreenBtn"],
-    pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton", "fullscreenBtn"],
-    gameover: ["restartButtonGameOver", "menuButtonGameOver", "rankingButtonGameOver"],
-    settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
-    audio: ["musicSlider", "sfxSlider", "soundOn", "soundOff", "closeSettingsAudio"],
-    cursor: ["cursorSizeSlider", "cursor1", "cursor2", "cursor3", "cursor4", "validateCursor"],
-    background: ["bg1", "bg2", "bg3", "bg4", "closeBackground"],
-    ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]
-};
+
+    const contexts = {
+        menu: ["startButton", "difficultyButton", "menuRankingButton", "settingsButtonMenu", "fullscreenBtn", "playerName"],
+        pause: ["resumeButton", "restartButton", "menuButton", "settingsButtonPause", "rankingButton", "fullscreenBtn"],
+        gameover: ["restartButtonGameOver", "menuButtonGameOver", "rankingButtonGameOver"],
+        settings: ["openSound", "openCursor", "openBackground", "closeSettings"],
+        audio: ["musicSlider", "sfxSlider", "soundOn", "soundOff", "closeSettingsAudio"],
+        cursor: ["cursorSizeSlider", "cursor1", "cursor2", "cursor3", "cursor4", "validateCursor"],
+        background: ["bg1", "bg2", "bg3", "bg4", "closeBackground"],
+        ranking: ["tabEasy", "tabHard", "tabExpert", "closeRanking"]
+    };
     const fullscreenBtn = document.getElementById("fullscreenBtn");
 
-if (fullscreenBtn) {
-    fullscreenBtn.onclick = () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        } else {
-            document.exitFullscreen();
-        }
-    };
-}
+    if (fullscreenBtn) {
+        fullscreenBtn.onclick = () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        };
+    }
 
     if (isAudio) {
 
