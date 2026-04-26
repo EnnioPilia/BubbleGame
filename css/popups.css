@@ -111,8 +111,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: min(90%, 500px);
-    padding: 55px;
+    width: min(90%, 415px);
+    padding: 45px;
     border-radius: 16px;
     background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(10px);

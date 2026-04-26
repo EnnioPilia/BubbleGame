@@ -40,12 +40,14 @@ fsBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("fullscreenchange", () => {
-    if (!fsIcon1) return;
+    if (!fsIcon || !fsBtn) return;
 
     if (document.fullscreenElement) {
-        fsIcon1.src = "assets/image/exit.png";
+        fsIcon.src = "assets/image/exit.png";
+        fsBtn.classList.add("fullscreen");
     } else {
         fsIcon1.src = "assets/image/fullScreen.png";
+        fsBtn.classList.remove("fullscreen");
     }
 });
 
