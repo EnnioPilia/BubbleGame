@@ -5,10 +5,11 @@ Récompensé pour le jeu le plus "fun"
 
 ---
 
-## Démo
+## Jouer au jeu
 
-Disponible en ligne via Vercel  
-[Lancer le jeu](https://bubble-game-ennio.vercel.app/)
+Le jeu est accessible en ligne via Vercel :
+
+- [Lancer le jeu](https://bubble-game-ennio.vercel.app/)
 
 ---
 
