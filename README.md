@@ -94,14 +94,17 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 ##  Interface utilisateur (UI)
 
-- Menu principal
-- Popups interactives
-- Classement (Top 10 local)
-- Paramètres :
-  - Réglage du système audio (musique et effets sonores)
-  - Curseur personnalisables 
-  - Choix de différents fonds d’écran
+- Menu principal interactif
+- Popups dynamiques (classement , paramètres…)
+- Interface fluide et responsive
+  
+---
 
+## Système de configuration 
+
+- Réglage du système audio : musique et effets sonores
+- Curseur personnalisables : choix du style et ajustement de la taille
+- Sélection de différents fonds d’écran
 
 ---
 
@@ -167,17 +170,6 @@ index.html
 - Cliquer sur **"PLAY"**
 - Jouer 
 
-
----
-
-
-##  Responsive
-
-Le jeu est entièrement responsive :
-
-- Desktop  
-- Mobile  
-- Tablette  
 
 ---
 
