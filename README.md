@@ -133,7 +133,7 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 ##  Stack technique
 
-- **JavaScript (ES6 Modules)** 
+- **JavaScript ES6 Modules** 
 - **HTML5**
 - **CSS3** (animations, responsive, effets visuels)
 - **LocalStorage** (scores + settings)
