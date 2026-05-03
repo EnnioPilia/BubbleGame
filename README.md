@@ -121,22 +121,19 @@ Les modes modifient les paramètres du jeu sans changer les règles :
   - Menu
   - Jeu
   - Dernière vie
-  - Mode Slow 
-  - Mode AimBot 
-  - Mode Star
-  - Mode Training
+  - Mode Slow / AimBot / Star / Training
 
 - Effets sonores :
-  - Bulles (normales, spéciales, star...)
+  - Bulles (normales, spéciales, star)
   - Items bonus
   - Erreur
-  - Explosion Game Over
+  - Game Over
 
 ---
 
 ##  Stack technique
 
-- **JavaScript (Vanilla ES6 Modules)**
+- **JavaScript (ES6 Modules)** 
 - **HTML5**
 - **CSS3** (animations, responsive, effets visuels)
 - **LocalStorage** (scores + settings)
