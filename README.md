@@ -113,19 +113,18 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 - Sauvegarde automatique en LocalStorage
 - Classement Top 10 par difficulté
 - Tri décroissant
-- Affichage dans une popup
 
 ---
 
 ##  Système audio
 - Musiques dynamiques :
   - Menu
-  - Gameplay
-  - Stress (dernière vie)
-  - Slow mode
-  - AimBot mode
-  - Star mode
-  - Training mode
+  - Jeu
+  - Dernière vie
+  - Mode Slow 
+  - Mode AimBot 
+  - Mode Star
+  - Mode Training
 
 - Effets sonores :
   - Bulles (normales, spéciales, star...)
