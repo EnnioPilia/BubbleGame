@@ -120,10 +120,10 @@ Les modes modifient les paramètres du jeu sans changer les règles :
   - Menu
   - Jeu
   - Dernière vie
-  - Mode Slow / AimBot / Star / Training
+  - Modes : Slow, AimBot, Star, Training
 
 - Effets sonores :
-  - Bulles (normales, spéciales, star)
+  - Bulles : normales, spéciales, star
   - Items bonus
   - Erreur
   - Game Over
