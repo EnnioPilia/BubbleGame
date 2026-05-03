@@ -1,7 +1,8 @@
 # 🎮 Bubble Game – Projet Concours Simplon 2025
 
-Jeu web développé en JavaScript dans le cadre d’un projet de promotion **Concepteur Développeur d’Applications (CDA)** chez Simplon (2025).
-Récompensé pour le jeu le plus "fun"
+Jeu web développé en JavaScript dans le cadre de la formation **Concepteur Développeur d’Applications (CDA)** chez Simplon (2025). Projet concours inter-promotion.
+
+Récompensé pour le jeu le plus "fun".
 
 ---
 
@@ -19,11 +20,9 @@ Le jeu est accessible en ligne via Vercel :
 
 Le joueur évolue dans un environnement en constante accélération, mêlant pression, prise de décision rapide et gestion du risque. Entre bulles à cliquer, pièges à éviter et bonus stratégiques, le jeu propose une expérience nerveuse et progressive.
 
-Accessible grâce à plusieurs niveaux de difficulté, le jeu s’adapte à tous les profils tout en offrant un défi de plus en plus intense au fil de la partie . **Bubble Game** met l’accent sur le score, la réactivité et l’amélioration continue du joueur.
+Accessible grâce à plusieurs niveaux de difficulté, le jeu s’adapte à tous les profils tout en offrant un défi de plus en plus intense au fil de la partie. **Bubble Game** met l’accent sur le score, la réactivité et l’amélioration continue du joueur.
 
 ---
-
-
 
 ##  Logique du jeu
 
@@ -32,18 +31,14 @@ Accessible grâce à plusieurs niveaux de difficulté, le jeu s’adapte à tous
 Le joueur doit :
 
 - Cliquer sur les bulles normales pour gagner des points
-- Éviter les bulles rouges (Game Over immédiat)
-- Ne pas rater les bulles normales (perte de vie)
+- Éviter les bulles rouges : Game Over immédiat
+- Ne pas rater les bulles normales : perte de vie
 - Faire face à une difficulté croissante : accélération progressive du jeu
-- Des Items bonus à disposition pour aider le joueur 
-- Survivre le plus longtemps possible pour maximiser le score
-
-
+- Utiliser les items bonus pour faciliter le game play
+- Survivre le plus longtemps possible pour maximiser son score
 
 **Boucle principale :**  
 Cliquer → Éviter → Survivre → Score
-
----
 
 ###  Système de bulles et bonus
 
@@ -141,9 +136,9 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 - **JavaScript (Vanilla ES6 Modules)**
 - **HTML5**
-- **CSS3 (animations, responsive, effets visuels)**
-- **LocalStorage (scores + settings)**
-- **Vercel (déploiement)**
+- **CSS3** (animations, responsive, effets visuels)
+- **LocalStorage** (scores + settings)
+- **Vercel** (déploiement)
 
 ---
 
