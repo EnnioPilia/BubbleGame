@@ -101,7 +101,7 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 ## Système de configuration 
 
-- Réglage du système audio : musique et effets sonores
+- Réglage du système audio : volume de la musique et des effets sonores
 - Curseur personnalisables : choix du style et ajustement de la taille
 - Sélection de différents fonds d’écran
 
