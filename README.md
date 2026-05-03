@@ -68,7 +68,6 @@ Cliquer → Éviter → Survivre → Score
 Les modes modifient les paramètres du jeu sans changer les règles :
 
 - Vitesse des bulles
-- Fréquence de spawn
 - Tailles des bulles
 - Perte en efficacité des bonus 
 - Fréquence des bonus 
