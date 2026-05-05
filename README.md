@@ -1,4 +1,4 @@
-# 🎮 Bubble Game – Projet Concours Simplon 2025
+# 🎮 BubbleGame – Projet Concours Simplon 2025
 
 Jeu web développé en JavaScript dans le cadre de la formation **Concepteur Développeur d’Applications (CDA)** chez Simplon (2025). Projet concours inter-promotion.
 
@@ -16,7 +16,7 @@ Le jeu est accessible en ligne via Vercel :
 
 ##  Présentation
 
-**Bubble Game** est un jeu d’arcade dynamique basé sur les réflexes et la précision, où chaque seconde compte.
+**BubbleGame** est un jeu d’arcade dynamique basé sur les réflexes et la précision, où chaque seconde compte.
 
 Le joueur évolue dans un environnement en constante accélération, mêlant pression, prise de décision rapide et gestion du risque. Entre bulles à cliquer, pièges à éviter et bonus stratégiques, le jeu propose une expérience nerveuse et progressive.
 
