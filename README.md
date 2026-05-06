@@ -1,8 +1,13 @@
 # 🎮 BubbleGame – Projet Concours Simplon 2025
 
-Jeu web développé en JavaScript dans le cadre de la formation **Concepteur Développeur d’Applications (CDA)** chez Simplon (2025). Projet concours inter-promotion.
+Jeu d’arcade web dynamique basé sur les réflexes et la précision où le joueur doit cliquer, éviter et survivre dans un environnement en accélération constante où chaque seconde compte.
 
-Récompensé pour le jeu le plus "fun".
+## Contexte du projet
+
+- Formation : **CDA Simplon Grenoble 2025**
+- Projet concours inter-promotion.
+- Récompensé pour le jeu le plus "fun".
+- Le projet a été amélioré après le concours avec de nouvelles fonctionnalités.
 
 ---
 
@@ -62,7 +67,6 @@ Cliquer → Éviter → Survivre → Score
 
 ---
 
-
 ##  Modes de difficulté
 
 Les modes modifient les paramètres du jeu sans changer les règles :
@@ -80,16 +84,13 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 ---
 
-
 ##  Mode Training
 
 - Permet de s'entraîner librement
 - Pas de Game Over
 - Vitesse et tailles des bulles augmenté selon la difficulté (Easy / Medium / Hard / Expert)
 
-
 ---
-
 
 ##  Interface utilisateur (UI)
 
@@ -130,6 +131,19 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 
 ---
 
+## Navigation clavier
+
+Le jeu implémente un système de navigation clavier contextuel :
+
+- `keyboardContext` définit l’état actuel (menu, pause, settings…)
+- `selectedIndex` permet de naviguer dans les éléments interactifs
+- gestion du focus automatique
+
+Objectif :
+→ améliorer l’accessibilité et l’expérience utilisateur
+
+---
+
 ##  Stack technique
 
 - **JavaScript ES6 Modules** 
@@ -137,6 +151,55 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 - **CSS3** (animations, responsive, effets visuels)
 - **LocalStorage** (scores + settings)
 - **Vercel** (déploiement)
+
+---
+
+## Architecture
+
+Le projet repose sur une architecture modulaire en **JavaScript ES6**, avec séparation claire des responsabilités (Single Responsibility) :
+- Maintenabilité
+- Lisibilité
+- Extensibilité (ajout de nouveaux modes, bonus...)
+
+### Structure des modules
+
+- `Game.js` : cœur du jeu (gestion de l’état global, boucle de jeu, score, difficulté, activation des modes)
+- `Bubble.js` : gestion des entités du jeu (types, comportement, interactions, cycle de vie)
+- `popupManager.js` : gestion centralisée des popups et du focus clavier
+- `cursor.js` : gestion du curseur personnalisé (affichage, interactions, configuration)
+- `audio.js` : gestion du son (musique, effets, état global audio)
+- `UI.js` : synchronisation de l’interface avec l’état du jeu
+- `background.js` : gestion des backgrounds utilisateur
+    
+### Flux de fonctionnement
+
+Le module `Game` orchestre la logique globale et pilote la boucle de jeu :
+- gestion de l’état global (score, vies, difficulté)
+- gestion des effets actifs (slow, star, aim…)
+- génération des entités
+
+`Game` instancie dynamiquement les objets `Bubble`
+
+Chaque `Bubble` est autonome et gère son propre cycle de vie :
+- spawn
+- animation
+- interaction utilisateur
+- destruction
+  
+Les interactions utilisateur déclenchent :
+- des mises à jour du score
+- modifie les états du jeu (slow, star, aim…)
+
+L’interface `UI.js` est synchronisée en temps réel avec l’état du jeu.
+
+Les popups et la navigation clavier sont gérés indépendamment via `popupManager`
+
+### Modélisation des entités
+
+Les bulles sont modélisées via une classe `Bubble` :
+- encapsulation du comportement (clic, effets, destruction)
+- gestion autonome du cycle de vie
+- adaptation dynamique selon le contexte de jeu (difficulté, bonus actifs via `Game`)
 
 ---
 
@@ -174,15 +237,6 @@ index.html
 -  Mode multijoueur
 -  Nouveaux power-ups
 -  Animations avancées
-
----
-
-## Contexte du projet
-
-- Formation : **CDA Simplon Grenoble 2025**
-- Travail "concours" entre promotion 
-- Récompensé parmi les meilleurs projets
-- Le projet a été amélioré après le concours avec de nouvelles fonctionnalités, des optimisations et des ajustements de gameplay.
 
 ---
 
