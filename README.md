@@ -156,7 +156,7 @@ Objectif :
 
 ## Architecture
 
-Le projet repose sur une architecture modulaire en **JavaScript ES6**, avec séparation claire des responsabilités (Single Responsibility) :
+Le projet repose sur une architecture modulaire en **JavaScript ES6**, avec séparation claire des responsabilités (Single Responsibility) afin de garantir :
 - Maintenabilité
 - Lisibilité
 - Extensibilité (ajout de nouveaux modes, bonus...)
