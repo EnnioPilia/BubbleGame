@@ -1,13 +1,7 @@
 # 🎮 BubbleGame – Projet Concours Simplon 2025
 
-Jeu d’arcade web dynamique basé sur les réflexes et la précision où le joueur doit cliquer, éviter et survivre dans un environnement en accélération constante où chaque seconde compte.
-
-## Contexte du projet
-
-- Formation : **CDA Simplon Grenoble 2025**
-- Projet concours inter-promotion.
-- Récompensé pour le jeu le plus "fun".
-- Le projet a été amélioré après le concours avec de nouvelles fonctionnalités.
+Jeu d’arcade web dynamique basé sur les réflexes et la précision où le joueur doit cliquer, éviter et survivre dans un environnement en constante accélération.
+Gameplay évolutif avec bonus stratégiques et différents effets de jeu. 
 
 ---
 
@@ -19,128 +13,12 @@ Le jeu est accessible en ligne via Vercel :
 
 ---
 
-##  Présentation
+## Contexte du projet
 
-**BubbleGame** est un jeu d’arcade dynamique basé sur les réflexes et la précision, où chaque seconde compte.
-
-Le joueur évolue dans un environnement en constante accélération, mêlant pression, prise de décision rapide et gestion du risque. Entre bulles à cliquer, pièges à éviter et bonus stratégiques, le jeu propose une expérience nerveuse et progressive.
-
-Accessible grâce à plusieurs niveaux de difficulté, le jeu s’adapte à tous les profils tout en offrant un défi de plus en plus intense au fil de la partie. **Bubble Game** met l’accent sur le score, la réactivité et l’amélioration continue du joueur.
-
----
-
-##  Logique du jeu
-
-###   Gameplay
-
-Le joueur doit :
-
-- Cliquer sur les bulles normales pour gagner des points
-- Éviter les bulles rouges : Game Over immédiat
-- Ne pas rater les bulles normales : perte de vie
-- Faire face à une difficulté croissante : accélération progressive du jeu
-- Utiliser les items bonus pour faciliter le game play
-- Survivre le plus longtemps possible pour maximiser son score
-
-**Boucle principale :**  
-Cliquer → Éviter → Survivre → Score
-
-###  Système de bulles et bonus
-
-
-####  Bulles normales
-- Donnent des points
-- Perte de vie si non cliquées
-
-####  Bulles rouges pièges
-- Provoquent un Game Over instantané
-
-####  Bulles spéciales
-- Nécessitent plusieurs clics
-- Rapportent un point par clic
-
-###  Items bonus
--  Cœur  → Récupére une vie
--  Sablier → Mode slow : ralentit temporairement le jeu
--  Cible  → Mode aimbot : vise automatiquement au clic
--  Etoile  → Mode bonus : bulles avec multiplicateur de score
-
----
-
-##  Modes de difficulté
-
-Les modes modifient les paramètres du jeu sans changer les règles :
-
-- Vitesse des bulles
-- Tailles des bulles
-- Perte en efficacité des bonus 
-- Fréquence des bonus 
-
-| Mode   | Description |
-|--------|------------|
-| Easy   | Expérience accessible |
-| Hard   | Challenge équilibré |
-| Expert | Difficulté élevée |
-
----
-
-##  Mode Training
-
-- Permet de s'entraîner librement
-- Pas de Game Over
-- Vitesse et tailles des bulles augmenté selon la difficulté (Easy / Medium / Hard / Expert)
-
----
-
-##  Interface utilisateur (UI)
-
-- Menu principal interactif
-- Popups dynamiques (classement , paramètres…)
-- Interface fluide et responsive
-  
----
-
-## Système de configuration 
-
-- Réglage du système audio : volume de la musique et des effets sonores
-- Curseur personnalisables : choix du style et ajustement de la taille
-- Sélection de différents fonds d’écran
-
----
-
-## Système de score
-
-- Sauvegarde automatique en LocalStorage
-- Classement Top 10 par difficulté
-- Tri décroissant
-
----
-
-##  Système audio
-- Musiques dynamiques :
-  - Menu
-  - Jeu
-  - Dernière vie
-  - Modes : Slow, AimBot, Star, Training
-
-- Effets sonores :
-  - Bulles : normales, spéciales, star
-  - Items bonus
-  - Erreur
-  - Game Over
-
----
-
-## Navigation clavier
-
-Le jeu implémente un système de navigation clavier contextuel :
-
-- `keyboardContext` définit l’état actuel (menu, pause, settings…)
-- `selectedIndex` permet de naviguer dans les éléments interactifs
-- gestion du focus automatique
-
-Objectif :
-→ améliorer l’accessibilité et l’expérience utilisateur
+- Formation : **CDA Simplon Grenoble 2025**
+- Projet concours inter-promotion.
+- Récompensé pour le jeu le plus "fun".
+- Le projet a été amélioré après le concours avec de nouvelles fonctionnalités.
 
 ---
 
@@ -188,7 +66,7 @@ Chaque `Bubble` est autonome et gère son propre cycle de vie :
   
 Les interactions utilisateur déclenchent :
 - des mises à jour du score
-- modifie les états du jeu (slow, star, aim…)
+- met à jour l’état du jeu (slow, star, aim…)
 
 L’interface `UI.js` est synchronisée en temps réel avec l’état du jeu.
 
@@ -201,6 +79,84 @@ Les bulles sont modélisées via une classe `Bubble` :
 - gestion autonome du cycle de vie
 - adaptation dynamique selon le contexte de jeu (difficulté, bonus actifs via `Game`)
 
+---
+
+
+
+##  Logique du jeu
+
+###   Gameplay
+
+Le joueur doit :
+
+- Cliquer sur les bulles normales pour gagner des points
+- Éviter les bulles rouges : Game Over immédiat
+- Ne pas rater les bulles normales : perte de vie
+- Faire face à une difficulté croissante : accélération progressive du jeu
+- Utiliser les items bonus pour faciliter le gameplay
+- Survivre le plus longtemps possible pour maximiser son score
+
+**Boucle principale :**  
+Cliquer → Éviter → Survivre → Score
+
+###  Système de bulles et bonus
+
+####  Bulles normales
+- Donnent des points
+- Perte de vie si non cliquées
+
+####  Bulles rouges pièges
+- Provoquent un Game Over instantané
+
+####  Bulles bonus
+- Nécessitent plusieurs clics
+- Rapportent un point par clic
+
+###  Items bonus
+-  Cœur  → Récupére une vie
+-  Sablier → Mode slow : ralentit temporairement le jeu
+-  Cible  → Mode aimbot : vise automatiquement au clic
+-  Etoile  → Mode bonus : bulles avec multiplicateur de score
+
+---
+
+##  Modes de difficulté
+
+Les modes modifient les paramètres du jeu sans changer les règles :
+
+- Vitesse des bulles
+- Tailles des bulles
+- Perte en efficacité des bonus 
+- Fréquence des bonus 
+
+| Mode   | Description |
+|--------|------------|
+| Easy   | Expérience accessible |
+| Hard   | Challenge équilibré |
+| Expert | Difficulté élevée |
+
+---
+
+##  Mode Training
+
+- Permet de s'entraîner librement
+- Pas de Game Over
+- Vitesse et tailles des bulles augmenté selon la difficulté (Easy / Medium / Hard / Expert)
+
+---
+
+##  Fonctionnalités
+
+- Interface utilisateur (menu interactif, popups dynamiques, responsive)
+  
+- Système audio (musiques contextuelles, effets sonores)
+  
+- Configuration utilisateur (audio, curseur, background)
+  
+- Persistance des scores (LocalStorage, classement par difficulté)
+  
+- Navigation clavier (gestion du focus, accessibilité)
+  
 ---
 
 ##  Installation
