@@ -52,21 +52,21 @@ Le projet repose sur une architecture modulaire en **JavaScript ES6**, avec sép
 ### Flux de fonctionnement
 
 Le module `Game` orchestre la logique globale et pilote la boucle de jeu :
-- gestion de l’état global (score, vies, difficulté)
-- gestion des effets actifs (slow, star, aim…)
-- génération des entités
+- Gestion de l’état global (score, vies, difficulté)
+- Gestion des effets actifs (slow, star, aim…)
+- Génération des entités
 
 `Game` instancie dynamiquement les objets `Bubble`
 
 Chaque `Bubble` est autonome et gère son propre cycle de vie :
-- spawn
-- animation
-- interaction utilisateur
-- destruction
+- Spawn
+- Animation
+- Interaction utilisateur
+- Destruction
   
 Les interactions utilisateur déclenchent :
-- des mises à jour du score
-- met à jour l’état du jeu (slow, star, aim…)
+- Des mises à jour du score
+- Met à jour l’état du jeu (slow, star, aim…)
 
 L’interface `UI.js` est synchronisée en temps réel avec l’état du jeu.
 
@@ -75,13 +75,11 @@ Les popups et la navigation clavier sont gérés indépendamment via `popupManag
 ### Modélisation des entités
 
 Les bulles sont modélisées via une classe `Bubble` :
-- encapsulation du comportement (clic, effets, destruction)
-- gestion autonome du cycle de vie
-- adaptation dynamique selon le contexte de jeu (difficulté, bonus actifs via `Game`)
+- Encapsulation du comportement (clic, effets, destruction)
+- Gestion autonome du cycle de vie
+- Adaptation dynamique selon le contexte de jeu (difficulté, bonus actifs via `Game`)
 
 ---
-
-
 
 ##  Logique du jeu
 
@@ -120,14 +118,14 @@ Cliquer → Éviter → Survivre → Score
 
 ---
 
-##  Modes de difficulté
+##  Modes de jeu
 
-Les modes modifient les paramètres du jeu sans changer les règles :
+### Difficultés
 
-- Vitesse des bulles
-- Tailles des bulles
-- Perte en efficacité des bonus 
-- Fréquence des bonus 
+Les modes de difficultés modifient les paramètres du jeu sans changer les règles :
+
+- Vitesse et tailles des bulles
+- Fréquence et perte en efficacité des bonus 
 
 | Mode   | Description |
 |--------|------------|
@@ -135,12 +133,13 @@ Les modes modifient les paramètres du jeu sans changer les règles :
 | Hard   | Challenge équilibré |
 | Expert | Difficulté élevée |
 
----
 
-##  Mode Training
+
+###  Mode entrainement
 
 - Permet de s'entraîner librement
-- Pas de Game Over
+- Pas de bulles pièges ni de bonus
+- Boucle infinie
 - Vitesse et tailles des bulles augmenté selon la difficulté (Easy / Medium / Hard / Expert)
 
 ---
